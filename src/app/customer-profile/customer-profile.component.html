@@ -1,0 +1,74 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title">Add Customer Profile</h4>
+            <p class="card-category">Complete all customer profile data</p>
+            <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null">
+            </mat-progress-bar>
+          </div>
+          <div class="card-body">
+            <form>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Fist Name" type="text" [formControl]="firstname">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Last Name" type="text" [formControl]="lastname">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Email address" [formControl]="email">
+                    <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+                      Please enter a valid email address
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-2">
+                  <mat-checkbox class="example-margin" [formControl]="taxFree">Tax exempt</mat-checkbox>
+                </div>
+                <div class="col-md-4" [attr.hidden]="!taxFree.value?'':null">
+                  <mat-form-field>
+                    <input matInput placeholder="Tax exempt #" type="text" [formControl]="taxExempt">
+                  </mat-form-field>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Telephone" type="text" [formControl]="telephone">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Company" [formControl]="company">
+                  </mat-form-field>
+                </div>
+
+              </div>
+
+              <button mat-raised-button type="submit" class="btn btn-default pull-right"
+                [attr.disabled]="dsbSave?'':null" (click)="create()">Create customer</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

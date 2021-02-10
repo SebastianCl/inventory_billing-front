@@ -1,0 +1,69 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title ">Customer Order</h4>
+            <p class="card-category"> List of customer orders</p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+
+              <p-table #dt [columns]="cols" [value]="listQuoatations" [paginator]="true" [responsive]="true" [rows]="10"
+                [rowsPerPageOptions]="[5,10,20]"
+                [globalFilterFields]="['numCO','customer','createdOn','totalItem','total']">
+                <ng-template pTemplate="caption">
+                  <div style="text-align: right">
+                    <em class="fa fa-search" style="margin:4px 4px 0 0"></em>
+                    <input type="text" pInputText size="30" placeholder="Search"
+                      (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th id="numCO" [pSortableColumn]="'numCO'"># CO<p-sortIcon [field]="'numCO'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="customer" [pSortableColumn]="'customer'">Customer<p-sortIcon [field]="'customer'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="createdOn" [pSortableColumn]="'createdOn'">Date<p-sortIcon [field]="'createdOn'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="totalItem" [pSortableColumn]="'totalItem'">Items<p-sortIcon [field]="'totalItem'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="total" [pSortableColumn]="'total'">Total<p-sortIcon [field]="'total'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="details">
+                      Details
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-data>
+                  <tr>
+                    <td>{{data.numCO}}</td>
+                    <td>{{data.customer}}</td>
+                    <td>{{data.createdOn}}</td>
+                    <td>{{data.totalItem}}</td>
+                    <td>{{data.total | currency}}</td>
+                    <td>
+                      <div>
+                        <button mat-raised-button class="btn" (click)=" goToDetails(data)">Details</button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+
+              <br><br><br><br><br>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

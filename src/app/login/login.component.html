@@ -1,0 +1,24 @@
+<form class="needs-validation" novalidate="">
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <img src="../../assets/img/logo-bellarose_164x67.png" alt="logo" />
+      </div>
+
+      <!-- Login Form -->
+      <form>
+        <input type="text" id="email" class="fadeIn second" name="email" placeholder="email" tabindex="1"
+          [formControl]="email" required autofocus>
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" tabindex="2"
+          [formControl]="password" required>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-block fadeIn fourth" tabindex="3" (click)="login()">
+          Login
+        </button>
+      </form>
+
+    </div>
+  </div>
+</form>
