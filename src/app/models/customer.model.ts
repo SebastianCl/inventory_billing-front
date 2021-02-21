@@ -1,35 +1,33 @@
 export interface ICustomer {
     id?: string;
-    firstname: string;
-    lastname: string;
+    name: string;
+    identification: string;
     email: string;
 
-    company: string;
-    telephone: string;
-    taxFree: boolean;
-    taxExempt: string;
+    telephone1: string;
+    telephone2: string;
+    telephone3: string;
+    direction: string;
 }
 
 export class Customer implements ICustomer {
     id?: string;
-    firstname: string;
-    lastname: string;
+    name: string;
+    identification: string;
     email: string;
 
-    company: string;
-    telephone: string;
-    taxFree: boolean;
-    taxExempt: string;
-
+    telephone1: string;
+    telephone2: string;
+    telephone3: string;
+    direction: string;
 
     constructor() {
-        this.firstname = '';
-        this.lastname = '';
+        this.name = '';
+        this.identification = '';
         this.email = '';
-
-        this.company = '';
-        this.telephone = '';
-        this.taxFree = false;
-        this.taxExempt = '';
+        this.telephone1 = '';
+        this.telephone2 = '';
+        this.telephone3 = '';
+        this.direction = '';
     }
 }

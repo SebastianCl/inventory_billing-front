@@ -38,8 +38,8 @@ export class ListCustomerComponent implements OnInit {
           response.msg.forEach(element => {
             const dataCustomer = {
               id: element.id,
-              firstname: element.firstname,
-              lastname: element.lastname
+              name: element.name,
+              identification: element.identification
             }
             this.listCustomer.push(dataCustomer);
           });
@@ -52,12 +52,12 @@ export class ListCustomerComponent implements OnInit {
             localStorage.removeItem('token');
             localStorage.removeItem('customer');
             Swal.fire({
-              title: 'Session expired', text: 'You must log.', icon: 'warning',
+              title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
               onClose: () => { this.router.navigate(['/login']); }
             });
           } else {
             console.log(err.message);
-            this.alert('Error', 'An error happened.', 'error');
+            this.alert('Error', 'Un error ha ocurrido.', 'error');
           }
         }
       );

@@ -4,41 +4,41 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-warning">
-            <h4 class="card-title ">Customer</h4>
-            <p class="card-category"> List of customers</p>
+            <h4 class="card-title ">Clientes</h4>
+            <p class="card-category"> Lista de clientes</p>
           </div>
           <div class="card-body">
             <div class="table-responsive">
 
               <p-table #dt [columns]="cols" [value]="listCustomer" [paginator]="true" [responsive]="true" [rows]="10"
-                [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['firstname','lastname']">
+                [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['name','identification']">
                 <ng-template pTemplate="caption">
                   <div style="text-align: right">
                     <em class="fa fa-search" style="margin:4px 4px 0 0"></em>
-                    <input type="text" pInputText size="30" placeholder="Search"
+                    <input type="text" pInputText size="30" placeholder="Buscar"
                       (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
                   </div>
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
                   <tr>
-                    <th id="firstname" [pSortableColumn]="'firstname'">Firstname<p-sortIcon [field]="'firstname'">
+                    <th id="name" [pSortableColumn]="'name'">Nombre<p-sortIcon [field]="'name'">
                       </p-sortIcon>
                     </th>
-                    <th id="lastname" [pSortableColumn]="'lastname'">Lastname<p-sortIcon [field]="'lastname'">
+                    <th id="identification" [pSortableColumn]="'identification'">Identificación<p-sortIcon
+                        [field]="'identification'">
                       </p-sortIcon>
                     </th>
                     <th id="change">
-                      Details
                     </th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-data>
                   <tr>
-                    <td>{{data.firstname}}</td>
-                    <td>{{data.lastname}}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.identification}}</td>
                     <td>
                       <div>
-                        <button mat-raised-button class="btn" (click)="goToDetails(data)">Details
+                        <button mat-raised-button class="btn" (click)="goToDetails(data)">Detalles
                         </button>
                       </div>
                     </td>

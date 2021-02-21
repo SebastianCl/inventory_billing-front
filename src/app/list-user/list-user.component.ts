@@ -53,12 +53,12 @@ export class ListUserComponent implements OnInit {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             Swal.fire({
-              title: 'Session expired', text: 'You must log.', icon: 'warning',
+              title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
               onClose: () => { this.router.navigate(['/login']); }
             });
           } else {
             console.log(err.message);
-            this.alert('Error', 'An error happened.', 'error');
+            this.alert('Error', 'Ocurrió un error.', 'error');
           }
         }
       );

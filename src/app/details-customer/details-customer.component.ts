@@ -38,10 +38,13 @@ export class DetailsCustomerComponent implements OnInit {
 
 
   setData(data) {
-    this.form.controls.name.setValue(`${data.firstname} ${data.lastname}`);
+    this.form.controls.name.setValue(data.name);
+    this.form.controls.identification.setValue(data.identification);
     this.form.controls.email.setValue(data.email);
-    this.form.controls.telephone.setValue(data.telephone);
-    this.form.controls.taxExempt.setValue(data.taxExempt);
+    this.form.controls.direction.setValue(data.direction);
+    this.form.controls.telephone1.setValue(data.telephone1);
+    this.form.controls.telephone2.setValue(data.telephone2);
+    this.form.controls.telephone3.setValue(data.telephone3);
   }
 
   getData(idCustomer: string): any {
@@ -54,12 +57,12 @@ export class DetailsCustomerComponent implements OnInit {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             Swal.fire({
-              title: 'Session expired', text: 'You must log.', icon: 'warning',
+              title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
               onClose: () => { this.router.navigate(['/login']); }
             });
           } else {
             console.log(err.message);
-            this.alert('Error', 'An error happened.', 'error');
+            this.alert('Error', 'Ocurrió un error.', 'error');
           }
         }
       );
@@ -73,9 +76,12 @@ export class DetailsCustomerComponent implements OnInit {
 
     this.form = new FormGroup({
       name: new FormControl(''),
+      identification: new FormControl(''),
       email: new FormControl(''),
-      telephone: new FormControl(''),
-      taxExempt: new FormControl('')
+      direction: new FormControl(''),
+      telephone1: new FormControl(''),
+      telephone2: new FormControl(''),
+      telephone3: new FormControl('')      
     });
   }
 

@@ -27,10 +27,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login() {
+  login2() {
     this.router.navigate(['/dashboard']);
   }
-  login2() {
+  login() {
     const session = { user: this.email.value, password: this.password.value }
     this.loginService.login(session).subscribe(
       response => {
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
           this.alert('Bad credentials', err.error.msg, 'warning');
         } else {
           console.log(err.message);
-          this.alert('Error', 'An error happened.', 'error');
+          this.alert('Error', 'Ocurrió un error.', 'error');
         }
       }
     );
