@@ -4,8 +4,8 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-warning">
-            <h4 class="card-title">Add User Profile</h4>
-            <p class="card-category">Complete all user profile data</p>
+            <h4 class="card-title">Agregar perfil de usuario</h4>
+            <p class="card-category">Complete toda la información</p>
             <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null">
             </mat-progress-bar>
           </div>
@@ -15,12 +15,25 @@
               <div class="row">
                 <div class="col-md-6">
                   <mat-form-field>
-                    <input matInput placeholder="Fist Name" type="text" [formControl]="firstname">
+                    <input matInput placeholder="Nombre" type="text" [formControl]="name">
                   </mat-form-field>
                 </div>
                 <div class="col-md-6">
                   <mat-form-field>
-                    <input matInput placeholder="Last Name" type="text" [formControl]="lastname">
+                    <input matInput placeholder="Identificación" type="text" [formControl]="identification">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Dirección" type="text" [formControl]="direction">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Teléfono" type="text" [formControl]="telephone">
                   </mat-form-field>
                 </div>
               </div>
@@ -29,20 +42,20 @@
 
                 <div class="col-md-6">
                   <mat-form-field>
-                    <input id="idEmail" matInput placeholder="Email address" autocomplete="new-email"
+                    <input id="idEmail" matInput placeholder="Dirección de email" autocomplete="new-email"
                       [formControl]="email">
                     <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
-                      Please enter a valid email address
+                      Por favor, introduce una dirección de correo electrónico válida
                     </mat-error>
                     <mat-error *ngIf="email.hasError('required')">
-                      Email is <strong>required</strong>
+                      El Email es <strong>obligatorio</strong>
                     </mat-error>
                   </mat-form-field>
                 </div>
 
                 <div class="col-md-6">
                   <mat-form-field>
-                    <input id="userPass" matInput placeholder="Enter a secure password"
+                    <input id="userPass" matInput placeholder="Ingrese una clave segura"
                       [type]="hide ? 'password' : 'text'" autocomplete="new-password" [formControl]="password">
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                       [attr.aria-pressed]="hide">
@@ -53,9 +66,14 @@
 
               </div>
 
+              <div class="row">
+                <div class="col-md-6">
+                  <!--<mat-card><strong>Administrador</strong> {{form.controls.isAdmin.value}}</mat-card>-->
+                </div>
+              </div>
+
               <button mat-raised-button type="submit" class="btn btn-default pull-right"
-                [attr.disabled]="dsbSave?'':null" (click)="create()">Create
-                User</button>
+                [attr.disabled]="dsbSave?'':null" (click)="create()">Crear usuario</button>
 
             </form>
           </div>

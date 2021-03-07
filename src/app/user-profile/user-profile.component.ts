@@ -18,31 +18,35 @@ export class UserProfileComponent implements OnInit {
   hide = true; // hide password
   user: User;
 
-  firstname: FormControl;
-  lastname: FormControl;
+  name: FormControl;
+  identification: FormControl;
   email: FormControl;
   password: FormControl;
+  direction: FormControl;
+  telephone: FormControl;
+  isAdmin: FormControl;
+  active: FormControl;
 
   dsbSave: boolean;
   hiddenProgBar: boolean;
 
-  constructor(
-    public userService: UserService,
-    private _snackBar: MatSnackBar) {
-    this.firstname = new FormControl();
-    this.lastname = new FormControl();
-    this.email = new FormControl('', [
-      Validators.email,
-    ]);
+  constructor(public userService: UserService, private _snackBar: MatSnackBar) {
+
+    this.name = new FormControl();
+    this.identification = new FormControl();
+    this.direction = new FormControl();
+    this.telephone = new FormControl();
+    this.email = new FormControl('', [Validators.email,]);
     this.password = new FormControl();
+    this.isAdmin = new FormControl();
+    this.active = new FormControl();
 
     this.clearData();
     this.hiddenProgBar = true;
     this.dsbSave = false;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   create() {
     this.changeShow();
@@ -55,48 +59,51 @@ export class UserProfileComponent implements OnInit {
 
   private save() {
     this.user = new User;
-    this.user.firstname = this.firstname.value;
-    this.user.lastname = this.lastname.value;
+    this.user.name = this.name.value;
+    this.user.identification = this.identification.value;
+    this.user.direction = this.direction.value;
+    this.user.telephone = this.telephone.value;
     this.user.email = this.email.value;
     this.user.password = this.password.value;
     this.user.active = true;
+    this.user.isAdmin = this.isAdmin.value;;
 
     this.userService.createUser(this.user)
       .subscribe((response: any) => {
         this.changeShow();
         if (response.resp) {
-          this.alert('Done', 'User created.', 'success');
+          this.alert('Hecho', 'Usuario creado.', 'success');
           this.clearData();
         } else {
-          this.alert('Atention', 'User not created.', 'warning');
+          this.alert('Atención', 'Usario no creado.', 'warning');
         }
       },
         (err) => {
           this.changeShow();
-          this.alert('Error', 'User not created.', 'error');
+          this.alert('Error', 'Usario no creado.', 'error');
         }
       );
   }
 
   private validateData() {
-    if (this.firstname.value === null || this.firstname.value === '') {
-      this.openSnackBar('You must indicate the firstname.', 'DONE');
+    if (this.name.value === null || this.name.value === '') {
+      this.openSnackBar('Debe indicar el nombre.', 'DONE');
       return false;
     }
-    if (this.lastname.value === null || this.lastname.value === '') {
-      this.openSnackBar('You must indicate the lastname.', 'DONE');
+    if (this.identification.value === null || this.identification.value === '') {
+      this.openSnackBar('Debe indicar la identificación.', 'DONE');
       return false;
     }
     if (this.email.value === null || this.email.value === '') {
-      this.openSnackBar('You must indicate the email.', 'DONE');
+      this.openSnackBar('Debe indicar el email.', 'DONE');
       return false;
     }
     if (this.password.value === null || this.password.value === '') {
-      this.openSnackBar('You must indicate the password.', 'DONE');
+      this.openSnackBar('Debe indicar la clave.', 'DONE');
       return false;
     }
     if (!this.formatEmail(this.email.value)) {
-      this.openSnackBar('You must enter an email with correct format.', 'DONE');
+      this.openSnackBar('Debe ingresar un email con formato correcto.', 'DONE');
       return false;
     }
     return true;
@@ -107,10 +114,13 @@ export class UserProfileComponent implements OnInit {
 
   // Reiniciar valores de los campos
   private clearData() {
-    this.firstname.setValue('');
-    this.lastname.setValue('');
+    this.name.setValue('');
+    this.identification.setValue('');
+    this.direction.setValue('');
+    this.telephone.setValue('');
     this.email.setValue('');
     this.password.setValue('');
+    this.isAdmin.setValue(false);
     this.hide = true;
   }
 
