@@ -14,11 +14,14 @@ import { ListUserComponent } from '../../list-user/list-user.component';
 import { ListsComponent } from '../../lists/lists.component';
 import { ListQuoteComponent } from '../../list-quote/list-quote.component';
 import { ListCustomerOrderComponent } from '../../list-customer-order/list-customer-order.component';
+import { ItemProfileComponent } from '../../item-profile/item-profile.component';
+import { ListItemComponent } from '../../list-item/list-item.component';
 
 import { DetailsQuoteComponent } from '../../details-quote/details-quote.component';
 import { DetailsCustomerOrderComponent } from '../../details-customerOrder/details-customerOrder.component';
 import { DetailsCustomerComponent } from '../../details-customer/details-customer.component';
 import { DetailsUserComponent } from '../../details-user/details-user.component';
+import { DetailsItemComponent } from '../../details-item/details-item.component';
 // Primeng
 import { TableModule } from 'primeng/table';
 
@@ -81,7 +84,10 @@ import {
     DetailsQuoteComponent,
     DetailsCustomerOrderComponent,
     DetailsCustomerComponent,
-    DetailsUserComponent
+    DetailsUserComponent,
+    ItemProfileComponent,
+    ListItemComponent,
+    DetailsItemComponent
   ]
 })
 

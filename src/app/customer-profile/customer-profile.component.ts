@@ -82,7 +82,7 @@ export class CustomerProfileComponent implements OnInit {
           this.alert('HECHO', 'Customer created.', 'success');
           this.clearData();
         } else {
-          this.alert('Atention', 'Customer not created.', 'warning');
+          this.alert('Atención', 'Customer not created.', 'warning');
         }
       },
         (err) => {

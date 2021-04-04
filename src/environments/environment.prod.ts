@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: '#',
+  apiUrl: 'https://bellarose-qa.herokuapp.com',
   production: true
 };

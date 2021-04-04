@@ -1,37 +1,41 @@
 export interface IItem {
     id?: string;
-    quote?: string;
-    ref: string
-    description: string;
-    retail: number;
-    discount: number;
+    type: string;
+    reference: string;
+    brand: string;
+    color: string;
+    size: string;
+    comments?: string;
     price: number;
-    quantity: number
-    total: number;
-    requested?: boolean;
+    quantity: number;
+    available: boolean;
+    image?: string;
 }
 
 export class Item implements IItem {
     id?: string;
-    quote: string;
-    ref: string
-    description: string;
-    retail: number;
-    discount: number;
+    type: string;
+    reference: string;
+    brand: string;
+    color: string;
+    size: string;
+    comments?: string;
     price: number;
-    quantity: number
-    total: number;
-    requested?: boolean;
+    quantity: number;
+    available: boolean;
+    image?: string;
 
     constructor() {
-        this.quote = '';
-        this.ref = '';
-        this.description = '';
-        this.retail = 0;
-        this.discount = 0;
+        this.type = '';
+        this.reference = '';
+        this.brand = '';
+        this.color = '';
+        this.type = '';
+        this.size = '';
+        this.comments = '';
         this.price = 0;
         this.quantity = 0;
-        this.total = 0;
-        this.requested = false;
+        this.available = false;
+        this.image = '';
     }
 }

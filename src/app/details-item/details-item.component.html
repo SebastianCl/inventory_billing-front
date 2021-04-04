@@ -1,0 +1,56 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" formGroup="form">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title ">Perfil de item</h4>
+            <p class="card-category"> Detalles de referencia {{form.controls.reference.value}}</p>
+            <button mat-raised-button matTooltip="Back to list" class="btn pull-right back"
+              (click)="back()">Volver</button>
+          </div>
+          <div class="card-body">
+
+            <br><br>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-card><strong>Marca:</strong> {{form.controls.brand.value}}</mat-card>
+              </div>
+              <div class="col-md-6">
+                <mat-card><strong>Tipo:</strong> {{form.controls.type.value}}</mat-card>
+              </div>
+            </div>
+
+
+            <br><br>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-card><strong>Comentarios:</strong> {{form.controls.comments.value}}</mat-card>
+              </div>
+              <div class="col-md-6">
+                <mat-card><strong>Cantidad:</strong> {{form.controls.quantity.value}}</mat-card>
+              </div>
+            </div>
+
+            <br><br>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-card><strong>Color:</strong> {{form.controls.color.value}}</mat-card>
+              </div>
+              <div class="col-md-4">
+                <mat-card><strong>Talla:</strong> {{form.controls.size.value}}</mat-card>
+              </div>
+              <div class="col-md-4">
+                <mat-card><strong>Precio:</strong> {{form.controls.price.value}}</mat-card>
+              </div>
+            </div>
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

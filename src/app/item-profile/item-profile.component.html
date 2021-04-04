@@ -1,0 +1,95 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title">Agregar item</h4>
+            <p class="card-category">Complete todos los datos del item</p>
+            <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null">
+            </mat-progress-bar>
+          </div>
+          <div class="card-body">
+            <form>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Tipo" type="text" [formControl]="type">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Descripción" type="text" [formControl]="comments">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput placeholder="Talla" type="text" [formControl]="size">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput placeholder="Precio" type="text" [formControl]="price">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput placeholder="Cantidad" type="text" [formControl]="quantity">
+                  </mat-form-field>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput placeholder="Referencia" type="text" [formControl]="reference">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput placeholder="Marca" type="text" [formControl]="brand">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput placeholder="Color" type="text" [formControl]="color">
+                  </mat-form-field>
+                </div>
+
+              </div>
+
+              <div class="row">
+
+                <div class="col-md-10">
+                  <input class="ng-hide" id="input-file-id" multiple type="file"
+                    (change)="uploadFile($event.target.files)" />
+                  <label for="input-file-id" class="md-button md-raised md-primary">Cargar imagen</label>
+                </div>
+
+
+
+                <div class="col-md-2">
+                  <mat-checkbox class="example-margin" [formControl]="available">¿Esta disponible?</mat-checkbox>
+                </div>
+              </div>
+
+              <button mat-raised-button type="submit" class="btn btn-default pull-right"
+                [attr.disabled]="dsbSave?'':null" (click)="create()">Crear item</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

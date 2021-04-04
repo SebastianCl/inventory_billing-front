@@ -37,7 +37,7 @@ export class ItemService {
 
     loadItem(id): Observable<Item> {
         const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
-        return this.http.get<Item>(this.urlApi + '/item/findItemsWithFilter', { headers: header })
+        return this.http.get<Item>(this.urlApi + '/item/getItem', { headers: header })
             .pipe(catchError(this.handleError));
     }
 
@@ -52,6 +52,15 @@ export class ItemService {
         const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
         return this.http.post<Item>(this.urlApi + '/item/createItem', item, { headers: header })
             .pipe(catchError(this.handleError));
+    }
+
+    async uploadImage(image) {
+        let header = new HttpHeaders({ 'Content-Type': 'application/json', 'cache-control': 'no-cache', 'x-access-token': this.token });
+        return await this.http.post<any>(
+            this.urlApi + '/item/createItem',
+            image,
+            { headers: header })
+            .pipe(catchError(this.handleError)).toPromise();
     }
 
     updateItem(id: string, newData: any): Observable<Item> {
