@@ -7,33 +7,36 @@ import Swal from 'sweetalert2';
 
 // Servicio
 import { CustomerService } from '../service/customer.service';
-import { QuoteService } from '../service/quote.service';
+import { ReserveService } from '../service/reserve.service';
+import { ItemService } from '../service/item.service';
 
 // Modelo
-import { Quote } from '../models/quote.model';
+import { Reserve } from '../models/reserve.model';
 
 @Component({
   selector: 'app-quotation',
-  templateUrl: './quote.component.html',
-  styleUrls: ['./quote.component.css'],
-  providers: [CustomerService, QuoteService]
+  templateUrl: './reserve.component.html',
+  styleUrls: ['./reserve.component.css'],
+  providers: [CustomerService, ReserveService, ItemService]
 })
-export class QuoteComponent implements OnInit {
+export class ReserveComponent implements OnInit {
 
-  quote: Quote;
+  reserve: Reserve;
   public hiddenProgBar: boolean;
   public dsbSave: boolean;
   public listCustomers: any[];
   public listItems: FormGroup;
+  public listGarment: any[];
 
   public customerId: FormControl;
+  public customerIdentificacion: FormControl;
   public tax: FormControl;
   public shipping: FormControl;
   public comments: FormControl;
   public totalTax: FormControl;
   public totalDiscount: FormControl;
   public subtotal: FormControl;
-  public totalQuote: FormControl;
+  public totalReserve: FormControl;
 
   private rowsItemsValues: any[];
 
@@ -42,20 +45,24 @@ export class QuoteComponent implements OnInit {
       private router: Router,
       private _snackBar: MatSnackBar,
       private customerService: CustomerService,
-      private quoteService: QuoteService,
+      private itemService: ItemService,
+      private reserveService: ReserveService,
       public fb: FormBuilder
     ) {
     this.customerId = new FormControl();
+    this.customerIdentificacion = new FormControl();
     this.shipping = new FormControl();
     this.tax = new FormControl();
     this.comments = new FormControl();
     this.totalTax = new FormControl();
     this.totalDiscount = new FormControl();
-    this.totalQuote = new FormControl();
+    this.totalReserve = new FormControl();
     this.subtotal = new FormControl();
     this.listItems = this.fb.group({ rows: this.fb.array([]) });
+    this.listGarment = [];
     this.clearData();
-    //this.getListCustomers();
+    this.getListCustomers();
+    this.getListGarments();
   }
 
   ngOnInit() { }
@@ -68,9 +75,8 @@ export class QuoteComponent implements OnInit {
   createItem(): FormGroup {
     return this.fb.group({
       discount: 0,
-      ref: '',
+      garmentReference: '',
       description: '',
-      retail: 0,
       price: 0,
       quantity: 1,
       total: 0
@@ -88,7 +94,7 @@ export class QuoteComponent implements OnInit {
     this.hiddenProgBar = !this.hiddenProgBar;
   }
 
-  saveQuote() {
+  saveReserve() {
     this.changeShow();
     // Validar todos los datos
     if (!this.validateData()) {
@@ -98,35 +104,29 @@ export class QuoteComponent implements OnInit {
     const shipping = this.shipping.value === null ? 0 : this.shipping.value;
     const vendor = JSON.parse(localStorage.getItem('user'));
 
-    this.quote = new Quote;
-    this.quote.customer = this.customerId.value;
-    this.quote.tax = this.tax.value;
-    this.quote.comments = this.comments.value;
-    this.quote.items = this.rowsItemsValues;
-    this.quote.vendor = vendor.id;
-    this.quote.shipping = shipping;
-    this.quote.isCO = false;
-    this.quote.total = this.totalQuote.value;
-    this.quote.subtotal = this.subtotal.value;
-    this.quote.totalTax = this.totalTax.value;
-    this.quote.totalDiscount = this.totalDiscount.value;
+    this.reserve = new Reserve;
+    this.reserve.customer = this.customerId.value;
+    this.reserve.tax = this.tax.value;
+    this.reserve.comments = this.comments.value;
+    this.reserve.items = this.rowsItemsValues;
+    this.reserve.vendor = vendor.id;
+    this.reserve.shipping = shipping;
+    this.reserve.isCO = false;
+    this.reserve.total = this.totalReserve.value;
+    this.reserve.subtotal = this.subtotal.value;
+    this.reserve.totalTax = this.totalTax.value;
+    this.reserve.totalDiscount = this.totalDiscount.value;
 
-    this.createQuote(this.quote);
-  };
+    this.createReserve(this.reserve);
+  }
 
   private validateData() {
 
     // Validar si selecciono un cliente
     if (this.customerId.value === null || this.customerId.value === '') {
-      this.openSnackBar('You must select a customer', 'DONE');
+      this.openSnackBar('Debe seleccionar un cliente', 'HECHO');
       return false;
     }
-    // Validar si indico tax
-    if (this.tax.value === null || this.tax.value === '') {
-      this.openSnackBar('You must indicate the tax percentage', 'DONE');
-      return false;
-    }
-
     // Validar campos de items
     const control = this.listItems.get('rows') as FormArray;
     const rowsItems = control.value;
@@ -137,26 +137,22 @@ export class QuoteComponent implements OnInit {
       const element = rowsItems[index];
 
       let item = {
-        ref: element.ref,
+        reference: element.reference,
         description: element.description,
-        retail: element.retail,
         discount: element.discount === null ? 0 : element.discount,
-        price: 0,
-        quantity: element.quantity,
-        total: 0
+        price: element.price,
+        quantity: element.quantity
       }
 
       // Calcular precio y total
-      item.price = item.retail - ((item.retail * item.discount) / 100);
-      item.total = item.price * item.quantity;
+      // item.price = item.retail - ((item.retail * item.discount) / 100);
+      // item.total = item.price * item.quantity;
       if (
-        item.ref === '' ||
+        item.reference === '' ||
         item.description === '' ||
-        item.retail <= 0 ||
         item.discount < 0 ||
         item.price <= 0 ||
-        item.quantity <= 0 ||
-        item.total < 0
+        item.quantity <= 0
       ) {
         break;
       }
@@ -164,7 +160,7 @@ export class QuoteComponent implements OnInit {
     }
 
     if (!sw) {
-      this.openSnackBar('You must indicate all the information of the items.', 'DONE');
+      this.openSnackBar('Debe indicar la toda la infomración de los productos.', 'HECHO');
       return false;
     }
     return true;
@@ -176,9 +172,8 @@ export class QuoteComponent implements OnInit {
     const control = this.listItems.get('rows') as FormArray;
     const rowsItems = control.value;
     let totalDiscount = 0;
-    let totalTax = 0;
     let subtotal = 0;
-    let totalQuote = 0;
+    let totalReserve = 0;
     let rowsItemsValues = [];
 
     for (let index = 0; index < rowsItems.length; index++) {
@@ -187,55 +182,48 @@ export class QuoteComponent implements OnInit {
       let item = {
         ref: element.ref,
         description: element.description,
-        retail: element.retail,
         discount: element.discount,
-        price: 0,
-        quantity: element.quantity,
-        total: 0
+        price: element.price,
+        quantity: element.quantity
       }
 
       // Calcular precio y total
-      const discount = item.retail * (item.discount / 100);
-      item.price = item.retail - discount;
-      item.total = item.price * item.quantity;
+      const discount = item.price * (item.discount / 100);
+      item.price = item.price - discount;
 
       // Conservar item en lista global para almacenar
       rowsItemsValues.push(item);
 
       // Calcular y asignar totales
-      subtotal = subtotal + item.retail;
-      totalQuote = totalQuote + item.total;
+      subtotal = subtotal + item.price;
+      totalReserve = totalReserve + item.price;
       totalDiscount = totalDiscount + (discount * item.quantity);
     }
 
     this.rowsItemsValues = rowsItemsValues;
-    totalTax = totalQuote * (this.tax.value / 100);
-
-    // Sumar tax y precio al total
-    totalQuote = totalQuote + totalTax + this.shipping.value;
 
     this.subtotal.setValue(subtotal); // SUBTOTAL
     this.totalDiscount.setValue(totalDiscount); // TOTAL DE DESCUENTOS
-    this.totalTax.setValue(totalTax); // TOTAL DE TAX
-    this.totalQuote.setValue(totalQuote); // TOTAL DE COTIZACION
+    this.totalReserve.setValue(totalReserve); // TOTAL DE RESERVA
 
   }
 
-  setTax() {
-    let taxFree = false;
+  setCustomerData() {
+    let customerIdentificacion = '';
     for (let index = 0; index < this.listCustomers.length; index++) {
       const element = this.listCustomers[index];
       if (element.id === this.customerId.value) {
-        taxFree = element.taxFree;
+        customerIdentificacion = element.identification;
         break;
       }
     }
-    if (taxFree) {
-      this.tax.setValue(0);
-    } else {
-      this.tax.setValue(7);
-    }
-    this.calculateTotals();
+    this.customerIdentificacion.setValue(customerIdentificacion);
+  }
+
+  setGarmentPrice(garment) {
+    debugger;
+    console.log(garment);
+
   }
 
   // Servicios
@@ -243,7 +231,7 @@ export class QuoteComponent implements OnInit {
     this.customerService.loadCustomers()
       .subscribe((response: any) => {
         if (response.resp && response.msg.length > 0) {
-          response.msg.sort((a, b) => a.firstname.localeCompare(b.firstname)).forEach(element => {
+          response.msg.sort((a, b) => a.name.localeCompare(b.name)).forEach(element => {
             this.listCustomers.push(element);
           });
         } else {
@@ -266,12 +254,39 @@ export class QuoteComponent implements OnInit {
       )
   }
 
-  createQuote(dataQuote: Quote): any {
-    this.quoteService.createQuote(dataQuote)
+  getListGarments(): any {
+    this.itemService.loadItems()
+      .subscribe((response: any) => {
+        if (response.resp && response.msg.length > 0) {
+          response.msg.sort((a, b) => a.reference.localeCompare(b.reference)).forEach(element => {
+            this.listGarment.push(element);
+          });
+        } else {
+          this.listGarment = [];
+        }
+      },
+        (err) => {
+          if (err.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            Swal.fire({
+              title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
+              onClose: () => { this.router.navigate(['/login']); }
+            });
+          } else {
+            console.log(err.message);
+            this.alert('Error', 'Ocurrió un error.', 'error');
+          }
+        }
+      )
+  }
+
+  createReserve(dataReserve: Reserve): any {
+    this.reserveService.createReserve(dataReserve)
       .subscribe((response: any) => {
         this.changeShow();
         if (response.resp) {
-          this.alert('Done', 'Registered quote.', 'success');
+          this.alert('Done', 'Registered reserve.', 'success');
           this.clearData();
           this.getListCustomers();
         } else {
@@ -292,13 +307,14 @@ export class QuoteComponent implements OnInit {
     this.hiddenProgBar = true;
     this.dsbSave = false;
     this.customerId.setValue('');
+    this.customerIdentificacion.setValue('');
     this.comments.setValue('');
     this.tax.setValue(7);
     this.shipping.setValue(0);
     this.totalTax.setValue(0);
     this.totalDiscount.setValue(0);
     this.subtotal.setValue(0);
-    this.totalQuote.setValue(0);
+    this.totalReserve.setValue(0);
     const control = this.listItems.get('rows') as FormArray;
     control.clear();
     this.addItem();

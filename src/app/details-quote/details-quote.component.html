@@ -4,9 +4,9 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-warning">
-            <h4 class="card-title ">Quote</h4>
-            <p class="card-category"> Detalles of quote</p>
-            <button mat-raised-button matTooltip="Back to list" class="btn pull-right back"
+            <h4 class="card-title ">Reserve</h4>
+            <p class="card-category"> Detalles of reserve</p>
+            <button mat-raised-button matTooltip="Volver a la lista" class="btn pull-right back"
               (click)="back()">Back</button>
           </div>
           <div class="card-body" formGroup="form">
@@ -36,7 +36,7 @@
                 <mat-card><strong>Discount Total:</strong> {{form.controls.totalDiscount.value | currency}}</mat-card>
               </div>
               <div class="col-md-6">
-                <mat-card><strong>TOTAL: {{form.controls.totalQuote.value | currency}}</strong></mat-card>
+                <mat-card><strong>TOTAL: {{form.controls.totalReserve.value | currency}}</strong></mat-card>
               </div>
             </div>
 

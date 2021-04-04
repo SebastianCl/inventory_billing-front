@@ -3,14 +3,14 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Quote } from '../models/quote.model';
+import { Reserve } from '../models/reserve.model';
 
 import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class QuoteService {
+export class ReserveService {
   urlApi: string;
   token: string;
 
@@ -23,46 +23,46 @@ export class QuoteService {
     }
   }
 
-  loadQuotes(): Observable<Quote[]> {
+  loadReserves(): Observable<Reserve[]> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
-    return this.http.get<Quote[]>(this.urlApi + '/quote/getQuotes', { headers: header })
+    return this.http.get<Reserve[]>(this.urlApi + '/reserve/getReserves', { headers: header })
       .pipe(catchError(this.handleError));
   }
 
-  loadQuote(id: string): Observable<Quote> {
+  loadReserve(id: string): Observable<Reserve> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
-    return this.http.get<Quote>(this.urlApi + '/quote/getQuote', { headers: header })
+    return this.http.get<Reserve>(this.urlApi + '/reserve/getReserve', { headers: header })
       .pipe(catchError(this.handleError));
   }
 
-  loadQuotesWithFilter(filter: any): Observable<any[]> {
+  loadReservesWithFilter(filter: any): Observable<any[]> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
-    return this.http.post<any[]>(this.urlApi + '/quote/findQuoteWithFilter', filter, {
+    return this.http.post<any[]>(this.urlApi + '/reserve/findReserveWithFilter', filter, {
       headers: header
     }).pipe(catchError(this.handleError));
   }
 
-  createQuote(quote: Quote): Observable<Quote> {
+  createReserve(reserve: Reserve): Observable<Reserve> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
-    return this.http.post<Quote>(this.urlApi + '/quote/createQuote', quote, { headers: header })
+    return this.http.post<Reserve>(this.urlApi + '/reserve/createReserve', reserve, { headers: header })
       .pipe(catchError(this.handleError));
   }
 
-  updateQuote(id: string, newData: any): Observable<Quote> {
+  updateReserve(id: string, newData: any): Observable<Reserve> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
-    return this.http.put<Quote>(this.urlApi + '/quote/updateQuote', newData, { headers: header })
+    return this.http.put<Reserve>(this.urlApi + '/reserve/updateReserve', newData, { headers: header })
       .pipe(catchError(this.handleError));
   }
 
-  quoteToCO(id: string): Observable<Quote> {
+  reserveToCO(id: string): Observable<Reserve> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
-    return this.http.post<Quote>(this.urlApi + '/quote/quoteToCO', { nombre: 'nada' }, { headers: header })
+    return this.http.post<Reserve>(this.urlApi + '/reserve/reserveToCO', { nombre: 'nada' }, { headers: header })
       .pipe(catchError(this.handleError));
   }
 
-  deleteQuote(id: string): Observable<any> {
+  deleteReserve(id: string): Observable<any> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
-    return this.http.delete<any>(this.urlApi + '/quote/deleteQuote', { headers: header })
+    return this.http.delete<any>(this.urlApi + '/reserve/deleteReserve', { headers: header })
       .pipe(catchError(this.handleError));
   }
 

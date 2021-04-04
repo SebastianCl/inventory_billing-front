@@ -5,17 +5,17 @@ import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 
 // Modelo
-import { Quote } from '../models/quote.model';
+import { Reserve } from '../models/reserve.model';
 // Servicio
-import { QuoteService } from '../service/quote.service';
+import { ReserveService } from '../service/reserve.service';
 
 @Component({
-  selector: 'app-details-quote',
-  templateUrl: './details-quote.component.html',
-  styleUrls: ['./details-quote.component.css'],
-  providers: [QuoteService]
+  selector: 'app-details-reserve',
+  templateUrl: './details-reserve.component.html',
+  styleUrls: ['./details-reserve.component.css'],
+  providers: [ReserveService]
 })
-export class DetailsQuoteComponent implements OnInit {
+export class DetailsReserveComponent implements OnInit {
 
   public form: FormGroup;
 
@@ -26,7 +26,7 @@ export class DetailsQuoteComponent implements OnInit {
   constructor(
     public route: ActivatedRoute,
     private router: Router,
-    public quoteService: QuoteService) {
+    public quoteService: ReserveService) {
     this.createForm();
     this.listItems = [];
   }
@@ -37,7 +37,7 @@ export class DetailsQuoteComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(['/list-quote']);
+    this.router.navigate(['/list-reserve']);
   }
 
 
@@ -48,7 +48,7 @@ export class DetailsQuoteComponent implements OnInit {
     this.form.controls.tax.setValue(data.tax);
     this.form.controls.totalTax.setValue(data.totalTax);
     this.form.controls.totalDiscount.setValue(data.totalDiscount);
-    this.form.controls.totalQuote.setValue(data.total);
+    this.form.controls.totalReserve.setValue(data.total);
     this.form.controls.subtotal.setValue(data.subtotal);
 
     data.items.forEach(element => {
@@ -66,8 +66,8 @@ export class DetailsQuoteComponent implements OnInit {
     });
   }
 
-  getData(idQuote: string): any {
-    this.quoteService.loadQuote(idQuote)
+  getData(idReserve: string): any {
+    this.quoteService.loadReserve(idReserve)
       .subscribe((response: any) => {
         this.setData(response.msg.entityData);
       },
@@ -100,7 +100,7 @@ export class DetailsQuoteComponent implements OnInit {
       comments: new FormControl(''),
       totalTax: new FormControl(''),
       totalDiscount: new FormControl(''),
-      totalQuote: new FormControl(''),
+      totalReserve: new FormControl(''),
       subtotal: new FormControl('')
     });
   }

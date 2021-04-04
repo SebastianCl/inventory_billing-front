@@ -5,17 +5,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
 
 // Modelo
-import { Quote } from '../models/quote.model';
+import { Reserve } from '../models/reserve.model';
 // Servicio
-import { QuoteService } from '../service/quote.service';
+import { ReserveService } from '../service/reserve.service';
 
 @Component({
-  selector: 'app-list-quote',
-  templateUrl: './list-quote.component.html',
-  styleUrls: ['./list-quote.component.css'],
-  providers: [QuoteService]
+  selector: 'app-list-reserve',
+  templateUrl: './list-reserve.component.html',
+  styleUrls: ['./list-reserve.component.css'],
+  providers: [ReserveService]
 })
-export class ListQuoteComponent implements OnInit {
+export class ListReserveComponent implements OnInit {
 
 
   public hiddenProgBar: boolean;
@@ -27,7 +27,7 @@ export class ListQuoteComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public quoteService: QuoteService,
+    public quoteService: ReserveService,
     private _snackBar: MatSnackBar) {
     this.listQuoatations = [];
     this.listQuoatationsAllInfo = [];
@@ -40,32 +40,14 @@ export class ListQuoteComponent implements OnInit {
     //this.getList();
   }
 
-  changeCO(data: any) {
-    const id = data;
-    Swal.fire({
-      title: '¿Are you sure?',
-      icon: 'info',
-      text: 'The quote will become a customer order.',
-      showCancelButton: true,
-      showCloseButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, convert.'
-    }).then((result) => {
-      if (result.value) {
-        this.updateQuote(id);
-      }
-    })
-  }
-
   goToDetails(data) {
-    this.router.navigate(['/details-quote', data.id]);
+    this.router.navigate(['/details-reserve', data.id]);
   }
 
   // Servicios
   getList(): any {
     const filter = { isCO: false };
-    this.quoteService.loadQuotesWithFilter(filter)
+    this.quoteService.loadReservesWithFilter(filter)
       .subscribe((response: any) => {
         if (response.resp) {
           response.msg.forEach(element => {
@@ -104,35 +86,6 @@ export class ListQuoteComponent implements OnInit {
       );
   }
 
-  updateQuote(data: any) {
-    this.changeShow();
-    const id = data.id;
-    this.quoteService.quoteToCO(id)
-      .subscribe((response: any) => {
-        this.changeShow();
-        if (response.resp) {
-          this.alert('Done!', 'The quote was passed at the customer order.', 'success');
-          this.listQuoatations = [];
-          this.getList();
-          return;
-        }
-        this.alert('Something went wrong', 'The quote was not passed at the customer order', 'warning');
-      },
-        (err) => {
-          this.changeShow();
-          if (err.status === 401) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            Swal.fire({
-              title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
-              onClose: () => { this.router.navigate(['/login']); }
-            });
-          } else {
-            this.alert('Error', 'Ocurrió un error.', 'error');
-          }
-        }
-      );
-  }
 
   private changeShow() {
     this.dsbBtn = !this.dsbBtn;

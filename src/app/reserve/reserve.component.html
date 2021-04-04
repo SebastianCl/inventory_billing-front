@@ -1,0 +1,126 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title">Registrar reserva</h4>
+            <p class="card-category">Reserva para el cliente con identificación: {{customerIdentificacion.value}}</p>
+            <button mat-raised-button matTooltip="Finalizar y registrar reserva." class="btn pull-right save-reserve"
+              [attr.disabled]="dsbSave?'':null" (click)="saveReserve()">Guardar Reserva</button>
+            <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null">
+            </mat-progress-bar>
+          </div>
+          <div class="card-body">
+
+            <form>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="selectRol">Cliente</label>
+                  <mat-form-field>
+                    <mat-select placeholder="Busca un cliente" [formControl]="customerId"
+                      (selectionChange)="setCustomerData()">
+                      <mat-option *ngFor="let customer of listCustomers" value="{{customer.id}}">
+                        {{customer.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <mat-form-field>
+                    <mat-label>COMENTARIOS</mat-label>
+                    <textarea matInput [formControl]="comments"></textarea>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <br><br>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <mat-card>Subtotal: {{subtotal.value | currency}}</mat-card>
+                </div>
+                <div class="col-md-4">
+                  <mat-card>Discount Total: {{totalDiscount.value | currency}}</mat-card>
+                </div>
+                <div class="col-md-4">
+                  <mat-card><strong>TOTAL: {{totalReserve.value | currency}}</strong></mat-card>
+                </div>
+              </div>
+
+              <br><br>
+              <div class="row">
+                <div class="pull-right">
+                  <button mat-mini-fab class="add pull-right" (click)="addItem()">+</button>
+                </div>
+
+              </div>
+
+
+              <!-- TABLA DE ITEMS -->
+              <div class="card-body">
+                <div class="table-responsive">
+
+                  <table class="table table-hover">
+
+                    <thead>
+                      <th id=""></th>
+                      <th id=""> DESCUENTO % </th>
+                      <th id=""> REFERENCIA </th>
+                      <th id=""> DESCRIPCIÓN </th>
+                      <th id=""> PRECIO </th>
+                    </thead>
+
+                    <tbody>
+                      <tr *ngFor="let item of listItems.get('rows')['controls'] ; let i = index;">
+                        <td>
+                          <button mat-mini-fab color="warn" (click)="removeItem(i)">X</button>
+                        </td>
+                        <td>
+                          <mat-form-field class="field-width">
+                            <input matInput placeholder="%" type="number" maxlength="3" max="100" min="0"
+                              (keypress)="numberOnly($event)" (change)="calculateTotals()"
+                              [formControl]="item.get('discount')">
+                            <span matPrefix>%&nbsp;</span>
+                          </mat-form-field>
+                        </td>
+                        <td>
+                          <mat-form-field>
+                            <mat-select placeholder="Busca por referencia" [formControl]="item.get('garmentReference')"
+                              (selectionChange)="setGarmentPrice(item.get('garmentReference'))">
+                              <mat-option *ngFor="let garment of listGarment" value="{{garment.reference}}">
+                                {{garment.reference}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </td>
+                        <td>
+                          <mat-form-field>
+                            <input matInput placeholder=" Descripcióon" [formControl]="item.get('description')">
+                          </mat-form-field>
+                        </td>
+                        <td>
+                          {{item.get('price').value - ((item.get('price').value * item.get('discount').value)/100) |
+                          currency }}
+                        </td>
+                      </tr>
+
+                    </tbody>
+
+                  </table>
+
+                </div>
+              </div>
+
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
