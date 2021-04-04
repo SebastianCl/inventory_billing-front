@@ -14,6 +14,7 @@ import { ListUserComponent } from '../../list-user/list-user.component';
 import { ListsComponent } from '../../lists/lists.component';
 import { ItemProfileComponent } from '../../item-profile/item-profile.component';
 import { ListItemComponent } from '../../list-item/list-item.component';
+import { ListReserveComponent } from '../../list-reserve/list-reserve.component';
 
 import { DetailsCustomerComponent } from '../../details-customer/details-customer.component';
 import { DetailsUserComponent } from '../../details-user/details-user.component';
@@ -79,6 +80,7 @@ import {
     DetailsUserComponent,
     ItemProfileComponent,
     ListItemComponent,
+    ListReserveComponent,
     DetailsItemComponent
   ]
 })

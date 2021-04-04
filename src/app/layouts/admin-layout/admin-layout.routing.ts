@@ -9,6 +9,7 @@ import { UserProfileComponent } from '../../user-profile/user-profile.component'
 import { ListUserComponent } from '../../list-user/list-user.component';
 import { ItemProfileComponent } from '../../item-profile/item-profile.component';
 import { ListItemComponent } from '../../list-item/list-item.component';
+import { ListReserveComponent } from '../../list-reserve/list-reserve.component';
 
 import { ListsComponent } from '../../lists/lists.component';
 
@@ -30,5 +31,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'details-user/:id', component: DetailsUserComponent },
     { path: 'lists', component: ListsComponent },
     { path: 'add-item', component: ItemProfileComponent },
-    { path: 'details-item/:id', component: DetailsItemComponent }
+    { path: 'details-item/:id', component: DetailsItemComponent },
+    { path: 'list-reserve', component: ListReserveComponent },
 ];
