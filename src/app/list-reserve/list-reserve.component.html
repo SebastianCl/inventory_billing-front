@@ -4,16 +4,17 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-warning">
-            <h4 class="card-title ">Reserve</h4>
-            <p class="card-category"> List of quotes</p>
+            <h4 class="card-title ">Reservas</h4>
+            <p class="card-category"> Lista de reservas</p>
             <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null">
             </mat-progress-bar>
           </div>
           <div class="card-body">
             <div class="table-responsive">
 
-              <p-table #dt [columns]="cols" [value]="listQuoatations" [paginator]="true" [responsive]="true" [rows]="10"
-                [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['customer','createdOn','totalItem','total']">
+              <p-table #dt [columns]="cols" [value]="listReserves" [paginator]="true" [responsive]="true" [rows]="10"
+                [rowsPerPageOptions]="[5,10,20]"
+                [globalFilterFields]="['customerName','reserveDay','endDate','articles','isActive']">
                 <ng-template pTemplate="caption">
                   <div style="text-align: right">
                     <em class="fa fa-search" style="margin:4px 4px 0 0"></em>
@@ -23,20 +24,22 @@
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
                   <tr>
-                    <th id="customer" [pSortableColumn]="'customer'">Customer<p-sortIcon [field]="'customer'">
+                    <th id="customerName" [pSortableColumn]="'customerName'">Cliente<p-sortIcon
+                        [field]="'customerName'">
                       </p-sortIcon>
                     </th>
-                    <th id="createdOn" [pSortableColumn]="'createdOn'">Date<p-sortIcon [field]="'createdOn'">
+                    <th id="reserveDay" [pSortableColumn]="'reserveDay'">Día de reserva<p-sortIcon
+                        [field]="'reserveDay'">
                       </p-sortIcon>
                     </th>
-                    <th id="totalItem" [pSortableColumn]="'totalItem'">Items<p-sortIcon [field]="'totalItem'">
+                    <th id="endDate" [pSortableColumn]="'endDate'">Día de cierre<p-sortIcon [field]="'endDate'">
                       </p-sortIcon>
                     </th>
-                    <th id="total" [pSortableColumn]="'total'">Total<p-sortIcon [field]="'total'">
+                    <th id="articles" [pSortableColumn]="'articles'">Articulos<p-sortIcon [field]="'articles'">
                       </p-sortIcon>
                     </th>
-                    <th id="CO">
-                      Convert
+                    <th id="isActive" [pSortableColumn]="'isActive'">Estado<p-sortIcon [field]="'isActive'">
+                      </p-sortIcon>
                     </th>
                     <th id="detail">
                       Detalles
@@ -45,16 +48,11 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-data>
                   <tr>
-                    <td>{{data.customer}}</td>
-                    <td>{{data.createdOn}}</td>
-                    <td>{{data.totalItem}}</td>
-                    <td>{{data.total | currency}}</td>
-                    <td>
-                      <div>
-                        <button mat-raised-button class="btn" [attr.disabled]="dsbBtn?'':null" (click)="changeCO(data)">
-                          Convert</button>
-                      </div>
-                    </td>
+                    <td>{{data.customerName}}</td>
+                    <td>{{data.reserveDay}}</td>
+                    <td>{{data.endDate}}</td>
+                    <td>{{data.articles}}</td>
+                    <td>{{data.isActive}}</td>
                     <td>
                       <div>
                         <button mat-raised-button class="btn" [attr.disabled]="dsbBtn?'':null"

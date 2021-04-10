@@ -16,6 +16,7 @@ import { ListsComponent } from '../../lists/lists.component';
 import { DetailsCustomerComponent } from '../../details-customer/details-customer.component';
 import { DetailsUserComponent } from '../../details-user/details-user.component';
 import { DetailsItemComponent } from '../../details-item/details-item.component';
+import { DetailsReserveComponent } from '../../details-reserve/details-reserve.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -33,4 +34,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'add-item', component: ItemProfileComponent },
     { path: 'details-item/:id', component: DetailsItemComponent },
     { path: 'list-reserve', component: ListReserveComponent },
+    { path: 'details-reserve/:id', component: DetailsReserveComponent }
 ];

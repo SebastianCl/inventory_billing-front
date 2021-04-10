@@ -19,6 +19,7 @@ import { ListReserveComponent } from '../../list-reserve/list-reserve.component'
 import { DetailsCustomerComponent } from '../../details-customer/details-customer.component';
 import { DetailsUserComponent } from '../../details-user/details-user.component';
 import { DetailsItemComponent } from '../../details-item/details-item.component';
+import { DetailsReserveComponent } from '../../details-reserve/details-reserve.component';
 // Primeng
 import { TableModule } from 'primeng/table';
 
@@ -81,7 +82,8 @@ import {
     ItemProfileComponent,
     ListItemComponent,
     ListReserveComponent,
-    DetailsItemComponent
+    DetailsItemComponent,
+    DetailsReserveComponent
   ]
 })
 

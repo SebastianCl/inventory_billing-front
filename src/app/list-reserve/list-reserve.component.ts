@@ -21,23 +21,23 @@ export class ListReserveComponent implements OnInit {
   public hiddenProgBar: boolean;
   public dsbBtn: boolean;
 
-  public listQuoatations: any[];
-  public listQuoatationsAllInfo: any[];
+  public listReserves: any[];
+  public listReservesAllInfo: any[];
   public cols: any;
 
   constructor(
     private router: Router,
-    public quoteService: ReserveService,
+    public reserveService: ReserveService,
     private _snackBar: MatSnackBar) {
-    this.listQuoatations = [];
-    this.listQuoatationsAllInfo = [];
+    this.listReserves = [];
+    this.listReservesAllInfo = [];
     this.hiddenProgBar = true;
     this.dsbBtn = false;
   }
 
 
   ngOnInit() {
-    //this.getList();
+    this.getList();
   }
 
   goToDetails(data) {
@@ -46,28 +46,30 @@ export class ListReserveComponent implements OnInit {
 
   // Servicios
   getList(): any {
-    const filter = { isCO: false };
-    this.quoteService.loadReservesWithFilter(filter)
+    this.reserveService.loadReserves()
       .subscribe((response: any) => {
         if (response.resp) {
+          debugger;
           response.msg.forEach(element => {
+            let isActive = element.active ? 'ACTIVA' : 'CERRADA';
             const dataQuotation = {
               id: element.id,
-              customer: `${element.customer.firstname} ${element.customer.lastname}`,
-              createdOn: '',
-              totalItem: element.items.length,
-              total: element.total
+              customerName: element.id,
+              reserveDay: element.reserveDay,
+              endDate: element.endDate,
+              articles: element.items.length,
+              isActive
             }
-            const date = new Date(element.createdOn);
+            /*const date = new Date(element.createdOn);
             const createdOn =
               `${date.getDate()}/${date.getMonth() + 1}/${date.getUTCFullYear()} |
                ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-            dataQuotation.createdOn = createdOn;
-            this.listQuoatations.push(dataQuotation);
-            this.listQuoatationsAllInfo.push(dataQuotation);
+            dataQuotation.createdOn = createdOn;*/
+            this.listReserves.push(dataQuotation);
+            this.listReservesAllInfo.push(dataQuotation);
           });
         } else {
-          this.openSnackBar('No registered quotes.', 'DONE');
+          this.openSnackBar('Sin registros de reservas.', 'HECHO');
         }
       },
         (err) => {
