@@ -1,4 +1,4 @@
-export interface IItem {
+export interface IArticle {
     id?: string;
     type: string;
     reference: string;
@@ -12,7 +12,7 @@ export interface IItem {
     image?: string;
 }
 
-export class Item implements IItem {
+export class Article implements IArticle {
     id?: string;
     type: string;
     reference: string;

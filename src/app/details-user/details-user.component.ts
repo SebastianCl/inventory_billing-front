@@ -38,7 +38,7 @@ export class DetailsUserComponent implements OnInit {
 
 
   setData(data) {
-    this.form.controls.name.setValue(`${data.firstname} ${data.lastname}`);
+    this.form.controls.name.setValue(data.name);
     this.form.controls.email.setValue(data.email);
     const active = data.active ? 'YES' : 'NO';
     this.form.controls.active.setValue(active);

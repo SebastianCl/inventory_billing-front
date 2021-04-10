@@ -4,18 +4,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import Swal from 'sweetalert2';
 
-import { Item } from '../models/item.model';
-import { ItemService } from '../service/item.service';
+import { Article } from '../models/article.model';
+import { ArticleService } from '../service/article.service';
 
 @Component({
-  selector: 'app-item-profile',
-  templateUrl: './item-profile.component.html',
-  styleUrls: ['./item-profile.component.css'],
-  providers: [ItemService]
+  selector: 'app-article-profile',
+  templateUrl: './article-profile.component.html',
+  styleUrls: ['./article-profile.component.css'],
+  providers: [ArticleService]
 })
-export class ItemProfileComponent implements OnInit {
+export class ArticleProfileComponent implements OnInit {
 
-  item: Item;
+  article: Article;
 
   type: FormControl;
 
@@ -34,7 +34,7 @@ export class ItemProfileComponent implements OnInit {
 
   public dataEventFileValid: any = null;
 
-  constructor(public itemService: ItemService, private _snackBar: MatSnackBar) {
+  constructor(public articleService: ArticleService, private _snackBar: MatSnackBar) {
     this.type = new FormControl();
     this.reference = new FormControl();
     this.brand = new FormControl();
@@ -73,13 +73,13 @@ export class ItemProfileComponent implements OnInit {
 
       let data = await toBase64(imageArray[0]);
 
-      //this.item.image = data;
+      //this.article.image = data;
 
 
 
 
-      await this.itemService
-        .uploadImage(this.item)
+      await this.articleService
+        .uploadImage(this.article)
         .then((resp) => {
           debugger;
           this.alert('¡Atención!', 'ENVIADO', 'success');
@@ -126,30 +126,30 @@ export class ItemProfileComponent implements OnInit {
 
   private save() {
     this.dsbSave = true;
-    this.item = new Item;
-    this.item.type = this.type.value;
-    this.item.reference = this.reference.value;
-    this.item.brand = this.brand.value;
-    this.item.color = this.color.value;
-    this.item.size = this.size.value;
-    this.item.comments = this.comments.value;
-    this.item.available = this.available.value;
-    this.item.price = this.price.value;
-    this.item.quantity = this.quantity.value;
+    this.article = new Article;
+    this.article.type = this.type.value;
+    this.article.reference = this.reference.value;
+    this.article.brand = this.brand.value;
+    this.article.color = this.color.value;
+    this.article.size = this.size.value;
+    this.article.comments = this.comments.value;
+    this.article.available = this.available.value;
+    this.article.price = this.price.value;
+    this.article.quantity = this.quantity.value;
 
-    this.itemService.createItem(this.item)
+    this.articleService.createArticle(this.article)
       .subscribe((response: any) => {
         this.changeShow();
         if (response.resp) {
-          this.alert('HECHO', 'Item creado.', 'success');
+          this.alert('HECHO', 'Article creado.', 'success');
           this.clearData();
         } else {
-          this.alert('Atención', 'Item no creado.', 'warning');
+          this.alert('Atención', 'Article no creado.', 'warning');
         }
       },
         (err) => {
           this.changeShow();
-          this.alert('Error', 'Fallo al crear Item.', 'error');
+          this.alert('Error', 'Fallo al crear Article.', 'error');
         }
       );
   }

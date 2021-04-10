@@ -12,13 +12,13 @@ import { ListCustomerComponent } from '../../list-customer/list-customer.compone
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { ListUserComponent } from '../../list-user/list-user.component';
 import { ListsComponent } from '../../lists/lists.component';
-import { ItemProfileComponent } from '../../item-profile/item-profile.component';
-import { ListItemComponent } from '../../list-item/list-item.component';
+import { ArticleProfileComponent } from '../../article-profile/article-profile.component';
+import { ListArticleComponent } from '../../list-article/list-article.component';
 import { ListReserveComponent } from '../../list-reserve/list-reserve.component';
 
 import { DetailsCustomerComponent } from '../../details-customer/details-customer.component';
 import { DetailsUserComponent } from '../../details-user/details-user.component';
-import { DetailsItemComponent } from '../../details-item/details-item.component';
+import { DetailsArticleComponent } from '../../details-article/details-article.component';
 import { DetailsReserveComponent } from '../../details-reserve/details-reserve.component';
 // Primeng
 import { TableModule } from 'primeng/table';
@@ -79,10 +79,10 @@ import {
     ListCustomerComponent,
     DetailsCustomerComponent,
     DetailsUserComponent,
-    ItemProfileComponent,
-    ListItemComponent,
+    ArticleProfileComponent,
+    ListArticleComponent,
     ListReserveComponent,
-    DetailsItemComponent,
+    DetailsArticleComponent,
     DetailsReserveComponent
   ]
 })

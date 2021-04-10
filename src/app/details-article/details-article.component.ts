@@ -5,15 +5,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 
 // Servicio
-import { ItemService } from '../service/item.service';
+import { ArticleService } from '../service/article.service';
 
 @Component({
-  selector: 'app-details-item',
-  templateUrl: './details-item.component.html',
-  styleUrls: ['./details-item.component.css'],
-  providers: [ItemService]
+  selector: 'app-details-article',
+  templateUrl: './details-article.component.html',
+  styleUrls: ['./details-article.component.css'],
+  providers: [ArticleService]
 })
-export class DetailsItemComponent implements OnInit {
+export class DetailsArticleComponent implements OnInit {
 
   public form: FormGroup;
   public cols: any;
@@ -21,7 +21,7 @@ export class DetailsItemComponent implements OnInit {
   constructor(
     public route: ActivatedRoute,
     private router: Router,
-    public itemService: ItemService) {
+    public articleService: ArticleService) {
     this.createForm();
   }
 
@@ -31,7 +31,7 @@ export class DetailsItemComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(['/list-item']);
+    this.router.navigate(['/list-article']);
   }
 
 
@@ -46,15 +46,15 @@ export class DetailsItemComponent implements OnInit {
     this.form.controls.price.setValue(data.price);
   }
 
-  getData(idItem: string): any {
-    this.itemService.loadItem(idItem)
+  getData(idArticle: string): any {
+    this.articleService.loadArticle(idArticle)
       .subscribe((response: any) => {
         this.setData(response.msg.entityData);
       },
         (err) => {
           if (err.status === 401) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
+            localStorage.removeArticle('token');
+            localStorage.removeArticle('user');
             Swal.fire({
               title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
               onClose: () => { this.router.navigate(['/login']); }
@@ -80,7 +80,7 @@ export class DetailsItemComponent implements OnInit {
       quantity: new FormControl(''),
       color: new FormControl(''),
       size: new FormControl(''),
-      price: new FormControl('')
+      price: new FormControl(0)
     });
   }
 

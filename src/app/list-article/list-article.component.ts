@@ -2,24 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
-import { Item } from '../models/item.model';
-import { ItemService } from '../service/item.service';
+import { Article } from '../models/article.model';
+import { ArticleService } from '../service/article.service';
 
 
 @Component({
-  selector: 'app-list-item',
-  templateUrl: './list-item.component.html',
-  styleUrls: ['./list-item.component.css'],
-  providers: [ItemService]
+  selector: 'app-list-article',
+  templateUrl: './list-article.component.html',
+  styleUrls: ['./list-article.component.css'],
+  providers: [ArticleService]
 })
-export class ListItemComponent implements OnInit {
+export class ListArticleComponent implements OnInit {
 
-  public listItem: any[] = [];
+  public listArticle: any[] = [];
   public cols: any;
 
   constructor(
     private router: Router,
-    public itemService: ItemService) { }
+    public articleService: ArticleService) { }
 
 
   ngOnInit() {
@@ -27,21 +27,21 @@ export class ListItemComponent implements OnInit {
   }
 
   goToDetails(data) {
-    this.router.navigate(['/details-item', data.id]);
+    this.router.navigate(['/details-article', data.id]);
   }
 
   // Servicios
   getList(): any {
-    this.itemService.loadItems()
+    this.articleService.loadArticles()
       .subscribe((response: any) => {
         if (response.resp) {
           response.msg.forEach(element => {
-            const dataItem = {
+            const dataArticle = {
               id: element.id,
               reference: element.reference,
               brand: element.brand
             }
-            this.listItem.push(dataItem);
+            this.listArticle.push(dataArticle);
           });
         } else {
           this.alert('¡Aviso!', 'Sin registros.', 'warning');
@@ -49,8 +49,8 @@ export class ListItemComponent implements OnInit {
       },
         (err) => {
           if (err.status === 401) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('item');
+            localStorage.removeArticle('token');
+            localStorage.removeArticle('article');
             Swal.fire({
               title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
               onClose: () => { this.router.navigate(['/login']); }
@@ -61,14 +61,6 @@ export class ListItemComponent implements OnInit {
           }
         }
       );
-  }
-
-  updateItem(id): any {
-    Swal.fire(
-      'Done!',
-      'The quotation was passed to item order.',
-      'success'
-    )
   }
 
   alert(title: any, text: any, icon: any) {

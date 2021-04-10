@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 // Servicio
 import { CustomerService } from '../service/customer.service';
 import { ReserveService } from '../service/reserve.service';
-import { ItemService } from '../service/item.service';
+import { ArticleService } from '../service/article.service';
 
 // Modelo
 import { Reserve } from '../models/reserve.model';
@@ -17,7 +17,7 @@ import { Reserve } from '../models/reserve.model';
   selector: 'app-quotation',
   templateUrl: './reserve.component.html',
   styleUrls: ['./reserve.component.css'],
-  providers: [CustomerService, ReserveService, ItemService]
+  providers: [CustomerService, ReserveService, ArticleService]
 })
 export class ReserveComponent implements OnInit {
 
@@ -25,7 +25,7 @@ export class ReserveComponent implements OnInit {
   public hiddenProgBar: boolean;
   public dsbSave: boolean;
   public listCustomers: any[];
-  public listItems: FormGroup;
+  public listArticles: FormGroup;
   public listGarment: any[];
 
   public customerId: FormControl;
@@ -38,14 +38,14 @@ export class ReserveComponent implements OnInit {
   public subtotal: FormControl;
   public totalReserve: FormControl;
 
-  private rowsItemsValues: any[];
+  private rowsArticlesValues: any[];
 
   constructor
     (
       private router: Router,
       private _snackBar: MatSnackBar,
       private customerService: CustomerService,
-      private itemService: ItemService,
+      private articleService: ArticleService,
       private reserveService: ReserveService,
       public fb: FormBuilder
     ) {
@@ -58,7 +58,7 @@ export class ReserveComponent implements OnInit {
     this.totalDiscount = new FormControl();
     this.totalReserve = new FormControl();
     this.subtotal = new FormControl();
-    this.listItems = this.fb.group({ rows: this.fb.array([]) });
+    this.listArticles = this.fb.group({ rows: this.fb.array([]) });
     this.listGarment = [];
     this.clearData();
     this.getListCustomers();
@@ -67,12 +67,12 @@ export class ReserveComponent implements OnInit {
 
   ngOnInit() { }
 
-  addItem() {
-    const control = this.listItems.get('rows') as FormArray;
-    control.push(this.createItem());
+  addArticle() {
+    const control = this.listArticles.get('rows') as FormArray;
+    control.push(this.createArticle());
   }
 
-  createItem(): FormGroup {
+  createArticle(): FormGroup {
     return this.fb.group({
       discount: 0,
       garmentReference: '',
@@ -83,8 +83,8 @@ export class ReserveComponent implements OnInit {
     });
   }
 
-  removeItem(index: number) {
-    const control = this.listItems.get('rows') as FormArray;
+  removeArticle(index: number) {
+    const control = this.listArticles.get('rows') as FormArray;
     control.removeAt(index);
     this.calculateTotals();
   }
@@ -102,13 +102,13 @@ export class ReserveComponent implements OnInit {
       return;
     }
     const shipping = this.shipping.value === null ? 0 : this.shipping.value;
-    const vendor = JSON.parse(localStorage.getItem('user'));
+    const vendor = JSON.parse(localStorage.getArticle('user'));
 
     this.reserve = new Reserve;
     this.reserve.customer = this.customerId.value;
     this.reserve.tax = this.tax.value;
     this.reserve.comments = this.comments.value;
-    this.reserve.items = this.rowsItemsValues;
+    this.reserve.items = this.rowsArticlesValues;
     this.reserve.vendor = vendor.id;
     this.reserve.shipping = shipping;
     this.reserve.isCO = false;
@@ -127,16 +127,16 @@ export class ReserveComponent implements OnInit {
       this.openSnackBar('Debe seleccionar un cliente', 'HECHO');
       return false;
     }
-    // Validar campos de items
-    const control = this.listItems.get('rows') as FormArray;
-    const rowsItems = control.value;
+    // Validar campos de articles
+    const control = this.listArticles.get('rows') as FormArray;
+    const rowsArticles = control.value;
 
     let sw = false;
 
-    for (let index = 0; index < rowsItems.length; index++) {
-      const element = rowsItems[index];
+    for (let index = 0; index < rowsArticles.length; index++) {
+      const element = rowsArticles[index];
 
-      let item = {
+      let article = {
         reference: element.reference,
         description: element.description,
         discount: element.discount === null ? 0 : element.discount,
@@ -145,14 +145,14 @@ export class ReserveComponent implements OnInit {
       }
 
       // Calcular precio y total
-      // item.price = item.retail - ((item.retail * item.discount) / 100);
-      // item.total = item.price * item.quantity;
+      // article.price = article.retail - ((article.retail * article.discount) / 100);
+      // article.total = article.price * article.quantity;
       if (
-        item.reference === '' ||
-        item.description === '' ||
-        item.discount < 0 ||
-        item.price <= 0 ||
-        item.quantity <= 0
+        article.reference === '' ||
+        article.description === '' ||
+        article.discount < 0 ||
+        article.price <= 0 ||
+        article.quantity <= 0
       ) {
         break;
       }
@@ -168,18 +168,18 @@ export class ReserveComponent implements OnInit {
 
   calculateTotals() {
 
-    // Validar campos de items
-    const control = this.listItems.get('rows') as FormArray;
-    const rowsItems = control.value;
+    // Validar campos de articles
+    const control = this.listArticles.get('rows') as FormArray;
+    const rowsArticles = control.value;
     let totalDiscount = 0;
     let subtotal = 0;
     let totalReserve = 0;
-    let rowsItemsValues = [];
+    let rowsArticlesValues = [];
 
-    for (let index = 0; index < rowsItems.length; index++) {
-      const element = rowsItems[index];
+    for (let index = 0; index < rowsArticles.length; index++) {
+      const element = rowsArticles[index];
 
-      let item = {
+      let article = {
         ref: element.ref,
         description: element.description,
         discount: element.discount,
@@ -188,19 +188,19 @@ export class ReserveComponent implements OnInit {
       }
 
       // Calcular precio y total
-      const discount = item.price * (item.discount / 100);
-      item.price = item.price - discount;
+      const discount = article.price * (article.discount / 100);
+      article.price = article.price - discount;
 
-      // Conservar item en lista global para almacenar
-      rowsItemsValues.push(item);
+      // Conservar article en lista global para almacenar
+      rowsArticlesValues.push(article);
 
       // Calcular y asignar totales
-      subtotal = subtotal + item.price;
-      totalReserve = totalReserve + item.price;
-      totalDiscount = totalDiscount + (discount * item.quantity);
+      subtotal = subtotal + article.price;
+      totalReserve = totalReserve + article.price;
+      totalDiscount = totalDiscount + (discount * article.quantity);
     }
 
-    this.rowsItemsValues = rowsItemsValues;
+    this.rowsArticlesValues = rowsArticlesValues;
 
     this.subtotal.setValue(subtotal); // SUBTOTAL
     this.totalDiscount.setValue(totalDiscount); // TOTAL DE DESCUENTOS
@@ -240,8 +240,8 @@ export class ReserveComponent implements OnInit {
       },
         (err) => {
           if (err.status === 401) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
+            localStorage.removeArticle('token');
+            localStorage.removeArticle('user');
             Swal.fire({
               title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
               onClose: () => { this.router.navigate(['/login']); }
@@ -255,7 +255,7 @@ export class ReserveComponent implements OnInit {
   }
 
   getListGarments(): any {
-    this.itemService.loadItems()
+    this.articleService.loadArticles()
       .subscribe((response: any) => {
         if (response.resp && response.msg.length > 0) {
           response.msg.sort((a, b) => a.reference.localeCompare(b.reference)).forEach(element => {
@@ -267,8 +267,8 @@ export class ReserveComponent implements OnInit {
       },
         (err) => {
           if (err.status === 401) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
+            localStorage.removeArticle('token');
+            localStorage.removeArticle('user');
             Swal.fire({
               title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
               onClose: () => { this.router.navigate(['/login']); }
@@ -303,7 +303,7 @@ export class ReserveComponent implements OnInit {
 
   private clearData() {
     this.listCustomers = [];
-    this.rowsItemsValues = [];
+    this.rowsArticlesValues = [];
     this.hiddenProgBar = true;
     this.dsbSave = false;
     this.customerId.setValue('');
@@ -315,9 +315,9 @@ export class ReserveComponent implements OnInit {
     this.totalDiscount.setValue(0);
     this.subtotal.setValue(0);
     this.totalReserve.setValue(0);
-    const control = this.listItems.get('rows') as FormArray;
+    const control = this.listArticles.get('rows') as FormArray;
     control.clear();
-    this.addItem();
+    this.addArticle();
   }
 
 

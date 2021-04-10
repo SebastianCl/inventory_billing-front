@@ -7,15 +7,15 @@ import { CustomerProfileComponent } from '../../customer-profile/customer-profil
 import { ListCustomerComponent } from '../../list-customer/list-customer.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { ListUserComponent } from '../../list-user/list-user.component';
-import { ItemProfileComponent } from '../../item-profile/item-profile.component';
-import { ListItemComponent } from '../../list-item/list-item.component';
+import { ArticleProfileComponent } from '../../article-profile/article-profile.component';
+import { ListArticleComponent } from '../../list-article/list-article.component';
 import { ListReserveComponent } from '../../list-reserve/list-reserve.component';
 
 import { ListsComponent } from '../../lists/lists.component';
 
 import { DetailsCustomerComponent } from '../../details-customer/details-customer.component';
 import { DetailsUserComponent } from '../../details-user/details-user.component';
-import { DetailsItemComponent } from '../../details-item/details-item.component';
+import { DetailsArticleComponent } from '../../details-article/details-article.component';
 import { DetailsReserveComponent } from '../../details-reserve/details-reserve.component';
 
 
@@ -28,11 +28,11 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'details-customer/:id', component: DetailsCustomerComponent },
     { path: 'add-user', component: UserProfileComponent },
     { path: 'list-user', component: ListUserComponent },
-    { path: 'list-item', component: ListItemComponent },
+    { path: 'list-article', component: ListArticleComponent },
     { path: 'details-user/:id', component: DetailsUserComponent },
     { path: 'lists', component: ListsComponent },
-    { path: 'add-item', component: ItemProfileComponent },
-    { path: 'details-item/:id', component: DetailsItemComponent },
+    { path: 'add-article', component: ArticleProfileComponent },
+    { path: 'details-article/:id', component: DetailsArticleComponent },
     { path: 'list-reserve', component: ListReserveComponent },
     { path: 'details-reserve/:id', component: DetailsReserveComponent }
 ];

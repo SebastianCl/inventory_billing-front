@@ -39,8 +39,8 @@ export class ListUserComponent implements OnInit {
           response.msg.forEach(element => {
             const dataUser = {
               id: element.id,
-              firstname: element.firstname,
-              lastname: element.lastname
+              name: element.name,
+              identification: element.identification
             }
             this.listUser.push(dataUser);
           });

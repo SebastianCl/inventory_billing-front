@@ -3,14 +3,14 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Item } from '../models/item.model';
+import { Article } from '../models/article.model';
 
 import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ItemService {
+export class ArticleService {
     urlApi: string;
     token: string;
 
@@ -23,55 +23,49 @@ export class ItemService {
         }
     }
 
-    loadItems(): Observable<Item[]> {
+    loadArticles(): Observable<Article[]> {
         const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
-        return this.http.get<Item[]>(this.urlApi + '/item/getItems', { headers: header })
+        return this.http.get<Article[]>(this.urlApi + '/article/getArticles', { headers: header })
             .pipe(catchError(this.handleError));
     }
 
-    loadItemsCO(): Observable<Item[]> {
-        const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
-        return this.http.get<Item[]>(this.urlApi + '/item/findItemsCO', { headers: header })
-            .pipe(catchError(this.handleError));
-    }
-
-    loadItem(id): Observable<Item> {
+    loadArticle(id): Observable<Article> {
         const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
-        return this.http.get<Item>(this.urlApi + '/item/getItem', { headers: header })
+        return this.http.get<Article>(this.urlApi + '/article/getArticle', { headers: header })
             .pipe(catchError(this.handleError));
     }
 
-    loadItemsWithFilter(filter): Observable<any[]> {
+    loadArticlesWithFilter(filter): Observable<any[]> {
         const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
-        return this.http.post<any[]>(this.urlApi + '/item/findItemsWithFilter', filter, {
+        return this.http.post<any[]>(this.urlApi + '/article/findArticlesWithFilter', filter, {
             headers: header
         }).pipe(catchError(this.handleError));
     }
 
-    createItem(item: Item): Observable<Item> {
+    createArticle(article: Article): Observable<Article> {
         const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
-        return this.http.post<Item>(this.urlApi + '/item/createItem', item, { headers: header })
+        return this.http.post<Article>(this.urlApi + '/article/createArticle', article, { headers: header })
             .pipe(catchError(this.handleError));
     }
 
     async uploadImage(image) {
         let header = new HttpHeaders({ 'Content-Type': 'application/json', 'cache-control': 'no-cache', 'x-access-token': this.token });
         return await this.http.post<any>(
-            this.urlApi + '/item/createItem',
+            this.urlApi + '/article/createArticle',
             image,
             { headers: header })
             .pipe(catchError(this.handleError)).toPromise();
     }
 
-    updateItem(id: string, newData: any): Observable<Item> {
+    updateArticle(id: string, newData: any): Observable<Article> {
         const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
-        return this.http.put<Item>(this.urlApi + '/item/updateItem', newData, { headers: header })
+        return this.http.put<Article>(this.urlApi + '/article/updateArticle', newData, { headers: header })
             .pipe(catchError(this.handleError));
     }
 
-    deleteItem(id): Observable<any> {
+    deleteArticle(id): Observable<any> {
         const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
-        return this.http.delete<any>(this.urlApi + '/item/deleteItem', { headers: header })
+        return this.http.delete<any>(this.urlApi + '/article/deleteArticle', { headers: header })
             .pipe(catchError(this.handleError));
     }
 
