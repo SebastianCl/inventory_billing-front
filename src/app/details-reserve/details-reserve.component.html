@@ -4,8 +4,9 @@
       <div class="col-md-12">
         <div class="card" formGroup="form">
           <div class="card-header card-header-warning">
-            <h4 class="card-title ">Reserva # 0000</h4>
+            <h4 class="card-title ">Reserva #{{form.controls.reserveNumber.value}}</h4>
             <p class="card-category"> Fecha de registro: {{form.controls.reserveDay.value}}</p>
+            <p class="card-category"> Factura: {{form.controls.invoiceNumber.value}}</p>
             <button mat-raised-button matTooltip="Volver a la lista" class="btn pull-right back"
               (click)="back()">Volver</button>
           </div>

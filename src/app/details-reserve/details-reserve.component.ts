@@ -37,12 +37,14 @@ export class DetailsReserveComponent implements OnInit {
 
   setData(data) {
     debugger;
+    this.form.controls.reserveNumber.setValue(data.reserveNumber);
     this.form.controls.reserveDay.setValue(data.reserveDay);
     this.form.controls.startDate.setValue(data.startDate);
     this.form.controls.endDate.setValue(data.endDate);
     this.form.controls.customerName.setValue('');
     this.form.controls.description.setValue(data.description);
     this.form.controls.articles.setValue(data.items.length);
+    this.form.controls.invoiceNumber.setValue(data.invoiceNumber);
 
     let isActive = data.iscative ? 'ACTIVA' : 'CERRADA';
     this.form.controls.isActive.setValue(isActive);
@@ -76,6 +78,8 @@ export class DetailsReserveComponent implements OnInit {
   public createForm() {
 
     this.form = new FormGroup({
+      reserveNumber: new FormControl(''),
+      invoiceNumber: new FormControl(''),
       customerName: new FormControl(''),
       reserveDay: new FormControl(''),
       startDate: new FormControl(''),
