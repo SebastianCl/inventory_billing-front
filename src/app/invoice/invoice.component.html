@@ -1,0 +1,43 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title">Agregar factura</h4>
+            <p class="card-category">Complete toda la información</p>
+            <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null">
+            </mat-progress-bar>
+          </div>
+          <div class="card-body">
+            <form>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Factura #" type="text" [formControl]="invoiceNumber">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field>
+
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <!--<mat-card><strong>Administrador</strong> {{form.controls.isAdmin.value}}</mat-card>-->
+                </div>
+              </div>
+
+              <button mat-raised-button type="submit" class="btn btn-default pull-right"
+                [attr.disabled]="dsbSave?'':null" (click)="create()">Crear factura</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

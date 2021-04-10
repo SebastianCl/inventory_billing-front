@@ -6,7 +6,6 @@ export interface IReserve {
     shipping?: number;
     comments?: string;
     items: Array<Object[]>;
-    isCO: boolean;
     total: number;
     subtotal: number;
     totalTax: number;
@@ -21,7 +20,6 @@ export class Reserve implements IReserve {
     shipping?: number;
     comments?: string;
     items: Array<Object[]>;
-    isCO: boolean;
     total: number;
     subtotal: number;
     totalTax: number;
@@ -32,7 +30,6 @@ export class Reserve implements IReserve {
         this.vendor = '';
         this.tax = 0;
         this.items = [];
-        this.isCO = false;
         this.total = 0;
         this.subtotal = 0;
         this.totalTax = 0;

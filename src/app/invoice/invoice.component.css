@@ -1,0 +1,17 @@
+.add {background-color: rgb(0, 0, 0)  !important;} 
+.save-invoice {background-color: #ffffff;} 
+
+
+.field-width {
+  max-width: 50px !important;
+}
+
+.field-width-price {
+  max-width: 80px !important;
+}
+
+
+.mycsssnackbartest {
+  background-color: gray !important;
+  color: rgb(170, 19, 19) !important;
+}

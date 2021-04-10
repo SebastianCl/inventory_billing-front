@@ -18,6 +18,8 @@ import { DetailsUserComponent } from '../../details-user/details-user.component'
 import { DetailsArticleComponent } from '../../details-article/details-article.component';
 import { DetailsReserveComponent } from '../../details-reserve/details-reserve.component';
 
+import { InvoiceComponent } from '../../invoice/invoice.component';
+
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
@@ -34,5 +36,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'add-article', component: ArticleProfileComponent },
     { path: 'details-article/:id', component: DetailsArticleComponent },
     { path: 'list-reserve', component: ListReserveComponent },
-    { path: 'details-reserve/:id', component: DetailsReserveComponent }
+    { path: 'details-reserve/:id', component: DetailsReserveComponent },
+    { path: 'invoice', component: InvoiceComponent }
 ];

@@ -95,6 +95,8 @@ export class ReserveComponent implements OnInit {
   }
 
   saveReserve() {
+    this.router.navigate(['/invoice']);
+    /*
     this.changeShow();
     // Validar todos los datos
     if (!this.validateData()) {
@@ -111,13 +113,12 @@ export class ReserveComponent implements OnInit {
     this.reserve.items = this.rowsArticlesValues;
     this.reserve.vendor = vendor.id;
     this.reserve.shipping = shipping;
-    this.reserve.isCO = false;
     this.reserve.total = this.totalReserve.value;
     this.reserve.subtotal = this.subtotal.value;
     this.reserve.totalTax = this.totalTax.value;
     this.reserve.totalDiscount = this.totalDiscount.value;
 
-    this.createReserve(this.reserve);
+    this.createReserve(this.reserve);*/
   }
 
   private validateData() {

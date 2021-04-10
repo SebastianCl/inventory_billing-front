@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { ReserveComponent } from '../../reserve/reserve.component';
+import { InvoiceComponent } from '../../invoice/invoice.component';
 
 import { ProfilesComponent } from '../../profiles/profiles.component';
 import { CustomerProfileComponent } from '../../customer-profile/customer-profile.component';
@@ -71,6 +72,7 @@ import {
   declarations: [
     DashboardComponent,
     ReserveComponent,
+    InvoiceComponent,
     ProfilesComponent,
     CustomerProfileComponent,
     UserProfileComponent,
