@@ -40,6 +40,7 @@ export class ReserveComponent implements OnInit {
   public referenceProduct: any;
   public imageProduct: any;
   public quantityProduct: any;
+  public dateNowValid: any;
 
   private rowsArticlesValues: any[];
 
@@ -118,26 +119,24 @@ export class ReserveComponent implements OnInit {
 
     for (let index = 0; index < rows.length; index++) {
       const element = rows[index];
-      let article = {
-        ref: element.garmentReference,
-        description: element.description,
-        discount: element.discount,
-        price: element.price,
-        quantity: element.quantity
-      }
-
       // Conservar article en lista para almacenar
-      articleList.push(article);
+      articleList.push(element.garmentReference);
     }
 
     this.rowsArticlesValues = articleList;
 
 
     this.reserve = new Reserve;
-    this.reserve.customer = this.customerId.value;
+    this.reserve.customerID = this.customerId.value;
+    let dataClientSelected = this.listCustomers.filter((e) => e.id === this.customerId.value);
+    this.reserve.customerName = dataClientSelected[0].name;
+    this.reserve.employeeName = vendor.name;
+    this.reserve.reserveDate = this.dateNow();
+    this.reserve.startDate = this.dateNow();
+    this.reserve.endDate = this.dateNow();
     this.reserve.tax = this.tax.value;
     this.reserve.comments = this.comments.value;
-    this.reserve.items = this.rowsArticlesValues;
+    this.reserve.articles = this.rowsArticlesValues;
     this.reserve.vendor = vendor.id;
     this.reserve.shipping = shipping;
     this.reserve.total = this.totalReserve.value;
@@ -359,6 +358,21 @@ export class ReserveComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  dateNow() {
+    const now = new Date(Date.now());
+    const dd = this.addZero(now.getDate());
+    const mm = this.addZero(now.getMonth() + 1);
+    const yyyy = now.getFullYear();
+    return yyyy + '-' + mm + '-' + dd;
+  }
+
+  addZero(i) {
+    if (i < 10) {
+      i = '0' + i;
+    }
+    return i;
   }
 
 

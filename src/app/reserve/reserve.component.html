@@ -114,7 +114,7 @@
                           currency }}
                         </td>
                         <td>
-                          <button mat-mini-fab color="primary" (click)="openModal(item.get('garmentReference'))"><mat-icon>image</mat-icon></button>
+                          <button mat-mini-fab color="primary" (click)="openModal(item.get('garmentReference'))" [disabled]="item.get('garmentReference').value === ''"><mat-icon>image</mat-icon></button>
                         </td>
                       </tr>
 

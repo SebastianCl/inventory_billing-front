@@ -1,11 +1,16 @@
 export interface IReserve {
     id?: string;
-    customer: string;
+    customerName: string;
+    customerID: string;
+    employeeName: string; 
+    reserveDate: string;
+    startDate: string;
+    endDate: string;
     vendor: string;
     tax: number;
     shipping?: number;
     comments?: string;
-    items: Array<Object[]>;
+    articles: Array<Object[]>;
     total: number;
     subtotal: number;
     totalTax: number;
@@ -14,22 +19,32 @@ export interface IReserve {
 
 export class Reserve implements IReserve {
     id?: string;
-    customer: string;
+    customerName: string;
+    customerID: string;
+    employeeName: string;
+    reserveDate: string; 
+    startDate: string;
+    endDate: string;
     vendor: string;
     tax: number;
     shipping?: number;
     comments?: string;
-    items: Array<Object[]>;
+    articles: Array<Object[]>;
     total: number;
     subtotal: number;
     totalTax: number;
     totalDiscount: number;
 
     constructor() {
-        this.customer = '';
+        this.customerName = '';
+        this.customerID = '';
+        this.employeeName = '';
+        this.reserveDate = '';
+        this.startDate = '';
+        this.endDate = '';
         this.vendor = '';
         this.tax = 0;
-        this.items = [];
+        this.articles = [];
         this.total = 0;
         this.subtotal = 0;
         this.totalTax = 0;
