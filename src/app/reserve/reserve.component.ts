@@ -37,6 +37,9 @@ export class ReserveComponent implements OnInit {
   public totalDiscount: FormControl;
   public subtotal: FormControl;
   public totalReserve: FormControl;
+  public referenceProduct: any;
+  public imageProduct: any;
+  public quantityProduct: any;
 
   private rowsArticlesValues: any[];
 
@@ -95,16 +98,40 @@ export class ReserveComponent implements OnInit {
   }
 
   saveReserve() {
-    this.router.navigate(['/invoice']);
-    /*
     this.changeShow();
-    // Validar todos los datos
-    if (!this.validateData()) {
+    // Validar todos los datos basicos
+    if (!this.validateForm()) {
+      this.changeShow();
+      return;
+    }
+    // Validar todos los datos de productos
+    if (!this.validateRows()) {
       this.changeShow();
       return;
     }
     const shipping = this.shipping.value === null ? 0 : this.shipping.value;
-    const vendor = JSON.parse(localStorage.getArticle('user'));
+    const vendor = JSON.parse(localStorage.getItem('user'));
+
+    const control = this.listArticles.get('rows') as FormArray;
+    const rows = control.value;
+    let articleList = [];
+
+    for (let index = 0; index < rows.length; index++) {
+      const element = rows[index];
+      let article = {
+        ref: element.garmentReference,
+        description: element.description,
+        discount: element.discount,
+        price: element.price,
+        quantity: element.quantity
+      }
+
+      // Conservar article en lista para almacenar
+      articleList.push(article);
+    }
+
+    this.rowsArticlesValues = articleList;
+
 
     this.reserve = new Reserve;
     this.reserve.customer = this.customerId.value;
@@ -118,50 +145,34 @@ export class ReserveComponent implements OnInit {
     this.reserve.totalTax = this.totalTax.value;
     this.reserve.totalDiscount = this.totalDiscount.value;
 
-    this.createReserve(this.reserve);*/
+    this.createReserve(this.reserve);
   }
 
-  private validateData() {
-
+  private validateForm() {
     // Validar si selecciono un cliente
     if (this.customerId.value === null || this.customerId.value === '') {
       this.openSnackBar('Debe seleccionar un cliente', 'HECHO');
       return false;
     }
+    return true;
+  }
+
+  private validateRows() {
     // Validar campos de articles
     const control = this.listArticles.get('rows') as FormArray;
     const rowsArticles = control.value;
-
+    let validRowsIndex = [];
     let sw = false;
-
     for (let index = 0; index < rowsArticles.length; index++) {
       const element = rowsArticles[index];
-
-      let article = {
-        reference: element.reference,
-        description: element.description,
-        discount: element.discount === null ? 0 : element.discount,
-        price: element.price,
-        quantity: element.quantity
+      if (element.reference === '' || element.description === '' || element.discount < 0 || element.price < 0 || element.quantity < 0) {
+        validRowsIndex.push(index);
+      } else {
+        sw = true
       }
-
-      // Calcular precio y total
-      // article.price = article.retail - ((article.retail * article.discount) / 100);
-      // article.total = article.price * article.quantity;
-      if (
-        article.reference === '' ||
-        article.description === '' ||
-        article.discount < 0 ||
-        article.price <= 0 ||
-        article.quantity <= 0
-      ) {
-        break;
-      }
-      sw = true
     }
-
     if (!sw) {
-      this.openSnackBar('Debe indicar la toda la infomración de los productos.', 'HECHO');
+      this.openSnackBarLarge(`En la siguientes filas ID # `+validRowsIndex.toString()+` \n debe verificarse que todos los campos de producto esten diligenciados.`, 'HECHO');
       return false;
     }
     return true;
@@ -175,33 +186,19 @@ export class ReserveComponent implements OnInit {
     let totalDiscount = 0;
     let subtotal = 0;
     let totalReserve = 0;
-    let rowsArticlesValues = [];
 
     for (let index = 0; index < rowsArticles.length; index++) {
       const element = rowsArticles[index];
 
-      let article = {
-        ref: element.ref,
-        description: element.description,
-        discount: element.discount,
-        price: element.price,
-        quantity: element.quantity
-      }
-
       // Calcular precio y total
-      const discount = article.price * (article.discount / 100);
-      article.price = article.price - discount;
-
-      // Conservar article en lista global para almacenar
-      rowsArticlesValues.push(article);
+      const discount = element.price * (element.discount / 100);
+      element.price = element.price - discount;
 
       // Calcular y asignar totales
-      subtotal = subtotal + article.price;
-      totalReserve = totalReserve + article.price;
-      totalDiscount = totalDiscount + (discount * article.quantity);
+      subtotal = subtotal + element.price;
+      totalReserve = totalReserve + element.price;
+      totalDiscount = totalDiscount + (discount * element.quantity);
     }
-
-    this.rowsArticlesValues = rowsArticlesValues;
 
     this.subtotal.setValue(subtotal); // SUBTOTAL
     this.totalDiscount.setValue(totalDiscount); // TOTAL DE DESCUENTOS
@@ -221,10 +218,10 @@ export class ReserveComponent implements OnInit {
     this.customerIdentificacion.setValue(customerIdentificacion);
   }
 
-  setGarmentPrice(garment) {
-    debugger;
-    console.log(garment);
-
+  setGarmentPrice(garment, index) {
+    var dataArticle = this.listGarment.filter((e) => e.reference === garment.value);
+    ((this.listArticles.get('rows') as FormArray).at(index) as FormGroup).get('price').setValue(dataArticle[0].price);
+    this.calculateTotals();
   }
 
   // Servicios
@@ -241,8 +238,8 @@ export class ReserveComponent implements OnInit {
       },
         (err) => {
           if (err.status === 401) {
-            localStorage.removeArticle('token');
-            localStorage.removeArticle('user');
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
             Swal.fire({
               title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
               onClose: () => { this.router.navigate(['/login']); }
@@ -268,8 +265,8 @@ export class ReserveComponent implements OnInit {
       },
         (err) => {
           if (err.status === 401) {
-            localStorage.removeArticle('token');
-            localStorage.removeArticle('user');
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
             Swal.fire({
               title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
               onClose: () => { this.router.navigate(['/login']); }
@@ -322,6 +319,23 @@ export class ReserveComponent implements OnInit {
   }
 
 
+  //modal Methods
+
+  public openModal(input) {
+    this.referenceProduct = input.value;
+    var article = this.listGarment.filter((e) => e.reference === input.value);
+    this.imageProduct = 'https://storage.googleapis.com/bellarose-qa.appspot.com/'+article[0].imageURL;
+    this.quantityProduct = article[0].quantity;
+    const modal = document.getElementById('myModalPreview');
+    modal.style.display = 'block';
+  }
+
+  public close() {
+    const modal = document.getElementById('myModalPreview');
+    modal.style.display = 'none';
+  }
+
+
   // FUNCIONES DE AYUDA
 
   // Función general para alertas
@@ -332,6 +346,11 @@ export class ReserveComponent implements OnInit {
   // Función general para snackbar
   private openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, { duration: 2000, panelClass: ['mycsssnackbartest'] });
+  }
+
+  // Función general para snackbar de texto largo
+  private openSnackBarLarge(message: string, action: string) {
+    this._snackBar.open(message, action, { duration: 6000, panelClass: ['mycsssnackbartest'] });
   }
 
   numberOnly(event): boolean {
