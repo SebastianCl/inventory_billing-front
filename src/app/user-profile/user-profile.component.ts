@@ -72,7 +72,7 @@ export class UserProfileComponent implements OnInit {
       .subscribe((response: any) => {
         this.changeShow();
         if (response.resp) {
-          this.alert('Hecho', 'Usuario creado.', 'success');
+          this.alert('Exito', 'Usuario creado.', 'success');
           this.clearData();
         } else {
           this.alert('Atención', 'Usario no creado.', 'warning');
@@ -87,23 +87,23 @@ export class UserProfileComponent implements OnInit {
 
   private validateData() {
     if (this.name.value === null || this.name.value === '') {
-      this.openSnackBar('Debe indicar el nombre.', 'DONE');
+      this.openSnackBar('Debe indicar el nombre.', 'OK');
       return false;
     }
     if (this.identification.value === null || this.identification.value === '') {
-      this.openSnackBar('Debe indicar la identificación.', 'DONE');
+      this.openSnackBar('Debe indicar la identificación.', 'OK');
       return false;
     }
     if (this.email.value === null || this.email.value === '') {
-      this.openSnackBar('Debe indicar el email.', 'DONE');
+      this.openSnackBar('Debe indicar el email.', 'OK');
       return false;
     }
     if (this.password.value === null || this.password.value === '') {
-      this.openSnackBar('Debe indicar la clave.', 'DONE');
+      this.openSnackBar('Debe indicar la clave.', 'OK');
       return false;
     }
     if (!this.formatEmail(this.email.value)) {
-      this.openSnackBar('Debe ingresar un email con formato correcto.', 'DONE');
+      this.openSnackBar('Debe ingresar un email con formato correcto.', 'OK');
       return false;
     }
     return true;

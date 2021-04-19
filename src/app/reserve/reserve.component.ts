@@ -31,8 +31,9 @@ export class ReserveComponent implements OnInit {
   public listGarment: any[];
 
   public customerId: FormControl;
-  public customerIdentificacion: FormControl;
-  public employeSelect: FormControl;
+  public customerIdentification: FormControl;
+  public employeIdentification: FormControl;
+  public employeId: FormControl;
   public startDate: FormControl;
   public endDate: FormControl;
   public tax: FormControl;
@@ -60,8 +61,9 @@ export class ReserveComponent implements OnInit {
       public fb: FormBuilder
     ) {
     this.customerId = new FormControl();
-    this.customerIdentificacion = new FormControl();
-    this.employeSelect = new FormControl();
+    this.customerIdentification = new FormControl();
+    this.employeIdentification = new FormControl();
+    this.employeId = new FormControl();
     this.startDate = new FormControl();
     this.endDate = new FormControl();
     this.shipping = new FormControl();
@@ -140,7 +142,7 @@ export class ReserveComponent implements OnInit {
     this.reserve.customerID = this.customerId.value;
     let dataClientSelected = this.listCustomers.filter((e) => e.id === this.customerId.value);
     this.reserve.customerName = dataClientSelected[0].name;
-    let dataEmployeSelected = this.listEmployees.filter((e) => e.id === this.employeSelect.value);
+    let dataEmployeSelected = this.listEmployees.filter((e) => e.id === this.employeId.value);
     this.reserve.employeeName = dataEmployeSelected[0].name;
     this.reserve.reserveDate = this.dateNow();
     this.reserve.startDate = this.convertDates(this.startDate.value);
@@ -161,19 +163,19 @@ export class ReserveComponent implements OnInit {
   private validateForm() {
     // Validar si selecciono un cliente
     if (this.customerId.value === null || this.customerId.value === '') {
-      this.openSnackBar('Debe seleccionar un cliente', 'HECHO');
+      this.openSnackBar('Debe seleccionar un cliente', 'OK');
       return false;
     }
-    if (this.employeSelect.value === null || this.employeSelect.value === '') {
-      this.openSnackBar('Debe seleccionar un empleado', 'HECHO');
+    if (this.employeId.value === null || this.employeId.value === '') {
+      this.openSnackBar('Debe seleccionar un empleado', 'OK');
       return false;
     }
     if (this.startDate.value === null || this.startDate.value === '') {
-      this.openSnackBar('Debe seleccionar una fecha inicial para la reserva', 'HECHO');
+      this.openSnackBar('Debe seleccionar una fecha inicial para la reserva', 'OK');
       return false;
     }
     if (this.endDate.value === null || this.endDate.value === '') {
-      this.openSnackBar('Debe seleccionar una fecha final para la reserva', 'HECHO');
+      this.openSnackBar('Debe seleccionar una fecha final para la reserva', 'OK');
       return false;
     }
     return true;
@@ -188,13 +190,13 @@ export class ReserveComponent implements OnInit {
     for (let index = 0; index < rowsArticles.length; index++) {
       const element = rowsArticles[index];
       if (element.reference === '' || element.description === '' || element.discount < 0 || element.price < 0 || element.quantity < 0) {
-        validRowsIndex.push(index);
+        validRowsIndex.push(index + 1);
       } else {
         sw = true
       }
     }
     if (!sw) {
-      this.openSnackBarLarge(`En la siguientes filas # `+validRowsIndex.toString()+` \n debe verificarse que todos los campos de producto esten diligenciados.`, 'HECHO');
+      this.openSnackBarLarge(`En las filas # ` + validRowsIndex.toString() + ` debe verificarse que todos los campos de producto esten diligenciados.`, 'OK');
       return false;
     }
     return true;
@@ -208,16 +210,17 @@ export class ReserveComponent implements OnInit {
     let totalDiscount = 0;
     let subtotal = 0;
     let totalReserve = 0;
-
+    debugger;
     for (let index = 0; index < rowsArticles.length; index++) {
       const element = rowsArticles[index];
 
-      // Calcular precio y total
+      // Calcular descuento y subtotal
       const discount = element.price * (element.discount / 100);
-      element.price = element.price - discount;
-
-      // Calcular y asignar totales
       subtotal = subtotal + element.price;
+
+
+      // Calcular precio con descuento, total de reserva y total de descuento
+      element.price = element.price - discount; // precio con descuento      
       totalReserve = totalReserve + element.price;
       totalDiscount = totalDiscount + (discount * element.quantity);
     }
@@ -229,15 +232,27 @@ export class ReserveComponent implements OnInit {
   }
 
   setCustomerData() {
-    let customerIdentificacion = '';
+    let customerIdentification = '';
     for (let index = 0; index < this.listCustomers.length; index++) {
       const element = this.listCustomers[index];
       if (element.id === this.customerId.value) {
-        customerIdentificacion = element.identification;
+        customerIdentification = element.identification;
         break;
       }
     }
-    this.customerIdentificacion.setValue(customerIdentificacion);
+    this.customerIdentification.setValue(customerIdentification);
+  }
+
+  setEmployeData() {
+    let employeIdentification = '';
+    for (let index = 0; index < this.listEmployees.length; index++) {
+      const element = this.listEmployees[index];
+      if (element.id === this.employeId.value) {
+        employeIdentification = element.identification;
+        break;
+      }
+    }
+    this.employeIdentification.setValue(employeIdentification);
   }
 
   setGarmentPrice(garment, index) {
@@ -333,12 +348,12 @@ export class ReserveComponent implements OnInit {
       .subscribe((response: any) => {
         this.changeShow();
         if (response.resp) {
-          this.alert('Done', 'Registered reserve.', 'success');
+          this.alert('Exito', 'Reserva regritrada.', 'success');
           this.clearData();
           this.getListCustomers();
           this.getListEmployes();
         } else {
-          this.alert('Fail', response.msg, 'error');
+          this.alert('Error', response.msg, 'error');
         }
       },
         (err) => {
@@ -356,8 +371,9 @@ export class ReserveComponent implements OnInit {
     this.hiddenProgBar = true;
     this.dsbSave = false;
     this.customerId.setValue('');
-    this.customerIdentificacion.setValue('');
-    this.employeSelect.setValue('');
+    this.customerIdentification.setValue('');
+    this.employeIdentification.setValue('');
+    this.employeId.setValue('');
     this.startDate.setValue('');
     this.endDate.setValue('');
     this.comments.setValue('');
@@ -378,7 +394,7 @@ export class ReserveComponent implements OnInit {
   public openModal(input) {
     this.referenceProduct = input.value;
     var article = this.listGarment.filter((e) => e.reference === input.value);
-    this.imageProduct = 'https://storage.googleapis.com/bellarose-qa.appspot.com/'+article[0].imageURL;
+    this.imageProduct = 'https://storage.googleapis.com/bellarose-qa.appspot.com/' + article[0].imageURL;
     this.quantityProduct = article[0].quantity;
     const modal = document.getElementById('myModalPreview');
     modal.style.display = 'block';
@@ -439,7 +455,7 @@ export class ReserveComponent implements OnInit {
     // tslint:disable-next-line: triple-equals
     if (dd != '0' && mm != '0' && yyyy > 2000) {
       if (new Date(this.startDate.value) >= new Date(this.endDate.value)) {
-        this.openSnackBar('La fecha final de reserva debe ser mayor a la fecha inicial de reserva', 'HECHO');
+        this.openSnackBar('La fecha final de reserva debe ser mayor a la fecha inicial de reserva', 'OK');
         this.endDate.reset();
       }
     }

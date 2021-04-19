@@ -16,6 +16,11 @@
   color: rgb(170, 19, 19) !important;
 }
 
+.modal0-message{
+  width: 90%;
+  margin-left: 6%;
+  margin-top: 1%;
+}
 
 
 /* The Modal New Code SAP (background) */
@@ -50,9 +55,8 @@
 
 /* The Close Button New Code SAP */
 .close0 {
-  color: white;
+  color: black;
   float: right;
-  font-size: 28px;
   font-weight: bold;
 }
 

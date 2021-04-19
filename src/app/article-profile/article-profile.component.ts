@@ -141,50 +141,50 @@ export class ArticleProfileComponent implements OnInit {
       .subscribe((response: any) => {
         this.changeShow();
         if (response.resp) {
-          this.alert('HECHO', 'Article creado.', 'success');
+          this.alert('HECHO', 'Artículo creado.', 'success');
           this.clearData();
         } else {
-          this.alert('Atención', 'Article no creado.', 'warning');
+          this.alert('Atención', 'Artículo no creado.', 'warning');
         }
       },
         (err) => {
           this.changeShow();
-          this.alert('Error', 'Fallo al crear Article.', 'error');
+          this.alert('Error', 'Ocurrio un error al crear artículo.', 'error');
         }
       );
   }
 
   private validateData() {
     if (this.type.value === null || this.type.value === '') {
-      this.openSnackBar('Debes indicar el tipo.', 'HECHO');
+      this.openSnackBar('Debes indicar el tipo.', 'OK');
       return false;
     }
     if (this.reference.value === null || this.reference.value === '') {
-      this.openSnackBar('Debes indicar la referencia.', 'HECHO');
+      this.openSnackBar('Debes indicar la referencia.', 'OK');
       return false;
     }
     if (this.brand.value === null || this.brand.value === '') {
-      this.openSnackBar('Debes indicar la marca.', 'HECHO');
+      this.openSnackBar('Debes indicar la marca.', 'OK');
       return false;
     }
     if (this.color.value === null || this.color.value === '') {
-      this.openSnackBar('Debes indicar el color.', 'HECHO');
+      this.openSnackBar('Debes indicar el color.', 'OK');
       return false;
     }
     if (this.size.value === null || this.size.value === '') {
-      this.openSnackBar('Debes indicar el tamaño.', 'HECHO');
+      this.openSnackBar('Debes indicar el tamaño.', 'OK');
       return false;
     }
     if (this.comments.value === null || this.comments.value === '') {
-      this.openSnackBar('Debes indicar el comentario.', 'HECHO');
+      this.openSnackBar('Debes indicar el comentario.', 'OK');
       return false;
     }
     if (this.price.value === null || this.price.value === '') {
-      this.openSnackBar('Debes indicar el precio.', 'HECHO');
+      this.openSnackBar('Debes indicar el precio.', 'OK');
       return false;
     }
     if (this.available.value === null || this.available.value === '') {
-      this.openSnackBar('Debes indicar si esta disponible.', 'HECHO');
+      this.openSnackBar('Debes indicar si esta disponible.', 'OK');
       return false;
     }
     return true;

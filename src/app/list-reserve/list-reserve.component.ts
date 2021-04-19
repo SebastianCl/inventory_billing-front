@@ -69,7 +69,7 @@ export class ListReserveComponent implements OnInit {
             this.listReservesAllInfo.push(dataQuotation);
           });
         } else {
-          this.openSnackBar('Sin registros de reservas.', 'HECHO');
+          this.openSnackBar('Sin registros de reservas.', 'OK');
         }
       },
         (err) => {

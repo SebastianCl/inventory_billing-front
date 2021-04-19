@@ -94,26 +94,26 @@ export class CustomerProfileComponent implements OnInit {
 
   private validateData() {
     if (this.name.value === null || this.name.value === '') {
-      this.openSnackBar('Debes indicar el nombre.', 'HECHO');
+      this.openSnackBar('Debes indicar el nombre.', 'OK');
       return false;
     }
     if (this.identification.value === null || this.identification.value === '') {
-      this.openSnackBar('Debes indicar the identification.', 'HECHO');
+      this.openSnackBar('Debes indicar the identification.', 'OK');
       return false;
     }
     if (this.telephone2.value === null || this.telephone2.value === '') {
-      this.openSnackBar('Debes indicar if tax free.', 'HECHO');
+      this.openSnackBar('Debes indicar if tax free.', 'OK');
       return false;
     }
     if (this.telephone2.value) {
       if (this.telephone3.value === null || this.telephone3.value === '') {
-        this.openSnackBar('Debes indicar the tax exempt number.', 'HECHO');
+        this.openSnackBar('Debes indicar the tax exempt number.', 'OK');
         return false;
       }
     }
     if (this.email.value !== '') {
       if (!this.formatEmail(this.email.value)) {
-        this.openSnackBar('You must enter an email with correct format.', 'HECHO');
+        this.openSnackBar('You must enter an email with correct format.', 'OK');
         return false;
       }
     }

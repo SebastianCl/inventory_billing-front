@@ -5,7 +5,8 @@
         <div class="card">
           <div class="card-header card-header-warning">
             <h4 class="card-title">Registrar reserva</h4>
-            <p class="card-category">Reserva para el cliente con identificación: {{customerIdentificacion.value}}</p>
+            <p class="card-category">Reserva para el cliente con identificación: {{customerIdentification.value}}</p>
+            <p class="card-category">Registra el empleado con identificación: {{employeIdentification.value}}</p>
             <button mat-raised-button matTooltip="Finalizar y registrar reserva." class="btn pull-right save-reserve"
               [attr.disabled]="dsbSave?'':null" (click)="saveReserve()">Guardar Reserva</button>
             <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null">
@@ -33,7 +34,8 @@
                 <div class="col-md-12">
                   <label for="selectRol">Empleado</label>
                   <mat-form-field>
-                    <mat-select placeholder="Busca un empleado" [formControl]="employeSelect">
+                    <mat-select placeholder="Busca un empleado" [formControl]="employeId"
+                      (selectionChange)="setEmployeData()">
                       <mat-option *ngFor="let employe of listEmployees" value="{{employe.id}}">
                         {{employe.name}}
                       </mat-option>
@@ -54,7 +56,8 @@
                 <div class="col-md-6">
                   <mat-form-field appearance="fill">
                     <mat-label>Seleccionar fecha final de reserva</mat-label>
-                    <input matInput [matDatepicker]="pickerEnd" readonly [formControl]="endDate" (dateChange)="dateLessThan($event.target.value)">
+                    <input matInput [matDatepicker]="pickerEnd" readonly [formControl]="endDate"
+                      (dateChange)="dateLessThan($event.target.value)">
                     <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
                     <mat-datepicker #pickerEnd></mat-datepicker>
                   </mat-form-field>
@@ -102,12 +105,12 @@
                     <thead>
                       <th id=""></th>
                       <th id=""></th>
-                      <th id=""> DESCUENTO % </th>
+                      <th id=""> DESCUENTO </th>
                       <th id=""> REFERENCIA </th>
                       <th id=""> DESCRIPCIÓN </th>
-                      <th id=""> PRECIO PRODUCTO </th>
-                      <th id=""> PRECIO DESC </th>
-                      <th id=""> PRODUCTO </th>
+                      <th id=""> PRECIO </th>
+                      <th id=""> NETO </th>
+                      <th id=""> VISUALIZAR </th>
                     </thead>
 
                     <tbody>
@@ -116,12 +119,12 @@
                           <button mat-mini-fab color="warn" (click)="removeArticle(i)">X</button>
                         </td>
                         <td>
-                          {{i}}
+                          {{i+1}}
                         </td>
                         <td>
                           <mat-form-field class="field-width">
-                            <input matInput placeholder="%" type="number" maxlength="3" max="100" min="0"
-                              (keypress)="numberOnly($event);calculateTotals();" (change)="calculateTotals()"
+                            <input matInput type="number" maxlength="3" max="100" min="0"
+                              (blur)="numberOnly($event);calculateTotals();" (change)="calculateTotals()"
                               [formControl]="item.get('discount')">
                             <span matPrefix>%&nbsp;</span>
                           </mat-form-field>
@@ -143,14 +146,20 @@
                         </td>
                         <td>
                           <mat-form-field>
-                            <input matInput placeholder="Precio" type="number" (keypress)="numberOnly($event);calculateTotals();" (change)="calculateTotals()" [formControl]="item.get('price')" style="width: 50%;">
+                            <input matInput placeholder="Precio" type="number"
+                              (keypress)="numberOnly($event);calculateTotals();" (change)="calculateTotals()"
+                              [formControl]="item.get('price')" style="width: 50%;">
                           </mat-form-field>
                         </td>
                         <td>
-                          {{item.get('price').value - ((item.get('price').value * item.get('discount').value)/100) | currency }}
+                          {{item.get('price').value - ((item.get('price').value * item.get('discount').value)/100) |
+                          currency }}
                         </td>
                         <td>
-                          <button mat-mini-fab color="primary" (click)="openModal(item.get('garmentReference'))" [disabled]="item.get('garmentReference').value === ''"><mat-icon>image</mat-icon></button>
+                          <button mat-mini-fab color="primary" (click)="openModal(item.get('garmentReference'))"
+                            [disabled]="item.get('garmentReference').value === ''">
+                            <mat-icon>image</mat-icon>
+                          </button>
                         </td>
                       </tr>
 
@@ -175,20 +184,20 @@
   <!-- Modal content -->
   <div class="modal0-content">
     <div class="modal0-header">
-      <h2>Previsualización de producto - {{referenceProduct}}</h2>
-      <span class="close0" (click)="close()">&times;</span>
+      <h2>Referencia: {{referenceProduct}}</h2>
+      <span class="close0" (click)="close()">X</span>
     </div>
     <div class="modal0-body">
-        <div style="width: 90%;margin-left: 6%;margin-top: 1%;">
-          <p>En inventario existen {{quantityProduct}} disponibles de este producto</p>
-        </div>
-        <div class="col-12 col-md-12 col-lg-12">
-          <form>
-            <div>
-              <img src="{{imageProduct}}" alt="product" id="ImageProduct" width="340">
-            </div>
-          </form>
-        </div>
+      <div class="modal0-message">
+        <p>Hay {{quantityProduct}} disponibles.</p>
+      </div>
+      <div class="col-12 col-md-12 col-lg-12">
+        <form>
+          <div>
+            <img src="{{imageProduct}}" alt="product" id="ImageProduct" width="340">
+          </div>
+        </form>
+      </div>
     </div>
     <div class="modal0-footer">
       <button class="btn btn-default" (click)="close()">Cerrar</button>

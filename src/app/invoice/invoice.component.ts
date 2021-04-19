@@ -54,7 +54,7 @@ export class InvoiceComponent implements OnInit {
       .subscribe((response: any) => {
         this.changeShow();
         if (response.resp) {
-          this.alert('Hecho', 'Usuario creado.', 'success');
+          this.alert('Exito', 'Usuario creado.', 'success');
           this.clearData();
         } else {
           this.alert('Atención', 'Usario no creado.', 'warning');
@@ -69,7 +69,7 @@ export class InvoiceComponent implements OnInit {
 
   private validateData() {
     if (this.invoiceNumber.value === null || this.invoiceNumber.value === '') {
-      this.openSnackBar('Debe indicar el nombre.', 'DONE');
+      this.openSnackBar('Debe indicar el nombre.', 'OK');
       return false;
     }
     return true;

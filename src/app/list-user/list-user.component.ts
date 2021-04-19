@@ -64,14 +64,6 @@ export class ListUserComponent implements OnInit {
       );
   }
 
-  updateUser(id): any {
-    Swal.fire(
-      'Done!',
-      'The quotation was passed to customer order.',
-      'success'
-    )
-  }
-
   alert(title: any, text: any, icon: any) {
     Swal.fire({ title, text, icon });
   }
