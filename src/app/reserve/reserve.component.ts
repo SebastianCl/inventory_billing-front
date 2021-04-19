@@ -12,6 +12,7 @@ import { ArticleService } from '../service/article.service';
 
 // Modelo
 import { Reserve } from '../models/reserve.model';
+import { EmployeeService } from 'app/service/employee.service';
 
 @Component({
   selector: 'app-quotation',
@@ -25,11 +26,15 @@ export class ReserveComponent implements OnInit {
   public hiddenProgBar: boolean;
   public dsbSave: boolean;
   public listCustomers: any[];
+  public listEmployees: any[];
   public listArticles: FormGroup;
   public listGarment: any[];
 
   public customerId: FormControl;
   public customerIdentificacion: FormControl;
+  public employeSelect: FormControl;
+  public startDate: FormControl;
+  public endDate: FormControl;
   public tax: FormControl;
   public shipping: FormControl;
   public comments: FormControl;
@@ -50,11 +55,15 @@ export class ReserveComponent implements OnInit {
       private _snackBar: MatSnackBar,
       private customerService: CustomerService,
       private articleService: ArticleService,
+      private employeService: EmployeeService,
       private reserveService: ReserveService,
       public fb: FormBuilder
     ) {
     this.customerId = new FormControl();
     this.customerIdentificacion = new FormControl();
+    this.employeSelect = new FormControl();
+    this.startDate = new FormControl();
+    this.endDate = new FormControl();
     this.shipping = new FormControl();
     this.tax = new FormControl();
     this.comments = new FormControl();
@@ -66,6 +75,7 @@ export class ReserveComponent implements OnInit {
     this.listGarment = [];
     this.clearData();
     this.getListCustomers();
+    this.getListEmployes();
     this.getListGarments();
   }
 
@@ -130,10 +140,11 @@ export class ReserveComponent implements OnInit {
     this.reserve.customerID = this.customerId.value;
     let dataClientSelected = this.listCustomers.filter((e) => e.id === this.customerId.value);
     this.reserve.customerName = dataClientSelected[0].name;
-    this.reserve.employeeName = vendor.name;
+    let dataEmployeSelected = this.listEmployees.filter((e) => e.id === this.employeSelect.value);
+    this.reserve.employeeName = dataEmployeSelected[0].name;
     this.reserve.reserveDate = this.dateNow();
-    this.reserve.startDate = this.dateNow();
-    this.reserve.endDate = this.dateNow();
+    this.reserve.startDate = this.convertDates(this.startDate.value);
+    this.reserve.endDate = this.convertDates(this.endDate.value);
     this.reserve.tax = this.tax.value;
     this.reserve.comments = this.comments.value;
     this.reserve.articles = this.rowsArticlesValues;
@@ -151,6 +162,18 @@ export class ReserveComponent implements OnInit {
     // Validar si selecciono un cliente
     if (this.customerId.value === null || this.customerId.value === '') {
       this.openSnackBar('Debe seleccionar un cliente', 'HECHO');
+      return false;
+    }
+    if (this.employeSelect.value === null || this.employeSelect.value === '') {
+      this.openSnackBar('Debe seleccionar un empleado', 'HECHO');
+      return false;
+    }
+    if (this.startDate.value === null || this.startDate.value === '') {
+      this.openSnackBar('Debe seleccionar una fecha inicial para la reserva', 'HECHO');
+      return false;
+    }
+    if (this.endDate.value === null || this.endDate.value === '') {
+      this.openSnackBar('Debe seleccionar una fecha final para la reserva', 'HECHO');
       return false;
     }
     return true;
@@ -171,7 +194,7 @@ export class ReserveComponent implements OnInit {
       }
     }
     if (!sw) {
-      this.openSnackBarLarge(`En la siguientes filas ID # `+validRowsIndex.toString()+` \n debe verificarse que todos los campos de producto esten diligenciados.`, 'HECHO');
+      this.openSnackBarLarge(`En la siguientes filas # `+validRowsIndex.toString()+` \n debe verificarse que todos los campos de producto esten diligenciados.`, 'HECHO');
       return false;
     }
     return true;
@@ -251,6 +274,33 @@ export class ReserveComponent implements OnInit {
       )
   }
 
+  getListEmployes(): any {
+    this.employeService.loadEmployes()
+      .subscribe((response: any) => {
+        if (response.resp && response.msg.length > 0) {
+          response.msg.sort((a, b) => a.name.localeCompare(b.name)).forEach(employe => {
+            this.listEmployees.push(employe);
+          });
+        } else {
+          this.listEmployees = [];
+        }
+      },
+        (err) => {
+          if (err.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            Swal.fire({
+              title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
+              onClose: () => { this.router.navigate(['/login']); }
+            });
+          } else {
+            console.log(err.message);
+            this.alert('Error', 'Ocurrió un error.', 'error');
+          }
+        }
+      )
+  }
+
   getListGarments(): any {
     this.articleService.loadArticles()
       .subscribe((response: any) => {
@@ -286,6 +336,7 @@ export class ReserveComponent implements OnInit {
           this.alert('Done', 'Registered reserve.', 'success');
           this.clearData();
           this.getListCustomers();
+          this.getListEmployes();
         } else {
           this.alert('Fail', response.msg, 'error');
         }
@@ -300,11 +351,15 @@ export class ReserveComponent implements OnInit {
 
   private clearData() {
     this.listCustomers = [];
+    this.listEmployees = [];
     this.rowsArticlesValues = [];
     this.hiddenProgBar = true;
     this.dsbSave = false;
     this.customerId.setValue('');
     this.customerIdentificacion.setValue('');
+    this.employeSelect.setValue('');
+    this.startDate.setValue('');
+    this.endDate.setValue('');
     this.comments.setValue('');
     this.tax.setValue(7);
     this.shipping.setValue(0);
@@ -366,6 +421,28 @@ export class ReserveComponent implements OnInit {
     const mm = this.addZero(now.getMonth() + 1);
     const yyyy = now.getFullYear();
     return yyyy + '-' + mm + '-' + dd;
+  }
+
+  convertDates(value) {
+    const now = new Date(value);
+    const dd = this.addZero(now.getDate());
+    const mm = this.addZero(now.getMonth() + 1);
+    const yyyy = now.getFullYear();
+    return yyyy + '-' + mm + '-' + dd;
+  }
+
+  dateLessThan(event) {
+    const now = new Date(event);
+    const dd = this.addZero(now.getDate());
+    const mm = this.addZero(now.getMonth() + 1);
+    const yyyy = now.getFullYear();
+    // tslint:disable-next-line: triple-equals
+    if (dd != '0' && mm != '0' && yyyy > 2000) {
+      if (new Date(this.startDate.value) >= new Date(this.endDate.value)) {
+        this.openSnackBar('La fecha final de reserva debe ser mayor a la fecha inicial de reserva', 'HECHO');
+        this.endDate.reset();
+      }
+    }
   }
 
   addZero(i) {

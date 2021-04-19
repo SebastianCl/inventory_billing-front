@@ -13,10 +13,13 @@ import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { LoginComponent } from './login/login.component';
+import { MatDatepickerModule } from '@angular/material';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
   imports: [
+    MatDatepickerModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -24,6 +27,7 @@ import { LoginComponent } from './login/login.component';
     HttpModule,
     ComponentsModule,
     RouterModule,
+    MatNativeDateModule,
     AppRoutingModule
   ],
   declarations: [

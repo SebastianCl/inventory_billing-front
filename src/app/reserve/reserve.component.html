@@ -31,6 +31,38 @@
 
               <div class="row">
                 <div class="col-md-12">
+                  <label for="selectRol">Empleado</label>
+                  <mat-form-field>
+                    <mat-select placeholder="Busca un empleado" [formControl]="employeSelect">
+                      <mat-option *ngFor="let employe of listEmployees" value="{{employe.id}}">
+                        {{employe.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Seleccionar fecha inicial de reserva</mat-label>
+                    <input matInput [matDatepicker]="pickerStart" readonly [formControl]="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerStart></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Seleccionar fecha final de reserva</mat-label>
+                    <input matInput [matDatepicker]="pickerEnd" readonly [formControl]="endDate" (dateChange)="dateLessThan($event.target.value)">
+                    <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerEnd></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
                   <mat-form-field>
                     <mat-label>COMENTARIOS</mat-label>
                     <textarea matInput [formControl]="comments"></textarea>
@@ -69,11 +101,12 @@
 
                     <thead>
                       <th id=""></th>
-                      <th id=""> ID </th>
+                      <th id=""></th>
                       <th id=""> DESCUENTO % </th>
                       <th id=""> REFERENCIA </th>
                       <th id=""> DESCRIPCIÓN </th>
-                      <th id=""> PRECIO </th>
+                      <th id=""> PRECIO PRODUCTO </th>
+                      <th id=""> PRECIO DESC </th>
                       <th id=""> PRODUCTO </th>
                     </thead>
 
@@ -109,9 +142,12 @@
                           </mat-form-field>
                         </td>
                         <td>
-                          <!--<input type=number id="price{{i}}" placeholder=" Precio" [formControl]="item.get('price')">-->
-                          {{item.get('price').value - ((item.get('price').value * item.get('discount').value)/100) |
-                          currency }}
+                          <mat-form-field>
+                            <input matInput placeholder="Precio" type="number" (keypress)="numberOnly($event);calculateTotals();" (change)="calculateTotals()" [formControl]="item.get('price')" style="width: 50%;">
+                          </mat-form-field>
+                        </td>
+                        <td>
+                          {{item.get('price').value - ((item.get('price').value * item.get('discount').value)/100) | currency }}
                         </td>
                         <td>
                           <button mat-mini-fab color="primary" (click)="openModal(item.get('garmentReference'))" [disabled]="item.get('garmentReference').value === ''"><mat-icon>image</mat-icon></button>

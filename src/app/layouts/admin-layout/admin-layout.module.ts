@@ -44,14 +44,17 @@ import {
   MatRippleModule,
   MatFormFieldModule,
   MatTooltipModule,
-  MatSelectModule
+  MatSelectModule,
+  MatDatepickerModule
 } from '@angular/material';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     ReactiveFormsModule,
+    MatNativeDateModule,
     MatButtonModule,
     MatRippleModule,
     MatFormFieldModule,
@@ -66,7 +69,7 @@ import {
     MatDialogModule,
     MatIconModule,
     MatCheckboxModule,
-
+    MatDatepickerModule,
     CdkTableModule
   ],
   declarations: [
