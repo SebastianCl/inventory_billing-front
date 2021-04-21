@@ -40,7 +40,7 @@ export class ListUserComponent implements OnInit {
             const dataUser = {
               id: element.id,
               name: element.name,
-              identification: element.identification
+              description: element.role.description
             }
             this.listUser.push(dataUser);
           });

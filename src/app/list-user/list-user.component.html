@@ -12,7 +12,7 @@
 
                             <p-table #dt [columns]="cols" [value]="listUser" [paginator]="true" [responsive]="true"
                                 [rows]="10" [rowsPerPageOptions]="[5,10,20]"
-                                [globalFilterFields]="['name','identification']">
+                                [globalFilterFields]="['name','description']">
                                 <ng-template pTemplate="caption">
                                     <div style="text-align: right">
                                         <em class="fa fa-search" style="margin:4px 4px 0 0"></em>
@@ -23,12 +23,11 @@
                                 </ng-template>
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
-                                        <th id="name" [pSortableColumn]="'name'">Nombre<p-sortIcon
-                                                [field]="'name'">
+                                        <th id="name" [pSortableColumn]="'name'">Nombre<p-sortIcon [field]="'name'">
                                             </p-sortIcon>
                                         </th>
-                                        <th id="identification" [pSortableColumn]="'identification'">Identification<p-sortIcon
-                                                [field]="'identification'">
+                                        <th id="description" [pSortableColumn]="'description'">Descripción<p-sortIcon
+                                                [field]="'description'">
                                             </p-sortIcon>
                                         </th>
                                         <th id="change">
@@ -39,7 +38,7 @@
                                 <ng-template pTemplate="body" let-data>
                                     <tr>
                                         <td>{{data.name}}</td>
-                                        <td>{{data.identification}}</td>
+                                        <td>{{data.description}}</td>
                                         <td>
                                             <div>
                                                 <button mat-raised-button class="btn"

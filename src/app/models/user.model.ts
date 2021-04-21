@@ -1,34 +1,32 @@
 export interface IUser {
     id?: string;
     name: string;
-    identification: string;
-    direction: string;
-    telephone: string;
+    description?: string;
     email: string;
     password: string;
-    isAdmin: boolean;
+    roleId: string,
     active: boolean;
 }
 
 export class User implements IUser {
     id?: string;
     name: string;
-    identification: string;
+    description?: string;
     direction: string;
     telephone: string;
     email: string;
     password: string;
-    isAdmin: boolean;
+    roleId: string;
     active: boolean;
 
     constructor() {
         this.name = '';
-        this.identification = '';
+        this.description = '';
         this.direction = '';
         this.telephone = '';
         this.email = '';
         this.password = '';
-        this.isAdmin = false;
+        this.roleId = '';
         this.active = true;
     }
 }

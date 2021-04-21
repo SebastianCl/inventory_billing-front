@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 import { User } from '../models/user.model';
@@ -19,29 +20,31 @@ export class UserProfileComponent implements OnInit {
   user: User;
 
   name: FormControl;
-  identification: FormControl;
+  description: FormControl;
   email: FormControl;
   password: FormControl;
-  direction: FormControl;
-  telephone: FormControl;
-  isAdmin: FormControl;
+  roleId: FormControl;
   active: FormControl;
+
+  listRoles: any[];
 
   dsbSave: boolean;
   hiddenProgBar: boolean;
 
-  constructor(public userService: UserService, private _snackBar: MatSnackBar) {
+  constructor(
+    private router: Router,
+    public userService: UserService,
+    private _snackBar: MatSnackBar) {
 
     this.name = new FormControl();
-    this.identification = new FormControl();
-    this.direction = new FormControl();
-    this.telephone = new FormControl();
+    this.description = new FormControl();
     this.email = new FormControl('', [Validators.email,]);
     this.password = new FormControl();
-    this.isAdmin = new FormControl();
+    this.roleId = new FormControl();
     this.active = new FormControl();
 
     this.clearData();
+    this.getListRoles();
     this.hiddenProgBar = true;
     this.dsbSave = false;
   }
@@ -60,13 +63,11 @@ export class UserProfileComponent implements OnInit {
   private save() {
     this.user = new User;
     this.user.name = this.name.value;
-    this.user.identification = this.identification.value;
-    this.user.direction = this.direction.value;
-    this.user.telephone = this.telephone.value;
+    this.user.description = this.description.value;
     this.user.email = this.email.value;
     this.user.password = this.password.value;
     this.user.active = true;
-    this.user.isAdmin = this.isAdmin.value;;
+    this.user.roleId = this.roleId.value;
 
     this.userService.createUser(this.user)
       .subscribe((response: any) => {
@@ -85,12 +86,39 @@ export class UserProfileComponent implements OnInit {
       );
   }
 
+  getListRoles(): any {
+    this.userService.loadRoles()
+      .subscribe((response: any) => {
+        if (response.resp && response.msg.length > 0) {
+          response.msg.sort((a, b) => a.role.localeCompare(b.role)).forEach(element => {
+            this.listRoles.push(element);
+          });
+        } else {
+          this.listRoles = [];
+        }
+      },
+        (err) => {
+          if (err.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            Swal.fire({
+              title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
+              onClose: () => { this.router.navigate(['/login']); }
+            });
+          } else {
+            console.log(err.message);
+            this.alert('Error', 'Ocurrió un error.', 'error');
+          }
+        }
+      )
+  }
+
   private validateData() {
     if (this.name.value === null || this.name.value === '') {
       this.openSnackBar('Debe indicar el nombre.', 'OK');
       return false;
     }
-    if (this.identification.value === null || this.identification.value === '') {
+    if (this.description.value === null || this.description.value === '') {
       this.openSnackBar('Debe indicar la identificación.', 'OK');
       return false;
     }
@@ -106,6 +134,10 @@ export class UserProfileComponent implements OnInit {
       this.openSnackBar('Debe ingresar un email con formato correcto.', 'OK');
       return false;
     }
+    if (this.roleId.value === null || this.roleId.value === '') {
+      this.openSnackBar('Debe indicar el rol.', 'OK');
+      return false;
+    }
     return true;
   }
 
@@ -115,12 +147,10 @@ export class UserProfileComponent implements OnInit {
   // Reiniciar valores de los campos
   private clearData() {
     this.name.setValue('');
-    this.identification.setValue('');
-    this.direction.setValue('');
-    this.telephone.setValue('');
+    this.description.setValue('');
     this.email.setValue('');
     this.password.setValue('');
-    this.isAdmin.setValue(false);
+    this.roleId.setValue('');
     this.hide = true;
   }
 

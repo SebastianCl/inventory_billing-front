@@ -4,7 +4,6 @@ export interface IEmploye {
     identification: number;
     direction: string;
     email: string;
-    password: string;
     telephone: number;
     active: boolean;
 }
@@ -15,7 +14,6 @@ export class Employe implements IEmploye {
     identification: number;
     direction: string;
     email: string;
-    password: string;
     telephone: number;
     active: boolean;
 
@@ -24,7 +22,6 @@ export class Employe implements IEmploye {
         this.identification = 0;
         this.direction = '';
         this.email = '';
-        this.password = '';
         this.telephone = 0;
         this.active = false;
     }

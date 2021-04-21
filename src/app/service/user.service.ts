@@ -25,13 +25,13 @@ export class UserService {
     return throwError(error);
   }
 
-  /*Servicio que consulta todos los usuarios registrados en el sistema*/
+  // Servicio que consulta todos los usuarios registrados en el sistema
   loadUsers(): Observable<User[]> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
     return this.http.get<User[]>(this.urlApi + '/user/getUsers', { headers: header }).pipe(catchError(this.handleError));
   }
 
-  /*Servicio que consulta un usuario en el sistema*/
+  // Servicio que consulta un usuario en el sistema
   loadUser(id): Observable<User> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
     return this.http.get<User>(this.urlApi + '/user/getUser', { headers: header }).pipe(catchError(this.handleError));
@@ -40,7 +40,7 @@ export class UserService {
   // Servicio que crea un usuario en el sistema
   createUser(user: User): Observable<User> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
-    return this.http.post<User>(this.urlApi + '/user/create', user, { headers: header }).pipe(catchError(this.handleError));
+    return this.http.post<User>(this.urlApi + '/user/createUser', user, { headers: header }).pipe(catchError(this.handleError));
   }
 
   // Servicio que actualiza un usuario en el sistema
@@ -62,5 +62,11 @@ export class UserService {
   deleteUser(id): Observable<any> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
     return this.http.delete<any>(this.urlApi + '/user/deleteUser', { headers: header }).pipe(catchError(this.handleError));
+  }
+
+  // Servicio que consulta todos los roles registrados en el sistema
+  loadRoles(): Observable<User[]> {
+    const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
+    return this.http.get<User[]>(this.urlApi + '/user/getRoles', { headers: header }).pipe(catchError(this.handleError));
   }
 }

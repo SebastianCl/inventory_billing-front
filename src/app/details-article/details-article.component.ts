@@ -49,7 +49,7 @@ export class DetailsArticleComponent implements OnInit {
   getData(idArticle: string): any {
     this.articleService.loadArticle(idArticle)
       .subscribe((response: any) => {
-        this.setData(response.msg.entityData);
+        this.setData(response.msg);
       },
         (err) => {
           if (err.status === 401) {

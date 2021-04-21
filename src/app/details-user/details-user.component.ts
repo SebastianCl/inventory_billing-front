@@ -40,14 +40,16 @@ export class DetailsUserComponent implements OnInit {
   setData(data) {
     this.form.controls.name.setValue(data.name);
     this.form.controls.email.setValue(data.email);
-    const active = data.active ? 'YES' : 'NO';
+    this.form.controls.role.setValue(data.role.role);
+    this.form.controls.description.setValue(data.description);
+    const active = data.active ? 'SI' : 'NO';
     this.form.controls.active.setValue(active);
   }
 
   getData(idUser: string): any {
     this.userService.loadUser(idUser)
       .subscribe((response: any) => {
-        this.setData(response.msg.entityData);
+        this.setData(response.msg);
       },
         (err) => {
           if (err.status === 401) {
@@ -74,6 +76,8 @@ export class DetailsUserComponent implements OnInit {
     this.form = new FormGroup({
       name: new FormControl(''),
       email: new FormControl(''),
+      role: new FormControl(''),
+      description: new FormControl(''),
       active: new FormControl('')
     });
   }

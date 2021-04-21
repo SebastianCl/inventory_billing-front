@@ -41,11 +41,11 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('user', JSON.stringify(user));
           this.router.navigate(['/dashboard']);
         } else {
-          this.alert('Bad', 'User o password incorrect', 'warning');
+          this.alert('¡Fallo inicio de sesión!', 'Usario o contraseña incorrectos.', 'warning');
         }
       }, (err) => {
         if (err.status === 400) {
-          this.alert('Bad credentials', err.error.msg, 'warning');
+          this.alert('¡Fallo inicio de sesión!', err.error.msg, 'warning');
         } else {
           console.log(err.message);
           this.alert('Error', 'Ocurrió un error.', 'error');

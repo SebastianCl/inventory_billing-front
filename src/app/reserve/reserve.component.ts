@@ -131,7 +131,7 @@ export class ReserveComponent implements OnInit {
 
     for (let index = 0; index < rows.length; index++) {
       const element = rows[index];
-      // Conservar article en lista para almacenar
+      // Conservar artículo en lista para almacenar
       articleList.push(element.garmentReference);
     }
 
@@ -182,7 +182,7 @@ export class ReserveComponent implements OnInit {
   }
 
   private validateRows() {
-    // Validar campos de articles
+    // Validar campos de artículos
     const control = this.listArticles.get('rows') as FormArray;
     const rowsArticles = control.value;
     let validRowsIndex = [];
@@ -204,7 +204,7 @@ export class ReserveComponent implements OnInit {
 
   calculateTotals() {
 
-    // Validar campos de articles
+    // Validar campos de artículos
     const control = this.listArticles.get('rows') as FormArray;
     const rowsArticles = control.value;
     let totalDiscount = 0;

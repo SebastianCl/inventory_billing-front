@@ -7,7 +7,7 @@
             <h4 class="card-title ">Perfil de usuario</h4>
             <p class="card-category"> Detalles de {{form.controls.name.value}}</p>
             <button mat-raised-button matTooltip="Volver a la lista" class="btn pull-right back"
-              (click)="back()">Back</button>
+              (click)="back()">Volver</button>
           </div>
           <div class="card-body">
 
@@ -22,9 +22,14 @@
               </div>
             </div>
 
+            <br>
             <div class="row">
               <div class="col-md-6">
-                <mat-card><strong>Administrador</strong> {{form.controls.isAdmin.value}}
+                <mat-card><strong>Rol:</strong> {{form.controls.role.value}}
+                </mat-card>
+              </div>
+              <div class="col-md-6">
+                <mat-card><strong>Descripción:</strong> {{form.controls.description.value}}
                 </mat-card>
               </div>
             </div>

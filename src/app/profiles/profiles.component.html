@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <br><br><br>
 
+                    <br><br><br>
                     <div class="card-header card-header-warning">
                         <h4 class="card-title ">Cliente</h4>
                         <p class="card-category"> Crea o visualiza el perfil de un cliente</p>
@@ -13,18 +13,28 @@
                         <button mat-raised-button class="btn pull-right btn-action"
                             (click)="goToPage('/add-customer')">Agregar cliente</button>
                     </div>
-                    <br><br><br>
 
+                    <br><br><br>
                     <div class="card-header card-header-warning">
                         <h4 class="card-title ">Empleado</h4>
                         <p class="card-category"> Crea o visualiza el perfil de un empleado</p>
+                        <button mat-raised-button class="btn btn-action" (click)="goToPage('/list-employe')">Ver
+                            lista</button>
+                        <button mat-raised-button class="btn pull-right btn-action"
+                            (click)="goToPage('/add-employe')">Agregar empleado</button>
+                    </div>
+
+                    <br><br><br>
+                    <div class="card-header card-header-warning">
+                        <h4 class="card-title ">Usuario</h4>
+                        <p class="card-category"> Crea o visualiza el perfil de un usuario</p>
                         <button mat-raised-button class="btn btn-action" (click)="goToPage('/list-user')">Ver
                             lista</button>
                         <button mat-raised-button class="btn pull-right btn-action"
-                            (click)="goToPage('/add-user')">Agregar empleado</button>
+                            (click)="goToPage('/add-user')">Agregar usuario</button>
                     </div>
-                    <br><br><br>
 
+                    <br><br><br>
                 </div>
             </div>
 

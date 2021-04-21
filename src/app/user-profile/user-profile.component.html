@@ -20,20 +20,7 @@
                 </div>
                 <div class="col-md-6">
                   <mat-form-field>
-                    <input matInput placeholder="Identificación" type="text" [formControl]="identification">
-                  </mat-form-field>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <mat-form-field>
-                    <input matInput placeholder="Dirección" type="text" [formControl]="direction">
-                  </mat-form-field>
-                </div>
-                <div class="col-md-6">
-                  <mat-form-field>
-                    <input matInput placeholder="Teléfono" type="text" [formControl]="telephone">
+                    <input matInput placeholder="Descripción" type="text" [formControl]="description">
                   </mat-form-field>
                 </div>
               </div>
@@ -67,10 +54,18 @@
               </div>
 
               <div class="row">
-                <div class="col-md-6">
-                  <!--<mat-card><strong>Administrador</strong> {{form.controls.isAdmin.value}}</mat-card>-->
+                <div class="col-md-12">
+                  <label for="selectRol">Rol</label>
+                  <mat-form-field>
+                    <mat-select placeholder="Seleccionar rol" [formControl]="roleId">
+                      <mat-option *ngFor="let role of listRoles" value="{{role.id}}">
+                        {{role.role}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
               </div>
+
 
               <button mat-raised-button type="submit" class="btn btn-default pull-right"
                 [attr.disabled]="dsbSave?'':null" (click)="create()">Crear usuario</button>

@@ -53,7 +53,7 @@ export class DetailsReserveComponent implements OnInit {
   getData(idReserve: string): any {
     this.reserveService.loadReserve(idReserve)
       .subscribe((response: any) => {
-        this.setData(response.msg.entityData);
+        this.setData(response.msg);
       },
         (err) => {
           if (err.status === 401) {

@@ -50,7 +50,7 @@ export class DetailsCustomerComponent implements OnInit {
   getData(idCustomer: string): any {
     this.customerService.loadCustomer(idCustomer)
       .subscribe((response: any) => {
-        this.setData(response.msg.entityData);
+        this.setData(response.msg);
       },
         (err) => {
           if (err.status === 401) {
@@ -81,7 +81,7 @@ export class DetailsCustomerComponent implements OnInit {
       direction: new FormControl(''),
       telephone1: new FormControl(''),
       telephone2: new FormControl(''),
-      telephone3: new FormControl('')      
+      telephone3: new FormControl('')
     });
   }
 
