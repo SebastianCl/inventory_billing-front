@@ -30,11 +30,11 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatNativeDateModule,
     AppRoutingModule
   ],
-  declarations: [
+  declarations: [		
     AppComponent,
     AdminLayoutComponent,
     LoginComponent
-  ],
+   ],
   providers: [],
   bootstrap: [AppComponent]
 })

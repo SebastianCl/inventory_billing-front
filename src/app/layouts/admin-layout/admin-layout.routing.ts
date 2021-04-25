@@ -19,6 +19,7 @@ import { DetailsArticleComponent } from '../../details-article/details-article.c
 import { DetailsReserveComponent } from '../../details-reserve/details-reserve.component';
 
 import { InvoiceComponent } from '../../invoice/invoice.component';
+import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -37,5 +38,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'details-article/:id', component: DetailsArticleComponent },
     { path: 'list-reserve', component: ListReserveComponent },
     { path: 'details-reserve/:id', component: DetailsReserveComponent },
-    { path: 'invoice', component: InvoiceComponent }
+    { path: 'invoice', component: InvoiceComponent },
+    { path: 'list-invoice', component: ListInvoiceComponent },
 ];

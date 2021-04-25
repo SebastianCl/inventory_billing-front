@@ -48,6 +48,7 @@ import {
   MatDatepickerModule
 } from '@angular/material';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -88,7 +89,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     ListArticleComponent,
     ListReserveComponent,
     DetailsArticleComponent,
-    DetailsReserveComponent
+    DetailsReserveComponent,
+    ListInvoiceComponent
   ]
 })
 

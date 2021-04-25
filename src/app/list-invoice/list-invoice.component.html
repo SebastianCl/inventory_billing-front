@@ -1,0 +1,118 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title ">Facturas</h4>
+            <p class="card-category"> Lista de facturas</p>
+            <button mat-raised-button class="btn" (click)="openModalInvoice()">Nueva Factura
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+
+              <p-table #dt [columns]="cols" [value]="listInvoices" [paginator]="true" [responsive]="true" [rows]="10"
+                [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['numberInvoice','numberReserve','nameEmployee','identificationCustomer','totalInvoice','despositInvoice','stateInvoice']">
+                <ng-template pTemplate="caption">
+                  <div style="text-align: right">
+                    <em class="fa fa-search" style="margin:4px 4px 0 0"></em>
+                    <input type="text" pInputText size="30" placeholder="Buscar"
+                      (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th id="numberInvoice" [pSortableColumn]="'numberInvoice'"># Factura<p-sortIcon
+                        [field]="'numberInvoice'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="numberReserve" [pSortableColumn]="'numberReserve'"># Reserva<p-sortIcon
+                        [field]="'numberReserve'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="nameEmployee" [pSortableColumn]="'nameEmployee'">Nombre Empleado<p-sortIcon
+                        [field]="'nameEmployee'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="identificationCustomer" [pSortableColumn]="'identificationCustomer'">Documento Cliente<p-sortIcon
+                        [field]="'identificationCustomer'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="totalInvoice" [pSortableColumn]="'totalInvoice'">Total Factura<p-sortIcon
+                        [field]="'totalInvoice'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="despositInvoice" [pSortableColumn]="'despositInvoice'">Deposito<p-sortIcon
+                        [field]="'despositInvoice'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="stateInvoice" [pSortableColumn]="'stateInvoice'">Estado<p-sortIcon
+                        [field]="'stateInvoice'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="change">
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-data>
+                  <tr>
+                    <td>{{data.numberInvoice}}</td>
+                    <td>{{data.numberReserve}}</td>
+                    <td>{{data.nameEmployee}}</td>
+                    <td>{{data.identificationCustomer}}</td>
+                    <td>{{data.totalInvoice}}</td>
+                    <td>{{data.depositInvoice}}</td>
+                    <td>
+                      <p *ngIf="data.stateInvoice === true">Aun Disponible</p>
+                      <p *ngIf="data.stateInvoice === false">Cerrada</p>
+                    </td>
+                    <td>
+                      <div>
+                        <button mat-mini-fab color="warn" (click)="deleteInvoice(data.id)">
+                          <mat-icon>
+                            delete_forever
+                          </mat-icon>
+                        </button>
+                      </div>
+                      <!--<div>
+                        <button mat-raised-button class="btn" (click)="goToDetails(data)">Detalles
+                        </button>
+                      </div>-->
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+              <br><br><br><br><br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- The Modal New Invoice By Reserve -->
+<div id="myModalNewInvoice" class="modal1">
+  <!-- Modal content -->
+  <div class="modal1-content">
+    <div class="modal1-header">
+      <h2>Creación de Factura por reserva
+        <span class="close1" (click)="close()">X</span>
+      </h2>
+    </div>
+    <div class="modal1-body">
+      <div class="modal1-message">
+        <p>Para crear una factura, debes tener en cuenta que dicha factura solo se puede crear a partir de una reserva existente.</p>
+      </div>
+      <div class="col-12 col-md-12 col-lg-12">
+        <form>
+        </form>
+      </div>
+    </div>
+    <div class="modal0-footer">
+      <button class="btn btn-default" (click)="close()">Cerrar</button>
+    </div>
+  </div>
+
+</div>
