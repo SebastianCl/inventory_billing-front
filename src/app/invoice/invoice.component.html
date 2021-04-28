@@ -10,18 +10,21 @@
             </mat-progress-bar>
           </div>
           <div class="card-body">
+            <p class="card-category">Previsualización de Factura</p>
             <form>
-
-              <div class="row">
-                <div class="col-md-6">
+              <div class="row" *ngIf="showDepositInput === true">
+                <div class="col-md-12">
                   <mat-form-field>
-                    <input matInput placeholder="Factura #" type="text" [formControl]="invoiceNumber">
+                    <input matInput placeholder="Ingrese Deposito" type="number" (keypress)="numberOnly($event)" [formControl]="deposit">
                   </mat-form-field>
                 </div>
+              </div>
+              <hr>
+              <div class="row">
                 <div class="col-md-6">
+                  En construcción de vista
                 </div>
               </div>
-
               <div class="row">
                 <div class="col-md-6">
                   <!--<mat-card><strong>Administrador</strong> {{form.controls.isAdmin.value}}</mat-card>-->
@@ -29,7 +32,7 @@
               </div>
 
               <button mat-raised-button type="submit" class="btn btn-default pull-right"
-                [attr.disabled]="dsbSave?'':null" (click)="create()">Crear factura</button>
+                [attr.disabled]="dsbSave?'':null" >Crear & Previsualizar factura</button>
 
             </form>
           </div>

@@ -38,6 +38,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'details-article/:id', component: DetailsArticleComponent },
     { path: 'list-reserve', component: ListReserveComponent },
     { path: 'details-reserve/:id', component: DetailsReserveComponent },
-    { path: 'invoice', component: InvoiceComponent },
+    { path: 'invoice/:id', component: InvoiceComponent },
     { path: 'list-invoice', component: ListInvoiceComponent },
 ];

@@ -6,7 +6,8 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-list-invoice',
   templateUrl: './list-invoice.component.html',
-  styleUrls: ['./list-invoice.component.css']
+  styleUrls: ['./list-invoice.component.css'],
+  providers: [InvoiceService]
 })
 export class ListInvoiceComponent implements OnInit {
 
@@ -32,9 +33,9 @@ export class ListInvoiceComponent implements OnInit {
     closeModalNewInvoice.style.display = 'none';
   }
 
-  /*goToDetails(data) {
-    this.router.navigate(['/details-invoice', data.id]);
-  }*/
+  goToDetails(data) {
+    this.router.navigate(['/invoice/', data]);
+  }
 
   deleteInvoice(idInvoice) {
     this.invoiceService.deleteInvoice(idInvoice)

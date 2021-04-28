@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 
 import Swal from 'sweetalert2';
 import { Invoice } from '../models/invoice.model';
@@ -18,23 +19,55 @@ export class InvoiceComponent implements OnInit {
   hide = true; // hide password
   invoice: Invoice;
 
+  deposit: FormControl;
   invoiceNumber: FormControl;
   active: FormControl;
 
   dsbSave: boolean;
   hiddenProgBar: boolean;
+  codeAction: string;
+  showDepositInput: boolean;
 
-  constructor(public invoiceService: InvoiceService, private _snackBar: MatSnackBar) {
-
+  constructor(
+    public invoiceService: InvoiceService,
+    private _snackBar: MatSnackBar,
+    public route: ActivatedRoute) {
+    this.deposit = new FormControl();
     this.invoiceNumber = new FormControl();
     this.active = new FormControl();
 
     this.clearData();
     this.hiddenProgBar = true;
     this.dsbSave = false;
+    this.codeAction = this.route.snapshot.paramMap.get('id');
+    if (this.codeAction === '0') {
+      this.showDepositInput = true;
+      this.loadDataLocalstorage();
+    } else {
+      this.showDepositInput = false;
+      this.loadDataInvoiceById(this.codeAction);
+    }
   }
 
   ngOnInit() { }
+
+  loadDataInvoiceById(id){
+    this.invoiceService.loadInvoice(id).subscribe((response: any) => {
+      if (response.resp) {
+        console.log(response);
+      } else {
+        this.alert('Atención', 'No se encontro ninguna factura por este id.', 'warning');
+      }
+    }, (err) => {
+      this.alert('Error', 'Ha ocurrido un error en la consulta', 'warning');
+    });
+    
+  }
+
+
+  loadDataLocalstorage(){
+
+  }
 
   create() {
     this.changeShow();
@@ -70,6 +103,14 @@ export class InvoiceComponent implements OnInit {
   private validateData() {
     if (this.invoiceNumber.value === null || this.invoiceNumber.value === '') {
       this.openSnackBar('Debe indicar el nombre.', 'OK');
+      return false;
+    }
+    return true;
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
     return true;
