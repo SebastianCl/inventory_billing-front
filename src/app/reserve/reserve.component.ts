@@ -18,7 +18,7 @@ import { EmployeeService } from 'app/service/employee.service';
   selector: 'app-quotation',
   templateUrl: './reserve.component.html',
   styleUrls: ['./reserve.component.css'],
-  providers: [CustomerService, ReserveService, ArticleService]
+  providers: [CustomerService, ReserveService, ArticleService, EmployeeService]
 })
 export class ReserveComponent implements OnInit {
 
@@ -49,6 +49,7 @@ export class ReserveComponent implements OnInit {
   public dateNowValid: any;
 
   private rowsArticlesValues: any[];
+  private localstorageArticlesValues: any[];
 
   constructor
     (
@@ -128,13 +129,16 @@ export class ReserveComponent implements OnInit {
     const control = this.listArticles.get('rows') as FormArray;
     const rows = control.value;
     let articleList = [];
+    
+    let articleListLocalstorage = [];
 
     for (let index = 0; index < rows.length; index++) {
       const element = rows[index];
       // Conservar artículo en lista para almacenar
       articleList.push(element.garmentReference);
+      articleListLocalstorage.push({reference: element.garmentReference, price: element.price, discount: element.discount});
     }
-
+    this.localstorageArticlesValues = articleListLocalstorage;
     this.rowsArticlesValues = articleList;
 
 
@@ -344,22 +348,50 @@ export class ReserveComponent implements OnInit {
   }
 
   createReserve(dataReserve: Reserve): any {
+    let arrayArticleValids = [];
     this.reserveService.createReserve(dataReserve)
       .subscribe((response: any) => {
         this.changeShow();
         if (response.resp) {
           this.alert('Exito', 'Reserva regritrada.', 'success');
+          let dataLocalstorage = {
+            status: response.resp.active,
+            articlesIDS: response.resp.articles,
+            articlesLocalStorage: this.localstorageArticlesValues,
+            customerID:  response.resp.customerID,
+            customerName: response.resp.customerName,
+            description: response.resp.description,
+            employeeName: response.resp.employeeName,
+            endDate: response.resp.endDate,
+            invoiceNumber: response.resp.invoiceNumber,
+            reserveDay: response.resp.reserveDay,
+            reserveNumber: response.resp.reserveNumber,
+            startDate: response.resp.startDate,
+            total: this.totalReserve.value,
+            subtotal: this.subtotal.value,
+            totalTax: this.totalTax.value,
+            totalDiscount: this.totalDiscount.value
+          }
+          localStorage.setItem('reserve', JSON.stringify(dataLocalstorage));
           this.clearData();
           this.getListCustomers();
           this.getListEmployes();
+          this.router.navigate(['/invoice/', 0]);
         } else {
           this.alert('Error', response.msg, 'error');
         }
       },
         (err) => {
           this.changeShow();
-          this.alert('Error', 'Ocurrió un error.', 'error');
-          console.log(err.message);
+          if (err.error.type === 2) {
+            err.error.msg.forEach(element => {
+              let msg = "- articulo "+element.reference+": no existe stock actualmente, estara disponible: "+this.convertDates(element.earlyDate);
+              arrayArticleValids.push(msg);
+            });
+            this.alert('Atención Usuario', 'Se informa lo siguiente: \n'+arrayArticleValids.toString(), 'warning');
+          } else {
+            this.alert('Error', 'Ocurrió un error.', 'error');
+          }
         }
       );
   }

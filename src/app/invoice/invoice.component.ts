@@ -66,7 +66,8 @@ export class InvoiceComponent implements OnInit {
 
 
   loadDataLocalstorage(){
-
+    let valLocalstorage = JSON.parse(localStorage.getItem('reserve'));
+    console.log(valLocalstorage);
   }
 
   create() {
@@ -80,8 +81,7 @@ export class InvoiceComponent implements OnInit {
 
   private save() {
     this.invoice = new Invoice;
-    this.invoice.invoiceNumber = this.invoiceNumber.value;
-    this.invoice.active = this.active.value;;
+    this.invoice.active = this.active.value;
 
     this.invoiceService.createInvoice(this.invoice)
       .subscribe((response: any) => {
