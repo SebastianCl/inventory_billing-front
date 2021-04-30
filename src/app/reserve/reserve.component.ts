@@ -353,30 +353,39 @@ export class ReserveComponent implements OnInit {
       .subscribe((response: any) => {
         this.changeShow();
         if (response.resp) {
-          this.alert('Exito', 'Reserva regritrada.', 'success');
           let dataLocalstorage = {
-            status: response.resp.active,
-            articlesIDS: response.resp.articles,
+            status: response.msg.active,
+            articlesIDS: response.msg.articles,
             articlesLocalStorage: this.localstorageArticlesValues,
-            customerID:  response.resp.customerID,
-            customerName: response.resp.customerName,
-            description: response.resp.description,
-            employeeName: response.resp.employeeName,
-            endDate: response.resp.endDate,
-            invoiceNumber: response.resp.invoiceNumber,
-            reserveDay: response.resp.reserveDay,
-            reserveNumber: response.resp.reserveNumber,
-            startDate: response.resp.startDate,
+            customerID:  response.msg.customerID,
+            customerName: response.msg.customerName,
+            description: response.msg.description,
+            employeeName: response.msg.employeeName,
+            endDate: response.msg.endDate,
+            invoiceNumber: response.msg.invoiceNumber,
+            reserveDay: response.msg.reserveDay,
+            reserveNumber: response.msg.reserveNumber,
+            startDate: response.msg.startDate,
             total: this.totalReserve.value,
             subtotal: this.subtotal.value,
             totalTax: this.totalTax.value,
             totalDiscount: this.totalDiscount.value
           }
-          localStorage.setItem('reserve', JSON.stringify(dataLocalstorage));
-          this.clearData();
-          this.getListCustomers();
-          this.getListEmployes();
-          this.router.navigate(['/invoice/', 0]);
+          Swal.fire({
+            title:'Exito',
+            html: `Reserva regritrada.`,
+            icon: 'success',
+            confirmButtonText: 'OK',
+            showConfirmButton: true,
+            showCancelButton: false,
+            timer: 3000
+          }).then((resultModal: any) => {
+            localStorage.setItem('reserve', JSON.stringify(dataLocalstorage));
+            this.clearData();
+            this.getListCustomers();
+            this.getListEmployes();
+            this.router.navigate(['/invoice/', 0]);
+          })
         } else {
           this.alert('Error', response.msg, 'error');
         }

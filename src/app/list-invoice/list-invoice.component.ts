@@ -38,29 +38,44 @@ export class ListInvoiceComponent implements OnInit {
   }
 
   deleteInvoice(idInvoice) {
-    this.invoiceService.deleteInvoice(idInvoice)
-      .subscribe((response: any) => {
-        if (response.resp) {
-          this.alert('Atención!', 'Se a eliminado la factura con exito.', 'success');
-          this.getList()
-        } else {
-          this.alert('Warning', 'Se presento un error en el sistema.', 'warning');
-        }
-      },
-        (err) => {
-          if (err.status === 401) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('customer');
-            Swal.fire({
-              title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
-              onClose: () => { this.router.navigate(['/login']); }
-            });
-          } else {
-            console.log(err.message);
-            this.alert('Error', 'Un error ha ocurrido.', 'error');
-          }
-        }
-      );
+    Swal.fire({
+      title:'Atención!',
+      html: `Deseas Eliminar la factura?`,
+      icon: 'warning',
+      confirmButtonText: 'Si',
+      showConfirmButton: true,
+      cancelButtonText: 'No',
+      showCancelButton: true,
+      allowOutsideClick: false,
+      timer: 3000
+    }).then((result: any) => {
+        if (result.value === true) {
+        this.invoiceService.deleteInvoice(idInvoice)
+          .subscribe((response: any) => {
+            if (response.resp) {
+              this.alert('Atención!', 'Se a eliminado la factura con exito.', 'success');
+              this.listInvoices = [];
+              this.getList()
+            } else {
+              this.alert('Warning', 'Se presento un error en el sistema.', 'warning');
+            }
+          },
+            (err) => {
+              if (err.status === 401) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('customer');
+                Swal.fire({
+                  title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
+                  onClose: () => { this.router.navigate(['/login']); }
+                });
+              } else {
+                console.log(err.message);
+                this.alert('Error', 'Un error ha ocurrido.', 'error');
+              }
+            }
+          );
+      }
+    })
   }
 
   // Servicios
