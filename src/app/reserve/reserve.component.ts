@@ -211,27 +211,30 @@ export class ReserveComponent implements OnInit {
     // Validar campos de artículos
     const control = this.listArticles.get('rows') as FormArray;
     const rowsArticles = control.value;
-    let totalDiscount = 0;
-    let subtotal = 0;
-    let totalReserve = 0;
+    
+    // Variables para calcular resumen del detalle
+    let valSubTotal = 0;
+    let valDescuento = 0;
+
     debugger;
     for (let index = 0; index < rowsArticles.length; index++) {
+
       const element = rowsArticles[index];
+      let valCantidad = element.quantity;
+      let valUnitario = element.price;
+      let valTotal = (valCantidad * valUnitario);
+      let pDescuento = element.discount;
+      
+      valSubTotal = valSubTotal + valTotal;
+      valDescuento = valDescuento + ( valTotal * (pDescuento / 100));
 
-      // Calcular descuento y subtotal
-      const discount = element.price * (element.discount / 100);
-      subtotal = subtotal + element.price;
-
-
-      // Calcular precio con descuento, total de reserva y total de descuento
-      element.price = element.price - discount; // precio con descuento      
-      totalReserve = totalReserve + element.price;
-      totalDiscount = totalDiscount + (discount * element.quantity);
     }
 
-    this.subtotal.setValue(subtotal); // SUBTOTAL
-    this.totalDiscount.setValue(totalDiscount); // TOTAL DE DESCUENTOS
-    this.totalReserve.setValue(totalReserve); // TOTAL DE RESERVA
+    let valTotal = (valSubTotal - valDescuento);
+
+    this.subtotal.setValue(valSubTotal); // SUBTOTAL
+    this.totalDiscount.setValue(valDescuento); // TOTAL DE DESCUENTOS
+    this.totalReserve.setValue(valTotal); // TOTAL DE RESERVA
 
   }
 

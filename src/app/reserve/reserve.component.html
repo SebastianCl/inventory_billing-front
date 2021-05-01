@@ -109,6 +109,7 @@
                       <th id=""> REFERENCIA </th>
                       <th id=""> DESCRIPCIÓN </th>
                       <th id=""> PRECIO </th>
+                      <th id=""> V/DESCUENTO </th>
                       <th id=""> NETO </th>
                       <th id=""> VISUALIZAR </th>
                     </thead>
@@ -152,8 +153,10 @@
                           </mat-form-field>
                         </td>
                         <td>
-                          {{item.get('price').value - ((item.get('price').value * item.get('discount').value)/100) |
-                          currency }}
+                          {{(item.get('quantity').value * item.get('price').value) * (item.get('discount').value / 100) | currency }}
+                        </td>
+                        <td>
+                          {{item.get('price').value | currency }}
                         </td>
                         <td>
                           <button mat-mini-fab color="primary" (click)="openModal(item.get('garmentReference'))"

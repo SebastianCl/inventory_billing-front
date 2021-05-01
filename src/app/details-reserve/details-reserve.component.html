@@ -1,43 +1,124 @@
 <div class="main-content">
+
   <div class="container-fluid">
+
     <div class="row">
+
       <div class="col-md-12">
+
         <div class="card" formGroup="form">
+
           <div class="card-header card-header-warning">
-            <h4 class="card-title ">Reserva #{{form.controls.reserveNumber.value}}</h4>
-            <p class="card-category"> Fecha de registro: {{form.controls.reserveDay.value}}</p>
-            <p class="card-category"> Factura: {{form.controls.invoiceNumber.value}}</p>
-            <button mat-raised-button matTooltip="Volver a la lista" class="btn pull-right back"
-              (click)="back()">Volver</button>
+
+            <h4 class="card-title ">Reserva # {{form.controls.reserveNumber.value}}</h4>
+            <p class="card-category"> Fecha de registro: {{form.controls.startDate.value}}</p>
+            <p class="card-category"> Nro factura: {{form.controls.invoiceNumber.value}}</p>
+            <p class="card-category"> Estado: {{form.controls.isActive.value}}</p>
+            <button mat-raised-button matTooltip="Listar reservas" class="btn pull-right back" (click)="back()">Volver</button>
+
           </div>
+
           <div class="card-body">
 
-            <br><br>
             <div class="row">
-              <div class="col-md-6">
-                <mat-card><strong>Inicio de reserva:</strong> {{form.controls.startDate.value}}</mat-card>
+
+              <div class="col-md-12">
+
+                <mat-card><strong>Cliente:</strong> {{form.controls.customerName.value}}</mat-card>
+
               </div>
-              <div class="col-md-6">
-                <mat-card><strong>Fin de reserva:</strong> {{form.controls.endDate.value}}</mat-card>
-              </div>
+
             </div>
 
-
-            <br><br>
             <div class="row">
-              <div class="col-md-6">
-                <mat-card><strong>Comentarios:</strong> {{form.controls.description.value}}</mat-card>
+
+              <div class="col-md-12">
+
+                <mat-card><strong>Empleado:</strong> {{form.controls.employeName.value}}</mat-card>
+
               </div>
-              <div class="col-md-6">
-                <mat-card><strong>Artículos:</strong> {{form.controls.articles.value}}</mat-card>
-              </div>
+
             </div>
 
-            <br><br>
+            <div class="row">
+
+              <div class="col-md-6">
+
+                <mat-card><strong>Fecha inicio reserva:</strong> {{form.controls.reserveDay.value}}</mat-card>
+
+              </div>
+
+              <div class="col-md-6">
+
+                <mat-card><strong>Fecha fin reserva:</strong> {{form.controls.endDate.value}}</mat-card>
+
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-12">
+
+                <mat-card><strong>Comentario:</strong> {{form.controls.description.value}}</mat-card>
+
+              </div>
+
+            </div>
+
+            <!-- TABLA DE ITEMS -->
+            <div class="card-body">
+
+              <div class="table-responsive">
+
+                <table class="table table-hover">
+
+                  <thead>
+                    <th id=""> DESCUENTO </th>
+                    <th id=""> REFERENCIA </th>
+                    <th id=""> PRECIO </th>
+                    <th id=""> V/DESCUENTO</th>
+                    <th id=""> NETO</th>
+                  </thead>
+
+                  <tbody>
+
+                    <tr *ngFor="let item of listArticlesLoads; let i = index;">
+
+                      <td>
+                        %{{item.discount}}
+                      </td>
+                      <td>
+                        {{item.reference}}
+                      </td>
+                      <td>
+                        {{item.price | currency}}
+                      </td>
+                      <td>
+                        {{item.price * (item.discount / 100) | currency }}
+                      </td>
+                      <td>
+                        {{item.price - (item.price * (item.discount / 100)) | currency}}
+                      </td>
+
+                    </tr>
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            </div>
 
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </div>
+
 </div>

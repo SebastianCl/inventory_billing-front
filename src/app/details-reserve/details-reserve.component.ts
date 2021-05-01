@@ -17,6 +17,7 @@ export class DetailsReserveComponent implements OnInit {
 
   public form: FormGroup;
   public cols: any;
+  listArticlesLoads = [];
 
   constructor(
     public route: ActivatedRoute,
@@ -36,16 +37,16 @@ export class DetailsReserveComponent implements OnInit {
 
 
   setData(data) {
-    debugger;
+    console.info(data);
     this.form.controls.reserveNumber.setValue(data.reserveNumber);
-    this.form.controls.reserveDay.setValue(data.reserveDay);
     this.form.controls.startDate.setValue(data.startDate);
-    this.form.controls.endDate.setValue(data.endDate);
-    this.form.controls.customerName.setValue('');
-    this.form.controls.description.setValue(data.description);
-    this.form.controls.articles.setValue(data.items.length);
     this.form.controls.invoiceNumber.setValue(data.invoiceNumber);
-
+    this.form.controls.customerName.setValue(data.customerName);
+    this.form.controls.employeName.setValue(data.employeeName);
+    this.form.controls.reserveDay.setValue(data.reserveDay);
+    this.form.controls.endDate.setValue(data.endDate);
+    this.form.controls.description.setValue(data.description);
+    this.listArticlesLoads = data.articles;
     let isActive = data.iscative ? 'ACTIVA' : 'CERRADA';
     this.form.controls.isActive.setValue(isActive);
   }
@@ -79,13 +80,13 @@ export class DetailsReserveComponent implements OnInit {
 
     this.form = new FormGroup({
       reserveNumber: new FormControl(''),
+      startDate: new FormControl(''),
       invoiceNumber: new FormControl(''),
       customerName: new FormControl(''),
+      employeName: new FormControl(''),
       reserveDay: new FormControl(''),
-      startDate: new FormControl(''),
       endDate: new FormControl(''),
       description: new FormControl(''),
-      articles: new FormControl(''),
       isActive: new FormControl('')
     });
   }

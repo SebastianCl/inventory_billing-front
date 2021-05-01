@@ -9,7 +9,7 @@ export interface IArticle {
     price: number;
     quantity: number;
     available: boolean;
-    image?: string;
+    imageBase64: string;
 }
 
 export class Article implements IArticle {
@@ -23,19 +23,18 @@ export class Article implements IArticle {
     price: number;
     quantity: number;
     available: boolean;
-    image?: string;
+    imageBase64: string;
 
     constructor() {
         this.type = '';
         this.reference = '';
         this.brand = '';
         this.color = '';
-        this.type = '';
         this.size = '';
         this.comments = '';
         this.price = 0;
         this.quantity = 0;
         this.available = false;
-        this.image = '';
+        this.imageBase64 = '';
     }
 }
