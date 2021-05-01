@@ -1,6 +1,6 @@
 export interface IInvoice {
     id?: string;
-    active: boolean;
+    active?: boolean;
     reserve: number;
 	customer: number;
     employee: number;
@@ -11,7 +11,7 @@ export interface IInvoice {
 
 export class Invoice implements IInvoice {
     id?: string;
-    active: boolean;
+    active?: boolean;
     reserve: number;
 	customer: number;
     employee: number;
@@ -20,7 +20,6 @@ export class Invoice implements IInvoice {
     description: string;
 
     constructor() {
-        this.active = false;
         this.reserve = 0;
         this.customer = 0;
         this.employee = 0;

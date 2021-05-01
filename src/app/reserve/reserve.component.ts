@@ -365,11 +365,13 @@ export class ReserveComponent implements OnInit {
             invoiceNumber: response.msg.invoiceNumber,
             reserveDay: response.msg.reserveDay,
             reserveNumber: response.msg.reserveNumber,
+            reserveID: response.msg.id,
             startDate: response.msg.startDate,
             total: this.totalReserve.value,
             subtotal: this.subtotal.value,
             totalTax: this.totalTax.value,
-            totalDiscount: this.totalDiscount.value
+            totalDiscount: this.totalDiscount.value,
+            employeeID: this.employeId.value
           }
           Swal.fire({
             title:'Exito',
