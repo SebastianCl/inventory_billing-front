@@ -128,14 +128,14 @@ export class ReserveComponent implements OnInit {
     const control = this.listArticles.get('rows') as FormArray;
     const rows = control.value;
     let articleList = [];
-    
+
     let articleListLocalstorage = [];
 
     for (let index = 0; index < rows.length; index++) {
       const element = rows[index];
       // Conservar artículo en lista para almacenar
-      articleList.push({ref: element.garmentReference, price: element.price, discount: element.discount});
-      articleListLocalstorage.push({reference: element.garmentReference, price: element.price, discount: element.discount});
+      articleList.push({ ref: element.garmentReference, price: element.price, discount: element.discount });
+      articleListLocalstorage.push({ reference: element.garmentReference, price: element.price, discount: element.discount });
     }
     this.localstorageArticlesValues = articleListLocalstorage;
     this.rowsArticlesValues = articleList;
@@ -199,7 +199,7 @@ export class ReserveComponent implements OnInit {
     // Validar campos de artículos
     const control = this.listArticles.get('rows') as FormArray;
     const rowsArticles = control.value;
-    
+
     // Variables para calcular resumen del detalle
     let valSubTotal = 0;
     let valDescuento = 0;
@@ -212,9 +212,9 @@ export class ReserveComponent implements OnInit {
       let valUnitario = element.price;
       let valTotal = (valCantidad * valUnitario);
       let pDescuento = element.discount;
-      
+
       valSubTotal = valSubTotal + valTotal;
-      valDescuento = valDescuento + ( valTotal * (pDescuento / 100));
+      valDescuento = valDescuento + (valTotal * (pDescuento / 100));
 
     }
 
@@ -285,7 +285,7 @@ export class ReserveComponent implements OnInit {
   }
 
   getListEmployes(): any {
-    this.employeService.loadEmployes()
+    this.employeService.loadEmployees()
       .subscribe((response: any) => {
         if (response.resp && response.msg.length > 0) {
           response.msg.sort((a, b) => a.name.localeCompare(b.name)).forEach(employe => {
@@ -368,7 +368,7 @@ export class ReserveComponent implements OnInit {
             created: false
           }
           Swal.fire({
-            title:'Exito',
+            title: 'Exito',
             html: `Reserva regritrada.`,
             icon: 'success',
             confirmButtonText: 'OK',
@@ -391,10 +391,10 @@ export class ReserveComponent implements OnInit {
           this.changeShow();
           if (err.error.type === 2) {
             err.error.msg.forEach(element => {
-              let msg = "- articulo "+element.reference+": no existe stock actualmente, estara disponible: "+this.convertDates(element.earlyDate);
+              let msg = "- articulo " + element.reference + ": no existe stock actualmente, estara disponible: " + this.convertDates(element.earlyDate);
               arrayArticleValids.push(msg);
             });
-            this.alert('Atención Usuario', 'Se informa lo siguiente: \n'+arrayArticleValids.toString(), 'warning');
+            this.alert('Atención Usuario', 'Se informa lo siguiente: \n' + arrayArticleValids.toString(), 'warning');
           } else {
             this.alert('Error', 'Ocurrió un error.', 'error');
           }

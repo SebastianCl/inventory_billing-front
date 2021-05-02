@@ -1,0 +1,62 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title">Agregar empleado</h4>
+            <p class="card-category">Complete todos los datos del perfil del empleado</p>
+            <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null">
+            </mat-progress-bar>
+          </div>
+          <div class="card-body">
+            <form>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Nombre del empleado" type="text" [formControl]="name">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <input matInput placeholder="Identificación" type="text" [formControl]="identification">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-3">
+                  <mat-form-field>
+                    <input matInput placeholder="Teléfono" type="text" [formControl]="telephone">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Correo electronico" [formControl]="email">
+                    <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+                      Por favor, introduce una dirección de correo electrónico válida
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Dirección del empleado" type="text" [formControl]="direction">
+                  </mat-form-field>
+                </div>
+
+              </div>
+
+              <button mat-raised-button type="submit" class="btn btn-default pull-right"
+                [attr.disabled]="dsbSave?'':null" (click)="create()">Crear empleado</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

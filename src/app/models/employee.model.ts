@@ -1,4 +1,4 @@
-export interface IEmploye {
+export interface IEmployee {
     id?: string;
     name: string;
     identification: number;
@@ -8,7 +8,7 @@ export interface IEmploye {
     active: boolean;
 }
 
-export class Employe implements IEmploye {
+export class Employee implements IEmployee {
     id?: string;
     name: string;
     identification: number;

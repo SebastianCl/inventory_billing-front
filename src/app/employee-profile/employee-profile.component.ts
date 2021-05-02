@@ -4,39 +4,35 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import Swal from 'sweetalert2';
 
-import { Customer } from '../models/customer.model';
-import { CustomerService } from '../service/customer.service';
+import { Employee } from '../models/employee.model';
+import { EmployeeService } from '../service/employee.service';
 
 @Component({
-  selector: 'app-customer-profile',
-  templateUrl: './customer-profile.component.html',
-  styleUrls: ['./customer-profile.component.css'],
-  providers: [CustomerService]
+  selector: 'app-employee-profile',
+  templateUrl: './employee-profile.component.html',
+  styleUrls: ['./employee-profile.component.css'],
+  providers: [EmployeeService]
 })
-export class CustomerProfileComponent implements OnInit {
+export class EmployeeProfileComponent implements OnInit {
 
-  customer: Customer;
+  employee: Employee;
 
   name: FormControl;
   identification: FormControl;
   email: FormControl;
-  telephone1: FormControl;
-  telephone2: FormControl;
-  telephone3: FormControl;
+  telephone: FormControl;
   direction: FormControl;
 
   dsbSave: boolean;
   hiddenProgBar: boolean;
 
   constructor(
-    public customerService: CustomerService,
+    public employeeService: EmployeeService,
     private _snackBar: MatSnackBar) {
     this.name = new FormControl();
     this.identification = new FormControl();
     this.email = new FormControl('', [Validators.email,]);
-    this.telephone1 = new FormControl();
-    this.telephone2 = new FormControl();
-    this.telephone3 = new FormControl();
+    this.telephone = new FormControl();
     this.direction = new FormControl();
     this.clearData();
     this.hiddenProgBar = true;
@@ -49,9 +45,7 @@ export class CustomerProfileComponent implements OnInit {
     this.name.setValue('');
     this.identification.setValue('');
     this.email.setValue('');
-    this.telephone1.setValue('');
-    this.telephone2.setValue('');
-    this.telephone3.setValue('');
+    this.telephone.setValue('');
     this.direction.setValue('');
   }
 
@@ -66,28 +60,26 @@ export class CustomerProfileComponent implements OnInit {
 
   private save() {
     this.dsbSave = true;
-    this.customer = new Customer;
-    this.customer.name = this.name.value;
-    this.customer.identification = this.identification.value;
-    this.customer.email = this.email.value;
-    this.customer.telephone1 = this.telephone1.value;
-    this.customer.direction = this.direction.value;
-    this.customer.telephone2 = this.telephone2.value;
-    this.customer.telephone3 = this.telephone3.value;
+    this.employee = new Employee;
+    this.employee.name = this.name.value;
+    this.employee.identification = this.identification.value;
+    this.employee.email = this.email.value;
+    this.employee.telephone = this.telephone.value;
+    this.employee.direction = this.direction.value;
 
-    this.customerService.createCustomer(this.customer)
+    this.employeeService.createEmployee(this.employee)
       .subscribe((response: any) => {
         this.changeShow();
         if (response.resp) {
           this.alert('HECHO', 'Empleado creado.', 'success');
           this.clearData();
         } else {
-          this.alert('Atención', 'Empleado no creado', 'warning');
+          this.alert('Atención', 'Empleado no creado.', 'warning');
         }
       },
         (err) => {
           this.changeShow();
-          this.alert('Error', 'Empleado no creado', 'error');
+          this.alert('Error', 'Empleado no creado.', 'error');
         }
       );
   }
@@ -101,16 +93,8 @@ export class CustomerProfileComponent implements OnInit {
       this.openSnackBar('Debes indicar la identificación.', 'OK');
       return false;
     }
-    if (this.telephone1.value === null || this.telephone1.value === '') {
-      this.openSnackBar('Debes indicar el telefono 1.', 'OK');
-      return false;
-    }
-    if (this.telephone2.value === null || this.telephone2.value === '') {
-      this.openSnackBar('Debes indicar el telefono 2.', 'OK');
-      return false;
-    }
-    if (this.telephone3.value === null || this.telephone3.value === '') {
-      this.openSnackBar('Debes indicar el telefono 3.', 'OK');
+    if (this.telephone.value === null || this.telephone.value === '') {
+      this.openSnackBar('Debes indicar el teléfono.', 'OK');
       return false;
     }
     if (this.email.value !== '') {
