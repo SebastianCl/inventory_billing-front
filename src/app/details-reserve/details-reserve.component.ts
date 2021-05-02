@@ -47,7 +47,7 @@ export class DetailsReserveComponent implements OnInit {
     this.form.controls.endDate.setValue(data.endDate);
     this.form.controls.description.setValue(data.description);
     this.listArticlesLoads = data.articles;
-    let isActive = data.iscative ? 'ACTIVA' : 'CERRADA';
+    let isActive = data.active ? 'ACTIVA' : 'CERRADA';
     this.form.controls.isActive.setValue(isActive);
   }
 

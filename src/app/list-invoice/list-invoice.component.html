@@ -11,7 +11,8 @@
             <div class="table-responsive">
 
               <p-table #dt [columns]="cols" [value]="listInvoices" [paginator]="true" [responsive]="true" [rows]="10"
-                [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['numberInvoice','numberReserve','nameEmployee','identificationCustomer','totalInvoice','despositInvoice','stateInvoice']">
+                [rowsPerPageOptions]="[5,10,20]"
+                [globalFilterFields]="['numberInvoice','numberReserve','nameEmployee','identificationCustomer','totalInvoice','despositInvoice','stateInvoice']">
                 <ng-template pTemplate="caption">
                   <div style="text-align: right">
                     <em class="fa fa-search" style="margin:4px 4px 0 0"></em>
@@ -33,8 +34,8 @@
                         [field]="'nameEmployee'">
                       </p-sortIcon>
                     </th>
-                    <th id="identificationCustomer" [pSortableColumn]="'identificationCustomer'">Documento Cliente<p-sortIcon
-                        [field]="'identificationCustomer'">
+                    <th id="identificationCustomer" [pSortableColumn]="'identificationCustomer'">Documento Cliente
+                      <p-sortIcon [field]="'identificationCustomer'">
                       </p-sortIcon>
                     </th>
                     <th id="totalInvoice" [pSortableColumn]="'totalInvoice'">Total Factura<p-sortIcon
@@ -45,8 +46,7 @@
                         [field]="'despositInvoice'">
                       </p-sortIcon>
                     </th>
-                    <th id="stateInvoice" [pSortableColumn]="'stateInvoice'">Estado<p-sortIcon
-                        [field]="'stateInvoice'">
+                    <th id="stateInvoice" [pSortableColumn]="'stateInvoice'">Estado<p-sortIcon [field]="'stateInvoice'">
                       </p-sortIcon>
                     </th>
                     <th id="change">
@@ -62,7 +62,7 @@
                     <td>{{data.totalInvoice}}</td>
                     <td>{{data.depositInvoice}}</td>
                     <td>
-                      <p *ngIf="data.stateInvoice === true">Aun Disponible</p>
+                      <p *ngIf="data.stateInvoice === true">Disponible</p>
                       <p *ngIf="data.stateInvoice === false">Cerrada</p>
                     </td>
                     <td>
@@ -73,7 +73,8 @@
                           </mat-icon>
                         </button>
                       </div>
-                      <button mat-raised-button class="btn" (click)="openModalInvoice(data)" *ngIf="data.stateInvoice === true">Abonar
+                      <button mat-raised-button class="btn" (click)="openModalInvoice(data)"
+                        *ngIf="data.stateInvoice === true">Abonar
                       </button>
                     </td>
                   </tr>
@@ -104,7 +105,8 @@
             <div class="col-md-12">
               <label for="selectRol">Abono</label>
               <mat-form-field>
-                <input matInput placeholder="Ingrese Abono" type="number" (keypress)="numberOnly($event)" [formControl]="abono">
+                <input matInput placeholder="Ingrese Abono" type="number" (keypress)="numberOnly($event)"
+                  [formControl]="abono">
               </mat-form-field>
             </div>
           </div>
@@ -112,7 +114,8 @@
       </div>
     </div>
     <div class="modal0-footer">
-      <button class="btn btn-primary" *ngIf="showUpdate === true" (click)="createAbono()" style="margin-left: 34%;">Abonar</button>
+      <button class="btn btn-primary" *ngIf="showUpdate === true" (click)="createAbono()"
+        style="margin-left: 34%;">Abonar</button>
       <button class="btn btn-default {{classMove}}" (click)="close()">Cerrar</button>
     </div>
   </div>
