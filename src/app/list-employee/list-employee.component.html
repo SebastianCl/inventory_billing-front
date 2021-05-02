@@ -1,0 +1,55 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-warning">
+            <h4 class="card-title ">Empleados</h4>
+            <p class="card-category"> Lista de empleados</p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+
+              <p-table #dt [columns]="cols" [value]="listEmployee" [paginator]="true" [responsive]="true" [rows]="10"
+                [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['name','identification']">
+                <ng-template pTemplate="caption">
+                  <div style="text-align: right">
+                    <em class="fa fa-search" style="margin:4px 4px 0 0"></em>
+                    <input type="text" pInputText size="30" placeholder="Buscar"
+                      (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th id="name" [pSortableColumn]="'name'">Nombre<p-sortIcon [field]="'name'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="identification" [pSortableColumn]="'identification'">Identificación<p-sortIcon
+                        [field]="'identification'">
+                      </p-sortIcon>
+                    </th>
+                    <th id="change">
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-data>
+                  <tr>
+                    <td>{{data.name}}</td>
+                    <td>{{data.identification}}</td>
+                    <td>
+                      <div>
+                        <button mat-raised-button class="btn" (click)="goToDetails(data)">Detalles
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+              <br><br><br><br><br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

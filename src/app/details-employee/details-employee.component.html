@@ -4,7 +4,7 @@
       <div class="col-md-12">
         <div class="card" formGroup="form">
           <div class="card-header card-header-warning">
-            <h4 class="card-title ">Perfil de cliente</h4>
+            <h4 class="card-title ">Perfil de empleado</h4>
             <p class="card-category"> Detalles de {{form.controls.name.value}}</p>
             <button mat-raised-button matTooltip="Volver a la lista" class="btn pull-right back"
               (click)="back()">Volver</button>
@@ -16,8 +16,11 @@
               <div class="col-md-6">
                 <mat-card><strong>Nombre:</strong> {{form.controls.name.value}}</mat-card>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-3">
                 <mat-card><strong>Identificación:</strong> {{form.controls.identification.value}}</mat-card>
+              </div>
+              <div class="col-md-3">
+                <mat-card><strong>Teléfono:</strong> {{form.controls.telephone.value}}</mat-card>
               </div>
             </div>
 
@@ -33,20 +36,6 @@
             </div>
 
             <br><br>
-            <div class="row">
-              <div class="col-md-4">
-                <mat-card><strong>Teléfono 1:</strong> {{form.controls.telephone1.value}}</mat-card>
-              </div>
-              <div class="col-md-4">
-                <mat-card><strong>Teléfono 2:</strong> {{form.controls.telephone2.value}}</mat-card>
-              </div>
-              <div class="col-md-4">
-                <mat-card><strong>Teléfono 3:</strong> {{form.controls.telephone3.value}}</mat-card>
-              </div>
-            </div>
-
-
-
 
           </div>
         </div>
