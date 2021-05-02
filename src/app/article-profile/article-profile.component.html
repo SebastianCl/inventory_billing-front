@@ -35,13 +35,13 @@
 
                 <div class="col-md-4">
                   <mat-form-field>
-                    <input matInput placeholder="Precio" type="text" [formControl]="price">
+                    <input matInput type="number" placeholder="Precio" (keypress)="numberOnly($event)" [formControl]="price">
                   </mat-form-field>
                 </div>
 
                 <div class="col-md-4">
                   <mat-form-field>
-                    <input matInput placeholder="Cantidad" type="text" [formControl]="quantity">
+                    <input matInput type="number" placeholder="Cantidad" (keypress)="numberOnly($event)" [formControl]="quantity">
                   </mat-form-field>
                 </div>
 

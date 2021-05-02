@@ -28,7 +28,7 @@ export class ArticleProfileComponent implements OnInit {
   price: FormControl;
   quantity: FormControl;
   available: FormControl;
-  base64Data:string;
+  base64Data: string;
 
   dsbSave: boolean;
   hiddenProgBar: boolean;
@@ -36,6 +36,7 @@ export class ArticleProfileComponent implements OnInit {
   public dataEventFileValid: any = null;
 
   constructor(public articleService: ArticleService, private _snackBar: MatSnackBar) {
+    this.base64Data = null;
     this.type = new FormControl();
     this.reference = new FormControl();
     this.brand = new FormControl();
@@ -68,56 +69,9 @@ export class ArticleProfileComponent implements OnInit {
 
     readers.readAsDataURL(dataFile);
     readers.onload = () => {
-        this.base64Data = readers.result.toString();
+        let resultBase64 = readers.result.toString();
+        this.base64Data = resultBase64.split(',')[1];
     }
-
-    let spBase64 = this.base64Data.split(',');
-
-    console.info(spBase64[1]);
-
-    this.base64Data = null;
-
-    // this.fileInputFrontal.nativeElement.value = null;
-
-    // this.dataEventFileValid = null;
-    // debugger;
-    // if (imageArray.length > 0) {
-    //   this.alert('Atención', 'Subiendo imágenes, un momento por favor...', 'warning');
-
-    //   const toBase64 = file => new Promise((resolve, reject) => {
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(file);
-    //     reader.onload = () => resolve(reader.result);
-    //     reader.onerror = error => reject(error);
-    //   });
-
-    //   let data = await toBase64(imageArray[0]);
-
-    //   //this.article.image = data;
-
-
-
-
-    //   await this.articleService
-    //     .uploadImage(this.article)
-    //     .then((resp) => {
-    //       debugger;
-    //       this.alert('¡Atención!', 'ENVIADO', 'success');
-    //     })
-    //     .catch((err) => {
-    //       debugger;
-    //       if (err.status === 401) {
-    //         this.alert('¡Atención!', err.error.msg + +' STATUS' + err.status, 'warning');
-    //       } else {
-    //         this.alert('¡Atención!', err.error.msg, 'warning');
-    //       }
-    //     });
-
-
-    // }
-    // else {
-    //   this.alert('Atención!', 'Debes seleccionar al menos una imágen para continuar.', 'warning');
-    // }
   }
 
 
@@ -154,8 +108,9 @@ export class ArticleProfileComponent implements OnInit {
     this.article.size = this.size.value;
     this.article.comments = this.comments.value;
     this.article.available = this.available.value;
-    this.article.price = this.price.value;
-    this.article.quantity = this.quantity.value;
+    this.article.price = Number(this.price.value);
+    this.article.quantity = Number(this.quantity.value);
+    this.article.imageBase64 = this.base64Data;
 
     this.articleService.createArticle(this.article)
       .subscribe((response: any) => {
@@ -203,8 +158,18 @@ export class ArticleProfileComponent implements OnInit {
       this.openSnackBar('Debes indicar el precio.', 'OK');
       return false;
     }
-    if (this.available.value === null || this.available.value === '') {
-      this.openSnackBar('Debes indicar si esta disponible.', 'OK');
+    console.log(this.base64Data);
+    if (this.base64Data === null || this.base64Data === '') {
+      this.openSnackBar('Debes indicar la imagen del articulo.', 'OK');
+      return false;
+    }
+    return true;
+  }
+  
+
+  private numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
     return true;

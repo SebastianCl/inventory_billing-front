@@ -17,6 +17,7 @@ export class DetailsArticleComponent implements OnInit {
 
   public form: FormGroup;
   public cols: any;
+  public imagePreview: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -42,6 +43,7 @@ export class DetailsArticleComponent implements OnInit {
     this.form.controls.price.setValue(data.price);
     this.form.controls.size.setValue(data.size);
     this.form.controls.quantity.setValue(data.quantity);
+    this.imagePreview = 'https://storage.googleapis.com/bellarose-qa.appspot.com/' + data.imageURL;
   }
 
   getData(idArticle: string): any {
