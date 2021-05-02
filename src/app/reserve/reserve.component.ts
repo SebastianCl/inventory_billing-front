@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
@@ -37,7 +37,6 @@ export class ReserveComponent implements OnInit {
   public startDate: FormControl;
   public endDate: FormControl;
   public tax: FormControl;
-  public shipping: FormControl;
   public comments: FormControl;
   public totalTax: FormControl;
   public totalDiscount: FormControl;
@@ -67,7 +66,6 @@ export class ReserveComponent implements OnInit {
     this.employeId = new FormControl();
     this.startDate = new FormControl();
     this.endDate = new FormControl();
-    this.shipping = new FormControl();
     this.tax = new FormControl();
     this.comments = new FormControl();
     this.totalTax = new FormControl();
@@ -122,8 +120,6 @@ export class ReserveComponent implements OnInit {
       this.changeShow();
       return;
     }
-    const shipping = this.shipping.value === null ? 0 : this.shipping.value;
-    const vendor = JSON.parse(localStorage.getItem('user'));
 
     const control = this.listArticles.get('rows') as FormArray;
     const rows = control.value;
@@ -210,12 +206,11 @@ export class ReserveComponent implements OnInit {
       const element = rowsArticles[index];
       let valCantidad = element.quantity;
       let valUnitario = element.price;
-      let valTotal = (valCantidad * valUnitario);
+      let valNeto = (valCantidad * valUnitario);
       let pDescuento = element.discount;
 
-      valSubTotal = valSubTotal + valTotal;
-      valDescuento = valDescuento + (valTotal * (pDescuento / 100));
-
+      valSubTotal = valSubTotal + valNeto;
+      valDescuento = valDescuento + (valNeto * (pDescuento / 100));
     }
 
     let valTotal = (valSubTotal - valDescuento);
@@ -369,7 +364,7 @@ export class ReserveComponent implements OnInit {
           }
           Swal.fire({
             title: 'Exito',
-            html: `Reserva regritrada.`,
+            html: `Reserva registrada.`,
             icon: 'success',
             confirmButtonText: 'OK',
             showConfirmButton: true,
@@ -416,7 +411,6 @@ export class ReserveComponent implements OnInit {
     this.endDate.setValue('');
     this.comments.setValue('');
     this.tax.setValue(7);
-    this.shipping.setValue(0);
     this.totalTax.setValue(0);
     this.totalDiscount.setValue(0);
     this.subtotal.setValue(0);
@@ -490,7 +484,7 @@ export class ReserveComponent implements OnInit {
     const dd = this.addZero(now.getDate());
     const mm = this.addZero(now.getMonth() + 1);
     const yyyy = now.getFullYear();
-    // tslint:disable-next-line: triple-equals
+
     if (dd != '0' && mm != '0' && yyyy > 2000) {
       if (new Date(this.startDate.value) >= new Date(this.endDate.value)) {
         this.openSnackBar('La fecha final de reserva debe ser mayor a la fecha inicial de reserva', 'OK');
