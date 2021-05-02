@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import Swal from 'sweetalert2';
 
 // Modelo
@@ -41,6 +40,7 @@ export class ListReserveComponent implements OnInit {
   }
 
   goToDetails(data) {
+    console.info(data);
     this.router.navigate(['/details-reserve', data.id]);
   }
 
@@ -49,22 +49,16 @@ export class ListReserveComponent implements OnInit {
     this.reserveService.loadReserves()
       .subscribe((response: any) => {
         if (response.resp) {
-          debugger;
           response.msg.forEach(element => {
-            let isActive = element.active ? 'ACTIVA' : 'CERRADA';
+            let boolActive = element.active ? 'ACTIVA' : 'CERRADA';
             const dataQuotation = {
               id: element.id,
-              customerName: element.id,
-              reserveDay: element.reserveDay,
-              endDate: element.endDate,
-              articles: element.items.length,
-              isActive
+              customerName: element.customerName,
+              reserveDay: this.convertDates(element.reserveDay),
+              endDate: this.convertDates(element.endDate),
+              articles: element.articles.length,
+              isActive: boolActive
             }
-            /*const date = new Date(element.createdOn);
-            const createdOn =
-              `${date.getDate()}/${date.getMonth() + 1}/${date.getUTCFullYear()} |
-               ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-            dataQuotation.createdOn = createdOn;*/
             this.listReserves.push(dataQuotation);
             this.listReservesAllInfo.push(dataQuotation);
           });
@@ -88,6 +82,20 @@ export class ListReserveComponent implements OnInit {
       );
   }
 
+  convertDates(value) {
+    const now = new Date(value);
+    const dd = this.addZero(now.getDate());
+    const mm = this.addZero(now.getMonth() + 1);
+    const yyyy = now.getFullYear();
+    return yyyy + '-' + mm + '-' + dd;
+  }
+
+  addZero(i) {
+    if (i < 10) {
+      i = '0' + i;
+    }
+    return i;
+  }
 
   private changeShow() {
     this.dsbBtn = !this.dsbBtn;

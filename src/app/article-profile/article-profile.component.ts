@@ -28,6 +28,7 @@ export class ArticleProfileComponent implements OnInit {
   price: FormControl;
   quantity: FormControl;
   available: FormControl;
+  base64Data:string;
 
   dsbSave: boolean;
   hiddenProgBar: boolean;
@@ -58,46 +59,65 @@ export class ArticleProfileComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  async uploadFile(imageArray) {
-    this.dataEventFileValid = null;
-    debugger;
-    if (imageArray.length > 0) {
-      this.alert('Atención', 'Subiendo imágenes, un momento por favor...', 'warning');
+  uploadFile(event) {
 
-      const toBase64 = file => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-      });
+    const readers = new FileReader();
+    const dataFile = event[0];
 
-      let data = await toBase64(imageArray[0]);
+    // console.info(dataFile);
 
-      //this.article.image = data;
-
-
-
-
-      await this.articleService
-        .uploadImage(this.article)
-        .then((resp) => {
-          debugger;
-          this.alert('¡Atención!', 'ENVIADO', 'success');
-        })
-        .catch((err) => {
-          debugger;
-          if (err.status === 401) {
-            this.alert('¡Atención!', err.error.msg + +' STATUS' + err.status, 'warning');
-          } else {
-            this.alert('¡Atención!', err.error.msg, 'warning');
-          }
-        });
-
-
+    readers.readAsDataURL(dataFile);
+    readers.onload = () => {
+        this.base64Data = readers.result.toString();
     }
-    else {
-      this.alert('Atención!', 'Debes seleccionar al menos una imágen para continuar.', 'warning');
-    }
+
+    let spBase64 = this.base64Data.split(',');
+
+    console.info(spBase64[1]);
+
+    this.base64Data = null;
+
+    // this.fileInputFrontal.nativeElement.value = null;
+
+    // this.dataEventFileValid = null;
+    // debugger;
+    // if (imageArray.length > 0) {
+    //   this.alert('Atención', 'Subiendo imágenes, un momento por favor...', 'warning');
+
+    //   const toBase64 = file => new Promise((resolve, reject) => {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(file);
+    //     reader.onload = () => resolve(reader.result);
+    //     reader.onerror = error => reject(error);
+    //   });
+
+    //   let data = await toBase64(imageArray[0]);
+
+    //   //this.article.image = data;
+
+
+
+
+    //   await this.articleService
+    //     .uploadImage(this.article)
+    //     .then((resp) => {
+    //       debugger;
+    //       this.alert('¡Atención!', 'ENVIADO', 'success');
+    //     })
+    //     .catch((err) => {
+    //       debugger;
+    //       if (err.status === 401) {
+    //         this.alert('¡Atención!', err.error.msg + +' STATUS' + err.status, 'warning');
+    //       } else {
+    //         this.alert('¡Atención!', err.error.msg, 'warning');
+    //       }
+    //     });
+
+
+    // }
+    // else {
+    //   this.alert('Atención!', 'Debes seleccionar al menos una imágen para continuar.', 'warning');
+    // }
   }
 
 

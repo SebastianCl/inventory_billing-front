@@ -71,9 +71,8 @@
               <div class="row">
 
                 <div class="col-md-10">
-                  <input class="ng-hide" id="input-file-id" multiple type="file"
-                    (change)="uploadFile($event.target.files)" />
-                  <label for="input-file-id" class="md-button md-raised md-primary">Cargar imagen</label>
+                  <input type="file" #fileInputFrontal id="fileInputFrontal" name="fileInputFrontal" (change)="uploadFile($event.target.files)"/>
+                  <label for="fileInputFrontal" class="md-button md-raised md-primary">Cargar imagen</label>
                 </div>
 
 

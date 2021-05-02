@@ -25,7 +25,6 @@ export class DetailsArticleComponent implements OnInit {
     this.createForm();
   }
 
-
   ngOnInit() {
     this.getData(this.route.snapshot.paramMap.get('id'));
   }
@@ -34,16 +33,15 @@ export class DetailsArticleComponent implements OnInit {
     this.router.navigate(['/list-article']);
   }
 
-
   setData(data) {
-    debugger;
-    this.form.controls.reference.setValue(data.reference);
     this.form.controls.type.setValue(data.type);
-    this.form.controls.comments.setValue(data.comments);
-    this.form.controls.quantity.setValue(data.quantity);
     this.form.controls.color.setValue(data.color);
-    this.form.controls.size.setValue(data.size);
+    this.form.controls.brand.setValue(data.brand);
+    this.form.controls.comments.setValue(data.comments);
+    this.form.controls.reference.setValue(data.reference);
     this.form.controls.price.setValue(data.price);
+    this.form.controls.size.setValue(data.size);
+    this.form.controls.quantity.setValue(data.quantity);
   }
 
   getData(idArticle: string): any {
@@ -74,13 +72,14 @@ export class DetailsArticleComponent implements OnInit {
   public createForm() {
 
     this.form = new FormGroup({
-      reference: new FormControl(''),
       type: new FormControl(''),
-      comments: new FormControl(''),
-      quantity: new FormControl(''),
       color: new FormControl(''),
+      brand: new FormControl(''),
+      comments: new FormControl(''),
+      reference: new FormControl(''),
+      price: new FormControl(0),
       size: new FormControl(''),
-      price: new FormControl(0)
+      quantity: new FormControl('')
     });
   }
 
