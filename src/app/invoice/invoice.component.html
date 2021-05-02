@@ -6,7 +6,7 @@
           <div class="card-header card-header-warning">
             <h4 class="card-title">{{tittle}}</h4>
             <p class="card-category">{{subtittle}}</p>
-            <button mat-raised-button class="btn btn-default pull-right" (click)="printPage()">Imprimir Factura</button>
+            <button mat-raised-button class="btn btn-default pull-right" *ngIf="showPrintButton === true" (click)="printPage()">Imprimir Factura</button>
             <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null">
             </mat-progress-bar>
           </div>

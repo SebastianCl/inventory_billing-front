@@ -364,6 +364,9 @@ export class ReserveComponent implements OnInit {
             totalDiscount: this.totalDiscount.value,
             employeeID: this.employeId.value
           }
+          let status = {
+            created: false
+          }
           Swal.fire({
             title:'Exito',
             html: `Reserva regritrada.`,
@@ -374,6 +377,7 @@ export class ReserveComponent implements OnInit {
             timer: 3000
           }).then((resultModal: any) => {
             localStorage.setItem('reserve', JSON.stringify(dataLocalstorage));
+            localStorage.setItem('isCreatedInvoice', JSON.stringify(status));
             this.clearData();
             this.getListCustomers();
             this.getListEmployes();

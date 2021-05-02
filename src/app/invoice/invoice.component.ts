@@ -44,6 +44,7 @@ export class InvoiceComponent implements OnInit {
   hiddenProgBar: boolean;
   codeAction: string;
   showDepositInput: boolean;
+  showPrintButton: boolean;
 
   constructor(
     private router: Router,
@@ -67,14 +68,14 @@ export class InvoiceComponent implements OnInit {
     if (this.codeAction === '0') {
       this.tittle = 'Agregar factura';
       this.subtittle = 'Complete toda la información';
-      this.showDepositInput = true;
-      this.isCreated = true;
+      this.showPrintButton = false;
       this.loadDataLocalstorage();
     } else {
       this.tittle = 'Detalle de Factura';
       this.subtittle = '';
       this.showDepositInput = false;
       this.isCreated = false;
+      this.showPrintButton = true;
       this.loadDataInvoiceById(this.codeAction);
     }
   }
@@ -114,6 +115,22 @@ export class InvoiceComponent implements OnInit {
 
 
   loadDataLocalstorage(){
+    if (localStorage.getItem('isCreatedInvoice') !== null) {
+      console.log('entra1');
+      const valStateLocalStorage = JSON.parse(localStorage.getItem('isCreatedInvoice'));
+      if (valStateLocalStorage.created === false) {
+        this.showDepositInput = true;
+        this.isCreated = true;
+      } else {
+        this.showPrintButton = true;
+        this.showDepositInput = false;
+        this.isCreated = false;
+      }
+    } else {
+      this.showPrintButton = true;
+      this.showDepositInput = false;
+      this.isCreated = false;
+    }
     let valLocalstorage = JSON.parse(localStorage.getItem('reserve'));
     valLocalstorage.articlesLocalStorage.forEach(element => {
       let msg = " - articulo: "+element.reference+", Descuento: "+element.discount+", Precio: "+element.price;
@@ -200,6 +217,8 @@ export class InvoiceComponent implements OnInit {
         if (response.resp) {
           this.alert('Exito', 'Factura creada.', 'success');
           this.invoiceNumber.setValue(response.msg.reserveNumber);
+          this.showPrintButton = true;
+          localStorage.removeItem('isCreatedInvoice');
           this.clearData();
         } else {
           this.alert('Atención', 'Factura no creada.', 'warning');
