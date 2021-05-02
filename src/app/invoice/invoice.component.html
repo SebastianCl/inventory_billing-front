@@ -26,9 +26,9 @@
                 <div class="col-md-4" style="padding: 1px;">
                   <p>Siguenos en:
                     <br>
-                  <a href="https://www.facebook.com/Bellarosealquiler"><span class="material-icons">facebook</span> Bellarose.alquiler</a>
+                  <a href="https://www.facebook.com/Bellarosealquiler" target="_blank"><span class="material-icons">facebook</span> Bellarose.alquiler</a>
                   <br>
-                  <a href="https://www.instagram.com/bellarose.alquiler">Bellarose.alquiler</a>
+                  <a href="https://www.instagram.com/bellarose.alquiler" target="_blank">Bellarose.alquiler</a>
                   </p>
                   <p>317 500 93 38
                     <br>
@@ -37,7 +37,7 @@
                     www.bellarose.com</p>
                 </div>
                 <div class="col-md-4" style="padding: 1px;">
-                  Factura de Venta: {{invoiceNumber.value}}
+                  Numero de factura: {{invoiceNumber.value}}
                 </div>
               </div>
               <mat-card  style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
@@ -93,10 +93,13 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6" style="padding: 1px;">
+                  <div class="col-md-4" style="padding: 1px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Deposito: {{deposit.value | currency }}</mat-card>
+                  </div>
+                  <div class="col-md-4" style="padding: 1px;">
                     <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor: {{subTotal | currency }}</mat-card>
                   </div>
-                  <div class="col-md-6" style="padding: 1px;">
+                  <div class="col-md-4" style="padding: 1px;">
                     <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Total a Pagar: {{total | currency }}</mat-card>
                   </div>
                 </div>

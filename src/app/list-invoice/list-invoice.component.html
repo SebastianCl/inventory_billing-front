@@ -6,8 +6,6 @@
           <div class="card-header card-header-warning">
             <h4 class="card-title ">Facturas</h4>
             <p class="card-category"> Lista de facturas</p>
-            <!--<button mat-raised-button class="btn" (click)="openModalInvoice()">Nueva Factura
-            </button>-->
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -82,6 +80,8 @@
                           </mat-icon>
                         </button>
                       </div>
+                      <button mat-raised-button class="btn" (click)="openModalInvoice(data)" *ngIf="data.stateInvoice === true">Abonar
+                      </button>
                     </td>
                   </tr>
                 </ng-template>
@@ -100,20 +100,26 @@
   <!-- Modal content -->
   <div class="modal1-content">
     <div class="modal1-header">
-      <h2>Creación de Factura por reserva
+      <h2>Abono de factura # {{numberInvoiceTittle}}
         <span class="close1" (click)="close()">X</span>
       </h2>
     </div>
     <div class="modal1-body">
-      <div class="modal1-message">
-        <p>Para crear una factura, debes tener en cuenta que dicha factura solo se puede crear a partir de una reserva existente.</p>
-      </div>
       <div class="col-12 col-md-12 col-lg-12">
         <form>
+          <div class="row">
+            <div class="col-md-12">
+              <label for="selectRol">Abono</label>
+              <mat-form-field>
+                <input matInput placeholder="Ingrese Abono" type="number" (keypress)="numberOnly($event)" [formControl]="abono">
+              </mat-form-field>
+            </div>
+          </div>
         </form>
       </div>
     </div>
     <div class="modal0-footer">
+      <button class="btn btn-primary" *ngIf="showUpdate === true" (click)="createAbono()" style="margin-left: 34%;">Abonar</button>
       <button class="btn btn-default" (click)="close()">Cerrar</button>
     </div>
   </div>

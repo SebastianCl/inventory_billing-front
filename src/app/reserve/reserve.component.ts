@@ -93,7 +93,6 @@ export class ReserveComponent implements OnInit {
     return this.fb.group({
       discount: 0,
       garmentReference: '',
-      description: '',
       price: 0,
       quantity: 1,
       total: 0
@@ -135,7 +134,7 @@ export class ReserveComponent implements OnInit {
     for (let index = 0; index < rows.length; index++) {
       const element = rows[index];
       // Conservar artículo en lista para almacenar
-      articleList.push(element.garmentReference);
+      articleList.push({ref: element.garmentReference, price: element.price, discount: element.discount});
       articleListLocalstorage.push({reference: element.garmentReference, price: element.price, discount: element.discount});
     }
     this.localstorageArticlesValues = articleListLocalstorage;
@@ -143,23 +142,12 @@ export class ReserveComponent implements OnInit {
 
 
     this.reserve = new Reserve;
-    this.reserve.customerID = this.customerId.value;
-    let dataClientSelected = this.listCustomers.filter((e) => e.id === this.customerId.value);
-    this.reserve.customerName = dataClientSelected[0].name;
-    let dataEmployeSelected = this.listEmployees.filter((e) => e.id === this.employeId.value);
-    this.reserve.employeeName = dataEmployeSelected[0].name;
-    this.reserve.reserveDate = this.dateNow();
+    this.reserve.customerID = Number(this.customerId.value);
+    this.reserve.employeeID = Number(this.employeId.value);
     this.reserve.startDate = this.convertDates(this.startDate.value);
     this.reserve.endDate = this.convertDates(this.endDate.value);
-    this.reserve.tax = this.tax.value;
-    this.reserve.comments = this.comments.value;
+    this.reserve.description = this.comments.value;
     this.reserve.articles = this.rowsArticlesValues;
-    this.reserve.vendor = vendor.id;
-    this.reserve.shipping = shipping;
-    this.reserve.total = this.totalReserve.value;
-    this.reserve.subtotal = this.subtotal.value;
-    this.reserve.totalTax = this.totalTax.value;
-    this.reserve.totalDiscount = this.totalDiscount.value;
 
     this.createReserve(this.reserve);
   }
@@ -193,7 +181,7 @@ export class ReserveComponent implements OnInit {
     let sw = false;
     for (let index = 0; index < rowsArticles.length; index++) {
       const element = rowsArticles[index];
-      if (element.reference === '' || element.description === '' || element.discount < 0 || element.price < 0 || element.quantity < 0) {
+      if (element.reference === '' || element.discount > 100 || element.price < 0 || element.quantity < 0) {
         validRowsIndex.push(index + 1);
       } else {
         sw = true
@@ -357,7 +345,7 @@ export class ReserveComponent implements OnInit {
             status: response.msg.active,
             articlesIDS: response.msg.articles,
             articlesLocalStorage: this.localstorageArticlesValues,
-            customerID:  response.msg.customerID,
+            customerID: this.customerId.value,
             customerName: response.msg.customerName,
             description: response.msg.description,
             employeeName: response.msg.employeeName,

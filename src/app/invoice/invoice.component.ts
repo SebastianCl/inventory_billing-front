@@ -22,7 +22,6 @@ export class InvoiceComponent implements OnInit {
 
   deposit: FormControl;
   invoiceNumber: FormControl;
-  active: FormControl;
   dateInvoice: FormControl;
   employeeName: FormControl;
   clientName: FormControl;
@@ -52,7 +51,6 @@ export class InvoiceComponent implements OnInit {
     public route: ActivatedRoute) {
     this.deposit = new FormControl();
     this.invoiceNumber = new FormControl();
-    this.active = new FormControl();
     this.dateInvoice = new FormControl();
     this.employeeName = new FormControl();
     this.clientName = new FormControl();
@@ -85,7 +83,6 @@ export class InvoiceComponent implements OnInit {
         this.alert('Atención', 'No se encontro ninguna factura por este id.', 'warning');
       }
     }, (err) => {
-      
       if (err.status === 401) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -143,7 +140,7 @@ export class InvoiceComponent implements OnInit {
 
   create() {
     this.changeShow();
-    if (!this.validateData()) {
+    if (!this.validateData(this.total)) {
       this.changeShow();
       return;
     }
@@ -153,8 +150,7 @@ export class InvoiceComponent implements OnInit {
   private save() {
     this.invoice = new Invoice;
     this.invoice.reserve = this.reserve;
-    this.invoice.customer = this.customer;
-    this.invoice.employee = this.employee;
+    this.invoice.subTotal = this.subTotal;
     this.invoice.cost = this.total;
     this.invoice.deposit = Number(this.deposit.value);
     this.invoice.description = this.descriptionArticles.toString();
@@ -187,9 +183,14 @@ export class InvoiceComponent implements OnInit {
       );
   }
 
-  private validateData() {
-    if (this.deposit.value === null || this.deposit.value === '') {
+  private validateData(totalInvoice) {
+    if (this.deposit.value === null || this.deposit.value === 0) {
       this.openSnackBar('Debe ingresar un deposito.', 'OK');
+      return false;
+    }
+    
+    if (this.deposit.value > totalInvoice) {
+      this.openSnackBar('Debe ingresar un deposito menor al total de la factura.', 'OK');
       return false;
     }
     return true;
@@ -225,7 +226,6 @@ export class InvoiceComponent implements OnInit {
 
   // Reiniciar valores de los campos
   private clearData() {
-    this.active.setValue(false);
     this.isCreated = false;
     this.showDepositInput = false;
     this.hide = true;
