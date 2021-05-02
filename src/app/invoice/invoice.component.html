@@ -4,8 +4,9 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-warning">
-            <h4 class="card-title">Agregar factura</h4>
-            <p class="card-category">Complete toda la información</p>
+            <h4 class="card-title">{{tittle}}</h4>
+            <p class="card-category">{{subtittle}}</p>
+            <button mat-raised-button class="btn btn-default pull-right" (click)="printPage()">Imprimir Factura</button>
             <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null">
             </mat-progress-bar>
           </div>
@@ -20,127 +21,129 @@
                 </div>
               </div>
               <hr>
-              <div class="row">
-                <div class="col-md-4" style="padding: 1px;">
-                </div>
-                <div class="col-md-4" style="padding: 1px;">
-                  <p>Siguenos en:
+              <div id="row-invoice-print">
+                <div class="row">
+                  <div class="col-md-4" style="padding: 1px;">
+                  </div>
+                  <div class="col-md-4" style="padding: 1px;">
+                    <p>Siguenos en:
+                      <br>
+                    <a href="https://www.facebook.com/Bellarosealquiler" target="_blank"><span class="material-icons">facebook</span> Bellarose.alquiler</a>
                     <br>
-                  <a href="https://www.facebook.com/Bellarosealquiler" target="_blank"><span class="material-icons">facebook</span> Bellarose.alquiler</a>
-                  <br>
-                  <a href="https://www.instagram.com/bellarose.alquiler" target="_blank">Bellarose.alquiler</a>
-                  </p>
-                  <p>317 500 93 38
-                    <br>
-                    www.bellarosealquiler.com
-                    <br>
-                    www.bellarose.com</p>
-                </div>
-                <div class="col-md-4" style="padding: 1px;">
-                  Numero de factura: {{invoiceNumber.value}}
-                </div>
-              </div>
-              <mat-card  style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
-                <div class="row">
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Fecha de Factura: {{dateInvoice.value}}</mat-card>
+                    <a href="https://www.instagram.com/bellarose.alquiler" target="_blank"><span class="iconify" data-icon="mdi-instagram" data-inline="false"></span>Bellarose.alquiler</a>
+                    </p>
+                    <p>317 500 93 38
+                      <br>
+                      www.bellarosealquiler.com
+                      <br>
+                      www.bellarose.com</p>
                   </div>
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Empleado: {{employeeName.value}}</mat-card>
+                  <div class="col-md-4" style="padding: 1px;">
+                    Numero de factura: {{invoiceNumber.value}}
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Nombre: {{clientName.value}}</mat-card>
+                <mat-card  style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
+                  <div class="row">
+                    <div class="col-md-6" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Fecha de Factura: {{dateInvoice.value}}</mat-card>
+                    </div>
+                    <div class="col-md-6" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Empleado: {{employeeName.value}}</mat-card>
+                    </div>
                   </div>
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Documento: {{clientDocument.value}}</mat-card>
+                  <div class="row">
+                    <div class="col-md-6" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Nombre: {{clientName.value}}</mat-card>
+                    </div>
+                    <div class="col-md-6" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Documento: {{clientDocument.value}}</mat-card>
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Dirección: {{clientAddress.value}}</mat-card>
+                  <div class="row">
+                    <div class="col-md-6" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Dirección: {{clientAddress.value}}</mat-card>
+                    </div>
+                    <div class="col-md-6" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Email: {{clientEmail.value}}</mat-card>
+                    </div>
                   </div>
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Email: {{clientEmail.value}}</mat-card>
+                  <div class="row">
+                    <div class="col-md-12" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 5px !important;text-align: center;">
+                        <mat-card-title style="text-align: center;"> Descripción Articulos </mat-card-title>
+                        <mat-card-content>
+                            <div class="table-responsive">
+                              <table class="table table-hover">
+                                <thead>
+                                  <th id=""> Referencia de Articulo </th>
+                                  <th id=""> Precio Original </th>
+                                  <th id=""> Descuento % </th>
+                                  <th id=""> Valor con descuento </th>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let item of listArticlesLoads; let i = index;">
+                                    <td>{{item.reference}}</td>
+                                    <td>{{item.price | currency }}</td>
+                                    <td>% {{item.discount}}</td>
+                                    <td>{{item.price - ((item.price * item.discount)/100) | currency }}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 5px !important;text-align: center;">
-                      <mat-card-title style="text-align: center;"> Descripción Articulos </mat-card-title>
-                      <mat-card-content>
-                          <div class="table-responsive">
-                            <table class="table table-hover">
-                              <thead>
-                                <th id=""> Referencia de Articulo </th>
-                                <th id=""> Precio Original </th>
-                                <th id=""> Descuento % </th>
-                                <th id=""> Valor con descuento </th>
-                              </thead>
-                              <tbody>
-                                <tr *ngFor="let item of listArticlesLoads; let i = index;">
-                                  <td>{{item.reference}}</td>
-                                  <td>{{item.price | currency }}</td>
-                                  <td>% {{item.discount}}</td>
-                                  <td>{{item.price - ((item.price * item.discount)/100) | currency }}</td>
-                                </tr>
-                              </tbody>
-                            </table>
+                  <div class="row">
+                    <div class="col-md-4" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Deposito: {{deposit.value | currency }}</mat-card>
+                    </div>
+                    <div class="col-md-4" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor: {{subTotal | currency }}</mat-card>
+                    </div>
+                    <div class="col-md-4" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Total a Pagar: {{total | currency }}</mat-card>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
+                        <p>* No se hace devolución de dinero</p>
+                        <p>* El deposito cubrira cualquier tipo de daño en la prenda o articulo</p>
+                        <p>* Pasados 30 dias no se hacen cambios</p>
+                      </mat-card>
+                    </div>
+                    <div class="col-md-6" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;height: 136px;">
+                        <div class="row">
+                          <div class="col-md-6">
+                            Vendedor:
                           </div>
-                      </mat-card-content>
-                    </mat-card>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Deposito: {{deposit.value | currency }}</mat-card>
-                  </div>
-                  <div class="col-md-4" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor: {{subTotal | currency }}</mat-card>
-                  </div>
-                  <div class="col-md-4" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Total a Pagar: {{total | currency }}</mat-card>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
-                      <p>* No se hace devolución de dinero</p>
-                      <p>* El deposito cubrira cualquier tipo de daño en la prenda o articulo</p>
-                      <p>* Pasados 30 dias no se hacen cambios</p>
-                    </mat-card>
-                  </div>
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;height: 136px;">
-                      <div class="row">
-                        <div class="col-md-6">
-                          Vendedor:
+                          <div class="col-md-6">
+                            Cliente:
+                          </div>
                         </div>
-                        <div class="col-md-6">
-                          Cliente:
+                        <br>
+                        <br>
+                        <div class="row">
+                          <div class="col-md-6">
+                            _____________________________
+                          </div>
+                          <div class="col-md-6">
+                            _____________________________
+                          </div>
                         </div>
-                      </div>
-                      <br>
-                      <br>
-                      <div class="row">
-                        <div class="col-md-6">
-                          _____________________________
-                        </div>
-                        <div class="col-md-6">
-                          _____________________________
-                        </div>
-                      </div>
-                    </mat-card>
+                      </mat-card>
+                    </div>
                   </div>
-                </div>
-                <p style="text-align: center;">Carrera 52 No. 45 - 116 Local 201 - Pasaje Pasteur / Medellin</p>
-                <p style="text-align: center;">tels: 293 33 93 / 293 33 91</p>
-              </mat-card>
+                  <p style="text-align: center;">Carrera 52 No. 45 - 116 Local 201 - Pasaje Pasteur / Medellin</p>
+                  <p style="text-align: center;">tels: 293 33 93 / 293 33 91</p>
+                </mat-card>
+              </div>
 
               <button mat-raised-button type="submit" class="btn btn-default pull-right"
                 [attr.disabled]="dsbSave?'':null" (click)="create()" *ngIf="isCreated === true">Crear factura</button>
-
+                
             </form>
           </div>
         </div>

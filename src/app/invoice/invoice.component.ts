@@ -35,6 +35,8 @@ export class InvoiceComponent implements OnInit {
   reserve: number;
   isCreated: boolean;
   descriptionArticles = [];
+  tittle: string;
+  subtittle: string;
 
   listArticlesLoads = [];
 
@@ -63,10 +65,14 @@ export class InvoiceComponent implements OnInit {
     this.dsbSave = false;
     this.codeAction = this.route.snapshot.paramMap.get('id');
     if (this.codeAction === '0') {
+      this.tittle = 'Agregar factura';
+      this.subtittle = 'Complete toda la información';
       this.showDepositInput = true;
       this.isCreated = true;
       this.loadDataLocalstorage();
     } else {
+      this.tittle = 'Detalle de Factura';
+      this.subtittle = '';
       this.showDepositInput = false;
       this.isCreated = false;
       this.loadDataInvoiceById(this.codeAction);
@@ -78,7 +84,15 @@ export class InvoiceComponent implements OnInit {
   loadDataInvoiceById(id){
     this.invoiceService.loadInvoice(id).subscribe((response: any) => {
       if (response.resp) {
-        console.log(response);
+        this.invoiceNumber.setValue(response.msg.invoiceNumber);
+        this.dateInvoice.setValue(this.convertDates(response.msg.date));
+        this.employeeName.setValue(response.msg.employeeName);
+        this.getCustomerData(response.msg.reserve.customer.id);
+        
+        this.listArticlesLoads = response.msg.articles
+        this.subTotal = response.msg.subTotal;
+        this.total = response.msg.cost;
+        this.deposit.setValue(response.msg.deposit);
       } else {
         this.alert('Atención', 'No se encontro ninguna factura por este id.', 'warning');
       }
@@ -112,7 +126,6 @@ export class InvoiceComponent implements OnInit {
     this.reserve = Number(valLocalstorage.reserveID);
     this.customerService.loadCustomer(valLocalstorage.customerID).subscribe((response: any) => {
       if (response.resp) {
-        console.log(response);
         this.clientName.setValue(response.msg.name === '' || null ? 'Sin Nombre': response.msg.name)
         this.clientDocument.setValue(response.msg.identification === '' || null ? 'Sin Numero de documento': response.msg.identification)
         this.clientAddress.setValue(response.msg.direction === '' || null ? 'Sin Dirección': response.msg.direction)
@@ -136,6 +149,31 @@ export class InvoiceComponent implements OnInit {
     this.listArticlesLoads = valLocalstorage.articlesLocalStorage
     this.subTotal = valLocalstorage.subtotal
     this.total = valLocalstorage.total
+  }
+
+  getCustomerData(customerID) {
+    this.customerService.loadCustomer(customerID).subscribe((response: any) => {
+      if (response.resp) {
+        this.clientName.setValue(response.msg.name === '' || null ? 'Sin Nombre': response.msg.name)
+        this.clientDocument.setValue(response.msg.identification === '' || null ? 'Sin Numero de documento': response.msg.identification)
+        this.clientAddress.setValue(response.msg.direction === '' || null ? 'Sin Dirección': response.msg.direction)
+        this.clientEmail.setValue(response.msg.email === '' || null ? 'Sin email': response.msg.email)
+      } else {
+        this.alert('Atención', 'El cliente ligado en esta factura no fue encontrado', 'warning');
+      }
+    }, (err) => {
+      if (err.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        Swal.fire({
+          title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
+          onClose: () => { this.router.navigate(['/login']); }
+        });
+      } else {
+        console.log(err.message);
+        this.alert('Error', 'Ocurrió un error.', 'error');
+      }
+    });
   }
 
   create() {
@@ -214,11 +252,27 @@ export class InvoiceComponent implements OnInit {
     return yyyy + '-' + mm + '-' + dd;
   }
 
+  convertDates(value) {
+    const now = new Date(value);
+    const dd = this.addZero(now.getDate());
+    const mm = this.addZero(now.getMonth() + 1);
+    const yyyy = now.getFullYear();
+    return yyyy + '-' + mm + '-' + dd;
+  }
+
   addZero(i) {
     if (i < 10) {
       i = '0' + i;
     }
     return i;
+  }
+
+
+  printPage() {
+    const printContents = document.getElementById('row-invoice-print').innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    window.location.reload();
   }
 
 
