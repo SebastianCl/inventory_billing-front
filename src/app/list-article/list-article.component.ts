@@ -30,6 +30,10 @@ export class ListArticleComponent implements OnInit {
     this.router.navigate(['/details-article', data.id]);
   }
 
+  goToPage(url: string) {
+    this.router.navigate([url]);
+  }
+
   // Servicios
   getList(): any {
     this.articleService.loadArticles()
