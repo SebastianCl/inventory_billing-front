@@ -79,15 +79,15 @@ export class CustomerProfileComponent implements OnInit {
       .subscribe((response: any) => {
         this.changeShow();
         if (response.resp) {
-          this.alert('HECHO', 'Empleado creado.', 'success');
+          this.alert('HECHO', 'Cliente creado.', 'success');
           this.clearData();
         } else {
-          this.alert('Atención', 'Empleado no creado', 'warning');
+          this.alert('Atención', 'Cliente no creado', 'warning');
         }
       },
         (err) => {
           this.changeShow();
-          this.alert('Error', 'Empleado no creado', 'error');
+          this.alert('Error', 'Cliente no creado', 'error');
         }
       );
   }

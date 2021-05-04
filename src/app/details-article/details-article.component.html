@@ -4,8 +4,8 @@
       <div class="col-md-12">
         <div class="card" formGroup="form">
           <div class="card-header card-header-warning">
-            <h4 class="card-title ">Detalles del artículo</h4>
-            <p class="card-category"> REFERENCIA: {{form.controls.reference.value}}</p>
+            <h4 class="card-title ">Detalles del artículo {{form.controls.reference.value}}</h4>
+            <p class="card-category">Estado: {{form.controls.available.value}}</p>
             <button mat-raised-button matTooltip="Volver a la lista" class="btn pull-right back"
               (click)="back()">Volver</button>
           </div>

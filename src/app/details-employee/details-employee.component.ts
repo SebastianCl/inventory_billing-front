@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import Swal from 'sweetalert2';
 
-// Modelo
-import { Employee } from '../models/employee.model';
 // Servicio
 import { EmployeeService } from '../service/employee.service';
 
@@ -38,7 +36,6 @@ export class DetailsEmployeeComponent implements OnInit {
 
 
   setData(data) {
-    debugger;
     this.form.controls.name.setValue(data.name);
     this.form.controls.identification.setValue(data.identification);
     this.form.controls.email.setValue(data.email);
