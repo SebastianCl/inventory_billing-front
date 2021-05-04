@@ -37,6 +37,8 @@ export class InvoiceComponent implements OnInit {
   descriptionArticles = [];
   tittle: string;
   subtittle: string;
+  numberInvoice: string;
+  depositInvoice: string;
 
   listArticlesLoads = [];
 
@@ -85,7 +87,7 @@ export class InvoiceComponent implements OnInit {
   loadDataInvoiceById(id){
     this.invoiceService.loadInvoice(id).subscribe((response: any) => {
       if (response.resp) {
-        this.invoiceNumber.setValue(response.msg.invoiceNumber);
+        this.numberInvoice = response.msg.invoiceNumber;
         this.dateInvoice.setValue(this.convertDates(response.msg.date));
         this.employeeName.setValue(response.msg.employeeName);
         this.getCustomerData(response.msg.reserve.customer.id);
@@ -116,7 +118,6 @@ export class InvoiceComponent implements OnInit {
 
   loadDataLocalstorage(){
     if (localStorage.getItem('isCreatedInvoice') !== null) {
-      console.log('entra1');
       const valStateLocalStorage = JSON.parse(localStorage.getItem('isCreatedInvoice'));
       if (valStateLocalStorage.created === false) {
         this.showDepositInput = true;
@@ -132,16 +133,17 @@ export class InvoiceComponent implements OnInit {
       this.isCreated = false;
     }
     let valLocalstorage = JSON.parse(localStorage.getItem('reserve'));
+    this.numberInvoice = valLocalstorage.invoiceNumber;
+    this.deposit.setValue(valLocalstorage.depositInvoice);
     valLocalstorage.articlesLocalStorage.forEach(element => {
       let msg = " - articulo: "+element.reference+", Descuento: "+element.discount+", Precio: "+element.price;
       this.descriptionArticles.push(msg);
     });
     this.dateInvoice.setValue(this.dateNow());
-    this.employeeName.setValue(valLocalstorage.employeeName)
+    this.employeeName.setValue(valLocalstorage.employeeName);
     this.customer = Number(valLocalstorage.customerID);
-    this.employee = Number(valLocalstorage.employeeID);
     this.reserve = Number(valLocalstorage.reserveID);
-    this.customerService.loadCustomer(valLocalstorage.customerID).subscribe((response: any) => {
+    this.customerService.loadCustomer(valLocalstorage.customerID.toString()).subscribe((response: any) => {
       if (response.resp) {
         this.clientName.setValue(response.msg.name === '' || null ? 'Sin Nombre': response.msg.name)
         this.clientDocument.setValue(response.msg.identification === '' || null ? 'Sin Numero de documento': response.msg.identification)
@@ -216,7 +218,21 @@ export class InvoiceComponent implements OnInit {
         this.changeShow();
         if (response.resp) {
           this.alert('Exito', 'Factura creada.', 'success');
-          this.invoiceNumber.setValue(response.msg.reserveNumber);
+          this.numberInvoice = response.msg.invoiceNumber;
+          let resetDataLocalstorage = {
+            status: response.msg.active,
+            articlesIDS: [],
+            invoiceNumber: response.msg.invoiceNumber,
+            articlesLocalStorage: this.listArticlesLoads,
+            customerID: this.customer,
+            employeeName: response.msg.employeeName,
+            reserveNumber: response.msg.reserveNumber,
+            reserveID: response.msg.id,
+            total: response.msg.cost,
+            subtotal: response.msg.subTotal,
+            depositInvoice: this.deposit.value
+          }
+          localStorage.setItem('reserve', JSON.stringify(resetDataLocalstorage));
           this.showPrintButton = true;
           localStorage.removeItem('isCreatedInvoice');
           this.clearData();

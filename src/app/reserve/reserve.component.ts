@@ -347,22 +347,15 @@ export class ReserveComponent implements OnInit {
           let dataLocalstorage = {
             status: response.msg.active,
             articlesIDS: response.msg.articles,
+            invoiceNumber: '',
             articlesLocalStorage: this.localstorageArticlesValues,
             customerID: this.customerId.value,
-            customerName: response.msg.customerName,
-            description: response.msg.description,
             employeeName: response.msg.employeeName,
-            endDate: response.msg.endDate,
-            invoiceNumber: response.msg.invoiceNumber,
-            reserveDay: response.msg.reserveDay,
             reserveNumber: response.msg.reserveNumber,
             reserveID: response.msg.id,
-            startDate: response.msg.startDate,
             total: this.totalReserve.value,
             subtotal: this.subtotal.value,
-            totalTax: this.totalTax.value,
-            totalDiscount: this.totalDiscount.value,
-            employeeID: this.employeId.value
+            depositInvoice: 0
           }
           let status = {
             created: false
