@@ -44,6 +44,10 @@ export class ListReserveComponent implements OnInit {
     this.router.navigate(['/details-reserve', data.id]);
   }
 
+  goToEdit(data) {
+    this.router.navigate(['/edit-reserve', data.id]);
+  }
+
   // Servicios
   getList(): any {
     this.reserveService.loadReserves()

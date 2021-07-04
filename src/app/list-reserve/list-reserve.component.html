@@ -28,11 +28,11 @@
                         [field]="'customerName'">
                       </p-sortIcon>
                     </th>
-                    <th id="reserveDay" [pSortableColumn]="'reserveDay'">Día de reserva<p-sortIcon
+                    <th id="reserveDay" [pSortableColumn]="'reserveDay'">Fecha/Reserva<p-sortIcon
                         [field]="'reserveDay'">
                       </p-sortIcon>
                     </th>
-                    <th id="endDate" [pSortableColumn]="'endDate'">Día de cierre<p-sortIcon [field]="'endDate'">
+                    <th id="endDate" [pSortableColumn]="'endDate'">Fecha/Cierre<p-sortIcon [field]="'endDate'">
                       </p-sortIcon>
                     </th>
                     <th id="articles" [pSortableColumn]="'articles'">Artículos<p-sortIcon [field]="'articles'">
@@ -55,8 +55,12 @@
                     <td>{{data.isActive}}</td>
                     <td>
                       <div>
-                        <button mat-raised-button class="btn" [attr.disabled]="dsbBtn?'':null"
-                          (click)="goToDetails(data)">Detalles </button>
+                        <button mat-mini-fab color="primary" matTooltip="Ver detalle" [attr.disabled]="dsbBtn?'':null" (click)="goToDetails(data)">
+                          <mat-icon> preview </mat-icon>
+                        </button>
+                        <button mat-mini-fab matTooltip="Editar" [attr.disabled]="dsbBtn?'':null" (click)="goToEdit(data)">
+                          <mat-icon> edit </mat-icon>
+                        </button>
                       </div>
                     </td>
                   </tr>

@@ -8,9 +8,15 @@ import { Router } from '@angular/router';
 })
 export class ProfilesComponent implements OnInit {
 
+  boolRole = false;
   constructor(private router: Router) { }
 
   ngOnInit() {
+
+    let jsonData = JSON.parse(localStorage.getItem('user'));
+    let descRole = jsonData.role.role.toUpperCase();
+    (descRole == "ADMINISTRADOR") ? this.boolRole = false : this.boolRole = true;
+
   }
 
   goToPage(url: string) {

@@ -4,6 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  apiUrl: 'http://localhost:3435',
+  // apiUrl: 'http://localhost:3435',
+  apiUrl: 'https://bellarose-qa.herokuapp.com',
   production: false
 };

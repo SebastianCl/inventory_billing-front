@@ -1,11 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-
 import { Employee } from '../models/employee.model';
 import { EmployeeService } from '../service/employee.service';
+
+declare const $: any;
+declare interface RouteInfo {
+  path: string;
+  title: string;
+  icon: string;
+  class: string;
+}
+
+export const ROUTES: RouteInfo[] = [
+  { path: '/profiles', title: 'Perfiles', icon: 'face', class: '' }
+];
 
 @Component({
   selector: 'app-employee-profile',
@@ -14,6 +25,8 @@ import { EmployeeService } from '../service/employee.service';
   providers: [EmployeeService]
 })
 export class EmployeeProfileComponent implements OnInit {
+
+  [x: string]: any;
 
   employee: Employee;
 
@@ -27,6 +40,7 @@ export class EmployeeProfileComponent implements OnInit {
   hiddenProgBar: boolean;
 
   constructor(
+    private router: Router,
     public employeeService: EmployeeService,
     private _snackBar: MatSnackBar) {
     this.name = new FormControl();
@@ -39,7 +53,16 @@ export class EmployeeProfileComponent implements OnInit {
     this.dsbSave = false;
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+    let jsonData = JSON.parse(localStorage.getItem('user'));
+    let descRole = jsonData.role.role.toUpperCase();
+
+    if (descRole != "ADMINISTRADOR") {
+      this.router.navigate(['/profiles']);
+    }
+
+  }
 
   private clearData() {
     this.name.setValue('');

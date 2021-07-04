@@ -20,8 +20,8 @@
                         <p class="card-category"> Crea o visualiza el perfil de un empleado</p>
                         <button mat-raised-button class="btn btn-action" (click)="goToPage('/list-employee')">Ver
                             lista</button>
-                        <button mat-raised-button class="btn pull-right btn-action"
-                            (click)="goToPage('/add-employee')">Agregar empleado</button>
+                        <button mat-raised-button class="btn pull-right btn-action" [disabled]="boolRole"
+                        (click)="goToPage('/add-employee')">Agregar empleado</button>
                     </div>
 
                     <br><br><br>

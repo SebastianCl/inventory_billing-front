@@ -200,7 +200,6 @@ export class ReserveComponent implements OnInit {
     let valSubTotal = 0;
     let valDescuento = 0;
 
-    debugger;
     for (let index = 0; index < rowsArticles.length; index++) {
 
       const element = rowsArticles[index];
