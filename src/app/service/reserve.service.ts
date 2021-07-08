@@ -48,9 +48,9 @@ export class ReserveService {
       .pipe(catchError(this.handleError));
   }
 
-  updateReserve(id: string, newData: any): Observable<Reserve> {
+  payReserve(id: string, newData: any): Observable<Reserve> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
-    return this.http.put<Reserve>(this.urlApi + '/reserve/updateReserve', newData, { headers: header })
+    return this.http.put<Reserve>(this.urlApi + '/reserve/payReserve', newData, { headers: header })
       .pipe(catchError(this.handleError));
   }
 

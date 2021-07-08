@@ -21,6 +21,7 @@ export class InvoiceComponent implements OnInit {
   invoice: Invoice;
 
   deposit: FormControl;
+  payment: FormControl;
   invoiceNumber: FormControl;
   dateInvoice: FormControl;
   employeeName: FormControl;
@@ -39,6 +40,7 @@ export class InvoiceComponent implements OnInit {
   subtittle: string;
   numberInvoice: string;
   depositInvoice: string;
+  paymentInvoice: string;
 
   listArticlesLoads = [];
 
@@ -55,6 +57,7 @@ export class InvoiceComponent implements OnInit {
     private _snackBar: MatSnackBar,
     public route: ActivatedRoute) {
     this.deposit = new FormControl();
+    this.payment = new FormControl();
     this.invoiceNumber = new FormControl();
     this.dateInvoice = new FormControl();
     this.employeeName = new FormControl();
@@ -84,18 +87,19 @@ export class InvoiceComponent implements OnInit {
 
   ngOnInit() { }
 
-  loadDataInvoiceById(id){
+  loadDataInvoiceById(id) {
     this.invoiceService.loadInvoice(id).subscribe((response: any) => {
       if (response.resp) {
         this.numberInvoice = response.msg.invoiceNumber;
         this.dateInvoice.setValue(this.convertDates(response.msg.date));
         this.employeeName.setValue(response.msg.employeeName);
         this.getCustomerData(response.msg.reserve.customer.id);
-        
+
         this.listArticlesLoads = response.msg.articles
         this.subTotal = response.msg.subTotal;
         this.total = response.msg.cost;
         this.deposit.setValue(response.msg.deposit);
+        this.payment.setValue(response.msg.payment);
       } else {
         this.alert('Atención', 'No se encontro ninguna factura por este id.', 'warning');
       }
@@ -112,11 +116,11 @@ export class InvoiceComponent implements OnInit {
         this.alert('Error', 'Ocurrió un error.', 'error');
       }
     });
-    
+
   }
 
 
-  loadDataLocalstorage(){
+  loadDataLocalstorage() {
     if (localStorage.getItem('isCreatedInvoice') !== null) {
       const valStateLocalStorage = JSON.parse(localStorage.getItem('isCreatedInvoice'));
       if (valStateLocalStorage.created === false) {
@@ -135,8 +139,9 @@ export class InvoiceComponent implements OnInit {
     let valLocalstorage = JSON.parse(localStorage.getItem('reserve'));
     this.numberInvoice = valLocalstorage.invoiceNumber;
     this.deposit.setValue(valLocalstorage.depositInvoice);
+    this.payment.setValue(valLocalstorage.paymentInvoice);
     valLocalstorage.articlesLocalStorage.forEach(element => {
-      let msg = " - articulo: "+element.reference+", Descuento: "+element.discount+", Precio: "+element.price;
+      let msg = " - articulo: " + element.reference + ", Descuento: " + element.discount + ", Precio: " + element.price;
       this.descriptionArticles.push(msg);
     });
     this.dateInvoice.setValue(this.dateNow());
@@ -145,10 +150,10 @@ export class InvoiceComponent implements OnInit {
     this.reserve = Number(valLocalstorage.reserveID);
     this.customerService.loadCustomer(valLocalstorage.customerID.toString()).subscribe((response: any) => {
       if (response.resp) {
-        this.clientName.setValue(response.msg.name === '' || null ? 'Sin Nombre': response.msg.name)
-        this.clientDocument.setValue(response.msg.identification === '' || null ? 'Sin Numero de documento': response.msg.identification)
-        this.clientAddress.setValue(response.msg.direction === '' || null ? 'Sin Dirección': response.msg.direction)
-        this.clientEmail.setValue(response.msg.email === '' || null ? 'Sin email': response.msg.email)
+        this.clientName.setValue(response.msg.name === '' || null ? 'Sin Nombre' : response.msg.name)
+        this.clientDocument.setValue(response.msg.identification === '' || null ? 'Sin Numero de documento' : response.msg.identification)
+        this.clientAddress.setValue(response.msg.direction === '' || null ? 'Sin Dirección' : response.msg.direction)
+        this.clientEmail.setValue(response.msg.email === '' || null ? 'Sin email' : response.msg.email)
       } else {
         this.alert('Atención', 'El cliente ligado en esta factura no fue encontrado', 'warning');
       }
@@ -173,10 +178,10 @@ export class InvoiceComponent implements OnInit {
   getCustomerData(customerID) {
     this.customerService.loadCustomer(customerID).subscribe((response: any) => {
       if (response.resp) {
-        this.clientName.setValue(response.msg.name === '' || null ? 'Sin Nombre': response.msg.name)
-        this.clientDocument.setValue(response.msg.identification === '' || null ? 'Sin Numero de documento': response.msg.identification)
-        this.clientAddress.setValue(response.msg.direction === '' || null ? 'Sin Dirección': response.msg.direction)
-        this.clientEmail.setValue(response.msg.email === '' || null ? 'Sin email': response.msg.email)
+        this.clientName.setValue(response.msg.name === '' || null ? 'Sin Nombre' : response.msg.name)
+        this.clientDocument.setValue(response.msg.identification === '' || null ? 'Sin Numero de documento' : response.msg.identification)
+        this.clientAddress.setValue(response.msg.direction === '' || null ? 'Sin Dirección' : response.msg.direction)
+        this.clientEmail.setValue(response.msg.email === '' || null ? 'Sin email' : response.msg.email)
       } else {
         this.alert('Atención', 'El cliente ligado en esta factura no fue encontrado', 'warning');
       }
@@ -210,6 +215,7 @@ export class InvoiceComponent implements OnInit {
     this.invoice.subTotal = this.subTotal;
     this.invoice.cost = this.total;
     this.invoice.deposit = Number(this.deposit.value);
+    this.invoice.payment = Number(this.payment.value);
     this.invoice.description = this.descriptionArticles.toString();
 
 
@@ -230,7 +236,8 @@ export class InvoiceComponent implements OnInit {
             reserveID: response.msg.id,
             total: response.msg.cost,
             subtotal: response.msg.subTotal,
-            depositInvoice: this.deposit.value
+            depositInvoice: this.deposit.value,
+            paymentInvoice: this.payment.value
           }
           localStorage.setItem('reserve', JSON.stringify(resetDataLocalstorage));
           this.showPrintButton = true;
@@ -261,9 +268,9 @@ export class InvoiceComponent implements OnInit {
       this.openSnackBar('Debe ingresar un deposito.', 'OK');
       return false;
     }
-    
-    if (this.deposit.value > totalInvoice) {
-      this.openSnackBar('Debe ingresar un deposito menor al total de la factura.', 'OK');
+
+    if (this.payment.value > totalInvoice) {
+      this.openSnackBar('Debe ingresar un abono menor al total de la factura.', 'OK');
       return false;
     }
     return true;
@@ -311,7 +318,7 @@ export class InvoiceComponent implements OnInit {
   }
 
 
-  
+
 
   // Reiniciar valores de los campos
   private clearData() {

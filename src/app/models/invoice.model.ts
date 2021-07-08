@@ -3,6 +3,7 @@ export interface IInvoice {
     reserve: number;
     cost: number;
     deposit: number;
+    payment: number;
     description: string;
 }
 
@@ -12,6 +13,7 @@ export class Invoice implements IInvoice {
     subTotal: number;
     cost: number;
     deposit: number;
+    payment: number;
     description: string;
 
     constructor() {
@@ -19,6 +21,7 @@ export class Invoice implements IInvoice {
         this.subTotal = 0;
         this.cost = 0;
         this.deposit = 0;
+        this.payment = 0;
         this.description = '';
     }
 }

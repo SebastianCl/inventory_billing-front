@@ -22,8 +22,8 @@ export class EditReserveComponent implements OnInit {
   public dsbSave: boolean;
   public subtotal: FormControl;
   public totalDiscount: FormControl;
-  public totalReserve: FormControl; 
-  public endDate: FormControl; 
+  public totalReserve: FormControl;
+  public endDate: FormControl;
   public startDate: FormControl;
   public idReserve: String;
 
@@ -84,7 +84,7 @@ export class EditReserveComponent implements OnInit {
 
     let array_articles = data.articles;
 
-    for ( let indx in array_articles ) {
+    for (let indx in array_articles) {
 
       let element = array_articles[indx];
 
@@ -122,7 +122,7 @@ export class EditReserveComponent implements OnInit {
     control.removeAt(index);
     this.calculateTotals();
   }
-  
+
   public createForm() {
 
     this.form = new FormGroup({
@@ -208,7 +208,7 @@ export class EditReserveComponent implements OnInit {
       articleList.push({ ref: element.garmentReference, price: element.price, discount: element.discount });
 
     }
-    
+
     this.edit_reserve = new EditReserve();
     this.edit_reserve.id = this.idReserve;
     this.edit_reserve.endDate = this.convertDates(this.endDate.value);
@@ -233,7 +233,7 @@ export class EditReserveComponent implements OnInit {
     let validRowsIndex: Number;
     let sw = false;
 
-    for (let indx in rowsArticles){
+    for (let indx in rowsArticles) {
 
       const element = rowsArticles[indx];
 
@@ -269,7 +269,7 @@ export class EditReserveComponent implements OnInit {
     }
   }
 
-   // Función general para snackbar
+  // Función general para snackbar
   private openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, { duration: 2000, panelClass: ['mycsssnackbartest'] });
   }

@@ -58,8 +58,8 @@
                     <td>{{data.numberReserve}}</td>
                     <td>{{data.nameEmployee}}</td>
                     <td>{{data.identificationCustomer}}</td>
-                    <td>{{data.totalInvoice}}</td>
-                    <td>{{data.depositInvoice}}</td>
+                    <td>{{data.totalInvoice | currency}}</td>
+                    <td>{{data.depositInvoice | currency}}</td>
                     <td>
                       <p *ngIf="data.stateInvoice === true">Disponible</p>
                       <p *ngIf="data.stateInvoice === false">Cerrada</p>
@@ -98,7 +98,7 @@
   <!-- Modal content -->
   <div class="modal1-content">
     <div class="modal1-header">
-      <h2>Abono de factura # {{numberInvoiceTittle}}
+      <h2>Factura # {{numberInvoiceTittle}}
         <span class="close1" (click)="close()">X</span>
       </h2>
     </div>
@@ -112,6 +112,7 @@
                 <input matInput placeholder="Ingrese abono" type="number" (keypress)="numberOnly($event)"
                   [formControl]="abono">
               </mat-form-field>
+              <h4>Restante: {{restante | currency}}</h4>
             </div>
           </div>
         </form>

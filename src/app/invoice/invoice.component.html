@@ -15,10 +15,16 @@
             <p class="card-category">Previsualización de factura</p>
             <form>
               <div class="row" *ngIf="showDepositInput === true">
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <mat-form-field>
                     <input matInput placeholder="Ingrese deposito" type="number" (keypress)="numberOnly($event)"
                       [formControl]="deposit">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <input matInput placeholder="Ingrese abono" type="number" (keypress)="numberOnly($event)"
+                      [formControl]="payment">
                   </mat-form-field>
                 </div>
               </div>
@@ -30,12 +36,8 @@
                   </div>
                   <div class="col-md-4" style="padding: 1px;">
                     <p>Siguenos en:
-                      <br>
-                      <a href="https://www.facebook.com/Bellarosealquiler" target="_blank"><span
-                          class="material-icons">facebook</span> Bellarose.alquiler</a>
-                      <br>
                       <a href="https://www.instagram.com/bellarose.alquiler" target="_blank"><span class="iconify"
-                          data-icon="mdi-instagram" data-inline="false"></span>Bellarose.alquiler</a>
+                          data-icon="mdi-instagram" data-inline="false"></span>@bellarose.alquiler</a>
                     </p>
                     <p>317 500 93 38
                       <br>
@@ -45,7 +47,7 @@
                     </p>
                   </div>
                   <div class="col-md-4" style="padding: 1px;">
-                    Numero de factura: {{numberInvoice}}
+                    Número de factura: {{numberInvoice}}
                   </div>
                 </div>
                 <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
@@ -108,15 +110,19 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-4" style="padding: 1px;">
+                    <div class="col-md-3" style="padding: 1px;">
                       <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Deposito:
                         {{deposit.value | currency }}</mat-card>
                     </div>
-                    <div class="col-md-4" style="padding: 1px;">
+                    <div class="col-md-3" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Abono:
+                        {{payment.value | currency }}</mat-card>
+                    </div>
+                    <div class="col-md-3" style="padding: 1px;">
                       <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor:
                         {{subTotal | currency }}</mat-card>
                     </div>
-                    <div class="col-md-4" style="padding: 1px;">
+                    <div class="col-md-3" style="padding: 1px;">
                       <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Total a
                         Pagar: {{total | currency }}</mat-card>
                     </div>

@@ -15,8 +15,10 @@ export class ListInvoiceComponent implements OnInit {
 
   public listInvoices: any[] = [];
   public numberInvoiceTittle: number;
+  public restante: number;
   public totalInvoice: number;
   public depositInvoice: number;
+  public payment: number;
   public idInvoice: number
   public cols: any;
   public showUpdate: boolean;
@@ -26,9 +28,9 @@ export class ListInvoiceComponent implements OnInit {
   constructor(
     private router: Router,
     public invoiceService: InvoiceService,
-    private _snackBar: MatSnackBar) { 
-      this.abono = new FormControl();
-    }
+    private _snackBar: MatSnackBar) {
+    this.abono = new FormControl();
+  }
 
 
   ngOnInit() {
@@ -36,12 +38,15 @@ export class ListInvoiceComponent implements OnInit {
   }
 
   openModalInvoice(data) {
+    debugger;
     this.classMove = '';
     this.showUpdate = true;
     this.numberInvoiceTittle = data.numberInvoice;
+    this.restante = data.totalInvoice - data.payment;
     this.idInvoice = data.id;
     this.totalInvoice = data.totalInvoice;
     this.depositInvoice = data.depositInvoice
+    this.payment = data.payment
     const modalNewInvoice = document.getElementById('myModalNewInvoice');
     modalNewInvoice.style.display = 'block';
   }
@@ -53,46 +58,6 @@ export class ListInvoiceComponent implements OnInit {
 
   goToDetails(data) {
     this.router.navigate(['/invoice/', data]);
-  }
-
-  deleteInvoice(idInvoice) {
-    Swal.fire({
-      title:'Atención!',
-      html: `Deseas Eliminar la factura?`,
-      icon: 'warning',
-      confirmButtonText: 'Si',
-      showConfirmButton: true,
-      cancelButtonText: 'No',
-      showCancelButton: true,
-      allowOutsideClick: false
-    }).then((result: any) => {
-        if (result.value === true) {
-        this.invoiceService.deleteInvoice(idInvoice)
-          .subscribe((response: any) => {
-            if (response.resp) {
-              this.alert('Atención!', 'Se a eliminado la factura con exito.', 'success');
-              this.listInvoices = [];
-              this.getList()
-            } else {
-              this.alert('Warning', 'Se presento un error en el sistema.', 'warning');
-            }
-          },
-            (err) => {
-              if (err.status === 401) {
-                localStorage.removeItem('token');
-                localStorage.removeItem('customer');
-                Swal.fire({
-                  title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
-                  onClose: () => { this.router.navigate(['/login']); }
-                });
-              } else {
-                console.log(err.message);
-                this.alert('Error', 'Un error ha ocurrido.', 'error');
-              }
-            }
-          );
-      }
-    })
   }
 
   // Servicios
@@ -111,6 +76,7 @@ export class ListInvoiceComponent implements OnInit {
               description: element.description,
               totalInvoice: element.cost,
               depositInvoice: element.deposit,
+              payment: element.payment,
               nameEmployee: element.employeeName
             }
             this.listInvoices = [... this.listInvoices, dataInvoice];
@@ -135,7 +101,7 @@ export class ListInvoiceComponent implements OnInit {
       );
   }
 
-  
+
 
   createAbono() {
     if (!this.validateData(this.totalInvoice)) {
@@ -152,7 +118,7 @@ export class ListInvoiceComponent implements OnInit {
       invoiceNumber: numberInvoice
     }
 
-    this.invoiceService.updateInvoice(idInvoice, invoiceAbono)
+    this.invoiceService.payInvoice(idInvoice, invoiceAbono)
       .subscribe((response: any) => {
         if (response.resp) {
           this.close();
@@ -198,8 +164,8 @@ export class ListInvoiceComponent implements OnInit {
       return false;
     }
 
-    let sumDeposit = this.depositInvoice + this.abono.value;
-    
+    let sumDeposit = this.payment + this.abono.value;
+
     if (sumDeposit > totalInvoice) {
       this.openSnackBar('Debe ingresar un abono menor al total restante de factura.', 'OK');
       return false;

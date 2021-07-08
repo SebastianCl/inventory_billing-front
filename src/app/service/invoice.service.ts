@@ -48,9 +48,9 @@ export class InvoiceService {
             .pipe(catchError(this.handleError));
     }
 
-    updateInvoice(id: string, newData: any): Observable<Invoice> {
+    payInvoice(id: string, newData: any): Observable<Invoice> {
         const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
-        return this.http.put<Invoice>(this.urlApi + '/invoice/updateInvoice', newData, { headers: header })
+        return this.http.put<Invoice>(this.urlApi + '/invoice/payInvoice', newData, { headers: header })
             .pipe(catchError(this.handleError));
     }
 
