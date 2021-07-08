@@ -69,8 +69,8 @@ export class ArticleProfileComponent implements OnInit {
 
     readers.readAsDataURL(dataFile);
     readers.onload = () => {
-        let resultBase64 = readers.result.toString();
-        this.base64Data = resultBase64.split(',')[1];
+      let resultBase64 = readers.result.toString();
+      this.base64Data = resultBase64.split(',')[1];
     }
   }
 
@@ -165,9 +165,9 @@ export class ArticleProfileComponent implements OnInit {
     }
     return true;
   }
-  
 
-  private numberOnly(event): boolean {
+
+  numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
