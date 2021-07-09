@@ -65,8 +65,6 @@ export class ArticleProfileComponent implements OnInit {
     const readers = new FileReader();
     const dataFile = event[0];
 
-    // console.info(dataFile);
-
     readers.readAsDataURL(dataFile);
     readers.onload = () => {
       let resultBase64 = readers.result.toString();
@@ -158,7 +156,6 @@ export class ArticleProfileComponent implements OnInit {
       this.openSnackBar('Debes indicar el precio.', 'OK');
       return false;
     }
-    console.log(this.base64Data);
     if (this.base64Data === null || this.base64Data === '') {
       this.openSnackBar('Debes indicar la imagen del articulo.', 'OK');
       return false;

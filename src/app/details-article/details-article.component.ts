@@ -62,7 +62,6 @@ export class DetailsArticleComponent implements OnInit {
               onClose: () => { this.router.navigate(['/login']); }
             });
           } else {
-            console.log(err.message);
             this.alert('Error', 'Ocurrió un error.', 'error');
           }
         }

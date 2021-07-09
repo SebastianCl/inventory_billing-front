@@ -230,7 +230,7 @@ export class EditReserveComponent implements OnInit {
       },
         (err) => {
           this.changeShow();
-          this.alert('Error', `${err.msg}`, 'error');
+          this.alert('Error', `${err.error.msg}`, 'error');
           this.back();
         }
       );

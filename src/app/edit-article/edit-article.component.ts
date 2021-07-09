@@ -7,7 +7,6 @@ import { EditArticle } from '../models/article.model';
 import { ArticleService } from '../service/article.service';
 import { environment } from '../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { info } from 'console';
 
 @Component({
   selector: 'app-edit-article',
