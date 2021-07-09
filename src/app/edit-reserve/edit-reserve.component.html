@@ -16,7 +16,8 @@
             <p class="card-category"> Estado: {{form.controls.isActive.value}}</p>
             <button mat-raised-button matTooltip="Listar reservas" class="btn pull-right save-reserve"
               (click)="back()">Volver</button>
-
+            <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null">
+            </mat-progress-bar>
           </div>
 
           <div class="card-body">
@@ -192,7 +193,6 @@
 
                 <button mat-raised-button class="btn pull-right save-reserve" [attr.disabled]="dsbSave?'':null"
                   (click)="editReserve()">Editar</button>
-                <!-- <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null"> -->
 
               </div>
 

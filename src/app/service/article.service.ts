@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Article } from '../models/article.model';
+import { Article, EditArticle } from '../models/article.model';
 
 import { environment } from '../../environments/environment';
 
@@ -45,6 +45,12 @@ export class ArticleService {
     createArticle(article: Article): Observable<Article> {
         const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
         return this.http.post<Article>(this.urlApi + '/article/createArticle', article, { headers: header })
+            .pipe(catchError(this.handleError));
+    }
+
+    editArticle(article: EditArticle, idArticle: string): Observable<EditArticle> {
+        const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, 'id': idArticle});
+        return this.http.put<EditArticle>(this.urlApi + '/article/updateArticle', article, { headers: header })
             .pipe(catchError(this.handleError));
     }
 

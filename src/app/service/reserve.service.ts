@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Reserve } from '../models/reserve.model';
+import { Reserve, EditReserve } from '../models/reserve.model';
 
 import { environment } from '../../environments/environment';
 
@@ -45,6 +45,12 @@ export class ReserveService {
   createReserve(reserve: Reserve): Observable<Reserve> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
     return this.http.post<Reserve>(this.urlApi + '/reserve/createReserve', reserve, { headers: header })
+      .pipe(catchError(this.handleError));
+  }
+
+  editReserve(reserve: EditReserve, idReserve: string): Observable<EditReserve> {
+    const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, 'id': idReserve});
+    return this.http.put<EditReserve>(this.urlApi + '/reserve/updateReserve', reserve, { headers: header })
       .pipe(catchError(this.handleError));
   }
 

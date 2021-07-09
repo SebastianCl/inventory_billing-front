@@ -21,6 +21,7 @@ import { DetailsUserComponent } from '../../details-user/details-user.component'
 import { DetailsArticleComponent } from '../../details-article/details-article.component';
 import { DetailsReserveComponent } from '../../details-reserve/details-reserve.component';
 import { EditReserveComponent } from '../../edit-reserve/edit-reserve.component';
+import { EditArticleComponent } from '../../edit-article/edit-article.component'
 
 import { InvoiceComponent } from '../../invoice/invoice.component';
 import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
@@ -48,4 +49,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'invoice/:id', component: InvoiceComponent },
     { path: 'list-invoice', component: ListInvoiceComponent },
     { path: 'edit-reserve/:id', component: EditReserveComponent },
+    { path: 'edit-article/:id', component: EditArticleComponent },
 ];

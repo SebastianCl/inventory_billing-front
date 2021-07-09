@@ -9,7 +9,6 @@ export interface IReserve {
 }
 
 export interface IEditReserve {
-    id?: String;
     endDate: string;
     description?: string;
     articles: Array<Object[]>;
@@ -35,13 +34,11 @@ export class Reserve implements IReserve {
 }
 
 export class EditReserve implements IEditReserve {
-    id?: String;
     endDate: string;
     description?: string;
     articles: Array<Object[]>;
 
     constructor() {
-        this.id = '';
         this.endDate = '';
         this.description = '';
         this.articles = [];

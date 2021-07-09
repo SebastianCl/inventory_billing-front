@@ -20,12 +20,13 @@ export class EditReserveComponent implements OnInit {
   public listArticles: FormGroup;
   public listGarment: any[];
   public dsbSave: boolean;
+  public hiddenProgBar: boolean;
   public subtotal: FormControl;
   public totalDiscount: FormControl;
   public totalReserve: FormControl;
   public endDate: FormControl;
   public startDate: FormControl;
-  public idReserve: String;
+  public idReserve: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -71,7 +72,6 @@ export class EditReserveComponent implements OnInit {
   }
 
   setData(data, idReserve) {
-    console.info(data);
     this.form.controls.reserveNumber.setValue(data.reserveNumber);
     this.form.controls.invoiceNumber.setValue(data.invoiceNumber);
     this.form.controls.customerName.setValue(data.customerName);
@@ -79,7 +79,7 @@ export class EditReserveComponent implements OnInit {
     this.form.controls.reserveDay.setValue(this.convertDates(data.reserveDay));
     this.startDate.setValue(data.reserveDay);
     this.endDate.setValue(data.endDate);
-    this.idReserve = idReserve.toString();
+    this.idReserve = idReserve;
     this.form.controls.description.setValue(data.description);
 
     let array_articles = data.articles;
@@ -102,6 +102,7 @@ export class EditReserveComponent implements OnInit {
     let isActive = data.active ? 'ACTIVA' : 'CERRADA';
     this.form.controls.isActive.setValue(isActive);
     this.calculateTotals();
+    this.hiddenProgBar = true;
   }
 
   addArticle() {
@@ -188,13 +189,13 @@ export class EditReserveComponent implements OnInit {
 
     // Validar todos los datos basicos
     if (!this.validateForm()) {
-      // this.changeShow();
+      this.changeShow();
       return;
     }
 
     // Validar todos los datos de productos
     if (!this.validateRows()) {
-      // this.changeShow();
+      this.changeShow();
       return;
     }
 
@@ -210,10 +211,29 @@ export class EditReserveComponent implements OnInit {
     }
 
     this.edit_reserve = new EditReserve();
-    this.edit_reserve.id = this.idReserve;
     this.edit_reserve.endDate = this.convertDates(this.endDate.value);
-    this.edit_reserve.description = this.form.controls.description.toString();
+    this.edit_reserve.description = this.form.controls.description.value;
     this.edit_reserve.articles = articleList;
+
+    console.info(this.edit_reserve);
+
+    this.reserveService.editReserve(this.edit_reserve, this.idReserve)
+      .subscribe((response: any) => {
+        console.info(response);
+        this.changeShow();
+        if (response.resp) {
+          this.alert('HECHO', 'Reserva editada.', 'success');
+        } else {
+          this.alert('Atención', 'Reserva no editado.', 'warning');
+        }
+        this.back();
+      },
+        (err) => {
+          this.changeShow();
+          this.alert('Error', `${err.msg}`, 'error');
+          this.back();
+        }
+      );
 
   }
 
@@ -321,6 +341,11 @@ export class EditReserveComponent implements OnInit {
     this.totalDiscount.setValue(valDescuento); // TOTAL DE DESCUENTOS
     this.totalReserve.setValue(valTotal); // TOTAL DE RESERVA
 
+  }
+
+  private changeShow() {
+    this.dsbSave = !this.dsbSave;
+    this.hiddenProgBar = !this.hiddenProgBar;
   }
 
 }
