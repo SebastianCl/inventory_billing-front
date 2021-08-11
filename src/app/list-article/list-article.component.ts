@@ -47,7 +47,10 @@ export class ListArticleComponent implements OnInit {
             const dataArticle = {
               id: element.id,
               reference: element.reference,
-              brand: element.brand
+              size: element.size,
+              color: element.color,
+              quantity: element.quantity,
+              brand: element.brand,
             }
             this.listArticle.push(dataArticle);
           });
