@@ -25,6 +25,10 @@ export interface IEditArticle {
     imageBase64: String;
 }
 
+export interface IValidateArticle {
+    articles: Array<Object[]>;
+}
+
 export class Article implements IArticle {
     id?: string;
     type: string;
@@ -75,5 +79,12 @@ export class EditArticle implements IEditArticle {
         this.quantity = 0;
         this.available = false;
         this.imageBase64 = '';
+    }
+}
+
+export class ValidateArticle implements IValidateArticle {
+    articles: Array<Object[]>;
+    constructor() {
+        this.articles = [];
     }
 }

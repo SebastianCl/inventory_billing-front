@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Article, EditArticle } from '../models/article.model';
+import { Article, EditArticle, ValidateArticle } from '../models/article.model';
 
 import { environment } from '../../environments/environment';
 
@@ -72,6 +72,12 @@ export class ArticleService {
     deleteArticle(id): Observable<any> {
         const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
         return this.http.delete<any>(this.urlApi + '/article/deleteArticle', { headers: header })
+            .pipe(catchError(this.handleError));
+    }
+
+    validateAvailability(articles: any): Observable<ValidateArticle> {
+        const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
+        return this.http.post<ValidateArticle>(this.urlApi + '/article/validateAvailability', articles, { headers: header })
             .pipe(catchError(this.handleError));
     }
 

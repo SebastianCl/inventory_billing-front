@@ -1,18 +1,122 @@
 <div class="main-content">
+
   <div class="container-fluid">
+
     <div class="row">
+
       <div class="col-md-12">
+
         <div class="card">
+
           <div class="card-header card-header-warning">
+
             <h4 class="card-title">Registrar reserva</h4>
             <p class="card-category">Reserva para el cliente con identificación: {{customerIdentification.value}}</p>
             <p class="card-category">Registra el empleado con identificación: {{employeIdentification.value}}</p>
-            <button mat-raised-button matTooltip="Finalizar y registrar reserva." class="btn pull-right save-reserve"
-              [attr.disabled]="dsbSave?'':null" (click)="saveReserve()">Guardar Reserva</button>
             <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null">
             </mat-progress-bar>
+            <button mat-raised-button class="btn pull-right save-reserve" (click)="openModalCliente()">Crear
+              cliente</button>
+
           </div>
+
           <div class="card-body">
+
+            <div class="rg">
+
+              <button mat-raised-button matTooltip="Agregar" class="btn save-reserve"
+                (click)="addArticle()">+</button>
+
+            </div>
+
+            <!-- TABLA DE ITEMS -->
+            <div class="card-body">
+              <div class="table-responsive">
+
+                <table class="table table-hover">
+
+                  <thead>
+                    <th id=""></th>
+                    <th id=""></th>
+                    <th id=""> % DESCUENTO </th>
+                    <th id=""> REFERENCIA </th>
+                    <th id=""> PRECIO </th>
+                    <th id=""> DESCUENTO </th>
+                    <th id=""> NETO </th>
+                    <th id=""> VISUALIZAR </th>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngFor="let item of listArticles.get('rows')['controls'] ; let i = index;">
+                      <td>
+                        <button mat-raised-button matTooltip="Eliminar" class="btn save-reserve"
+                          (click)="removeArticle(i)">X</button>
+                      </td>
+                      <td>
+                        {{i+1}}
+                      </td>
+                      <td>
+                        <mat-form-field class="field-width">
+                          <input matInput type="number" maxlength="3" max="100" min="0"
+                            (blur)="numberOnly($event);calculateTotals();" (change)="calculateTotals()"
+                            [formControl]="item.get('discount')">
+                          <span matPrefix>%&nbsp;</span>
+                        </mat-form-field>
+                      </td>
+                      <td>
+                        <mat-form-field>
+                          <mat-select placeholder="Busca por referencia" [formControl]="item.get('garmentReference')"
+                            (selectionChange)="setGarmentPrice(item.get('garmentReference'), i)">
+                            <mat-option *ngFor="let garment of listGarment" value="{{garment.reference}}">
+                              {{garment.reference}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </td>
+                      <td>
+                        <mat-form-field>
+                          <input matInput placeholder="Precio" type="number"
+                            (keypress)="numberOnly($event);calculateTotals();" (change)="calculateTotals()"
+                            [formControl]="item.get('price')" style="width: 50%;">
+                        </mat-form-field>
+                      </td>
+                      <td>
+                        {{(item.get('quantity').value * item.get('price').value) * (item.get('discount').value / 100)
+                        | currency }}
+                      </td>
+                      <td>
+                        {{item.get('price').value - ((item.get('quantity').value * item.get('price').value) *
+                        (item.get('discount').value / 100)) | currency }}
+                      </td>
+                      <td>
+                        <button mat-mini-fab color="primary" (click)="openModal(item.get('garmentReference'))"
+                          [disabled]="item.get('garmentReference').value === ''">
+                          <mat-icon>image</mat-icon>
+                        </button>
+                      </td>
+                    </tr>
+
+                  </tbody>
+
+                </table>
+
+              </div>
+              
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <mat-card>Subtotal: {{subtotal.value | currency}}</mat-card>
+              </div>
+              <div class="col-md-4">
+                <mat-card>Descuento total: {{totalDiscount.value | currency}}</mat-card>
+              </div>
+              <div class="col-md-4">
+                <mat-card><strong>TOTAL: {{totalReserve.value | currency}}</strong></mat-card>
+              </div>
+            </div>
+
+            <br>
 
             <form>
 
@@ -73,109 +177,143 @@
                 </div>
               </div>
 
-              <br><br>
+              <div class="pull-right">
 
-              <div class="row">
-                <div class="col-md-4">
-                  <mat-card>Subtotal: {{subtotal.value | currency}}</mat-card>
-                </div>
-                <div class="col-md-4">
-                  <mat-card>Descuento total: {{totalDiscount.value | currency}}</mat-card>
-                </div>
-                <div class="col-md-4">
-                  <mat-card><strong>TOTAL: {{totalReserve.value | currency}}</strong></mat-card>
-                </div>
-              </div>
-
-              <br><br>
-              <div class="row">
-                <div class="pull-right">
-                  <button mat-mini-fab class="add pull-right" (click)="addArticle()">+</button>
-                </div>
+                <button mat-raised-button matTooltip="Finalizar y registrar reserva."
+                  class="btn pull-right save-reserve" [attr.disabled]="dsbSave?'':null" (click)="saveReserve()">Guardar
+                  Reserva</button>
 
               </div>
-
-
-              <!-- TABLA DE ITEMS -->
-              <div class="card-body">
-                <div class="table-responsive">
-
-                  <table class="table table-hover">
-
-                    <thead>
-                      <th id=""></th>
-                      <th id=""></th>
-                      <th id=""> % DESCUENTO </th>
-                      <th id=""> REFERENCIA </th>
-                      <th id=""> PRECIO </th>
-                      <th id=""> DESCUENTO </th>
-                      <th id=""> NETO </th>
-                      <th id=""> VISUALIZAR </th>
-                    </thead>
-
-                    <tbody>
-                      <tr *ngFor="let item of listArticles.get('rows')['controls'] ; let i = index;">
-                        <td>
-                          <button mat-mini-fab color="warn" (click)="removeArticle(i)">X</button>
-                        </td>
-                        <td>
-                          {{i+1}}
-                        </td>
-                        <td>
-                          <mat-form-field class="field-width">
-                            <input matInput type="number" maxlength="3" max="100" min="0"
-                              (blur)="numberOnly($event);calculateTotals();" (change)="calculateTotals()"
-                              [formControl]="item.get('discount')">
-                            <span matPrefix>%&nbsp;</span>
-                          </mat-form-field>
-                        </td>
-                        <td>
-                          <mat-form-field>
-                            <mat-select placeholder="Busca por referencia" [formControl]="item.get('garmentReference')"
-                              (selectionChange)="setGarmentPrice(item.get('garmentReference'), i)">
-                              <mat-option *ngFor="let garment of listGarment" value="{{garment.reference}}">
-                                {{garment.reference}}
-                              </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                        </td>
-                        <td>
-                          <mat-form-field>
-                            <input matInput placeholder="Precio" type="number"
-                              (keypress)="numberOnly($event);calculateTotals();" (change)="calculateTotals()"
-                              [formControl]="item.get('price')" style="width: 50%;">
-                          </mat-form-field>
-                        </td>
-                        <td>
-                          {{(item.get('quantity').value * item.get('price').value) * (item.get('discount').value / 100)
-                          | currency }}
-                        </td>
-                        <td>
-                          {{item.get('price').value - ((item.get('quantity').value * item.get('price').value) *
-                          (item.get('discount').value / 100)) | currency }}
-                        </td>
-                        <td>
-                          <button mat-mini-fab color="primary" (click)="openModal(item.get('garmentReference'))"
-                            [disabled]="item.get('garmentReference').value === ''">
-                            <mat-icon>image</mat-icon>
-                          </button>
-                        </td>
-                      </tr>
-
-                    </tbody>
-
-                  </table>
-
-                </div>
-              </div>
-
 
             </form>
+
           </div>
+
         </div>
+
       </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- The Modal Show Create New Cliente -->
+<div id="modalCreateClient" class="modal0">
+
+  <div class="modal0-content">
+
+    <div class="modal0-header">
+
+      <h2>Crear cliente</h2>
+      <h4>Complete todos los datos del perfil para el cliente</h4>
+
+    </div>
+
+    <div class="modal0-body">
+
+      <div class="modal0-message">
+
+        <div class="col-12 col-md-12 col-lg-12">
+
+          <form>
+
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput placeholder="Nombre del cliente" type="text" [formControl]="name">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput placeholder="Identificación" type="text" [formControl]="identification">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput placeholder="Correo electronico" [formControl]="email">
+                  <!-- <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+                    Por favor, introduce una dirección de correo electrónico válida
+                  </mat-error> -->
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput placeholder="Dirección del cliente" type="text" [formControl]="direction">
+                </mat-form-field>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="Teléfono 1" type="text" [formControl]="telephone1">
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="Teléfono 2" type="text" [formControl]="telephone2">
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="Teléfono 3" type="text" [formControl]="telephone3">
+                </mat-form-field>
+              </div>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="modal0-footer">
+      <button class="btn btn-default" [attr.disabled]="dsbSaveCliente?'':null" (click)="createCliente()">Crear cliente</button>
+      <button class="btn btn-default pull-right" (click)="closeModalCliente()">X</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- The Modal Show Image Preview Product -->
+<div id="modalPreReserve" class="modal0">
+  <!-- Modal content -->
+  <div class="modal0-content">
+    <div class="modal0-header">
+      <h2>¿Esta seguro de crear la reserva?</h2>
+      <!-- <span class="close0" (click)="close()">X</span> -->
+    </div>
+    <div class="modal0-body">
+      <!-- <div class="modal0-message">
+        <p>Hay {{quantityProduct}} disponibles.</p>
+      </div> -->
+      <!-- <div class="col-12 col-md-12 col-lg-12">
+        <form>
+          <div>
+            <img src="{{imageProduct}}" alt="product" id="ImageProduct" width="340">
+          </div>
+        </form>
+      </div> -->
+    </div>
+    <div class="modal0-footer">
+      <button class="btn btn-default" (click)="close()">Cerrar</button>
     </div>
   </div>
+
 </div>
 
 <!-- The Modal Show Image Preview Product -->

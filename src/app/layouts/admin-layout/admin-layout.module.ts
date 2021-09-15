@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { ReserveComponent } from '../../reserve/reserve.component';
+import { ReserveOldComponent } from '../../reserve-old/reserve-old.component';
 import { InvoiceComponent } from '../../invoice/invoice.component';
 
 import { ProfilesComponent } from '../../profiles/profiles.component';
@@ -80,7 +80,7 @@ import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
   ],
   declarations: [
     DashboardComponent,
-    ReserveComponent,
+    ReserveOldComponent,
     InvoiceComponent,
     ProfilesComponent,
     CustomerProfileComponent,

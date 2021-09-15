@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
@@ -12,6 +12,8 @@ import { ArticleService } from '../service/article.service';
 
 // Modelo
 import { Reserve } from '../models/reserve.model';
+import { ValidateArticle } from '../models/article.model'
+import { Customer } from '../models/customer.model';
 import { EmployeeService } from 'app/service/employee.service';
 
 @Component({
@@ -22,13 +24,25 @@ import { EmployeeService } from 'app/service/employee.service';
 })
 export class ReserveComponent implements OnInit {
 
+  customer: Customer;
+  name: FormControl;
+  identification: FormControl;
+  email: FormControl;
+  telephone1: FormControl;
+  telephone2: FormControl;
+  telephone3: FormControl;
+  direction: FormControl;
+
+  article: ValidateArticle;
   reserve: Reserve;
   public hiddenProgBar: boolean;
   public dsbSave: boolean;
+  public dsbSaveCliente: boolean;
   public listCustomers: any[];
   public listEmployees: any[];
   public listArticles: FormGroup;
   public listGarment: any[];
+  public listResponseArticle: any[];
 
   public customerId: FormControl;
   public customerIdentification: FormControl;
@@ -48,6 +62,7 @@ export class ReserveComponent implements OnInit {
   public dateNowValid: any;
 
   private rowsArticlesValues: any[];
+  private arrayValidateArticles:any[];
   private localstorageArticlesValues: any[];
 
   constructor
@@ -60,6 +75,13 @@ export class ReserveComponent implements OnInit {
       private reserveService: ReserveService,
       public fb: FormBuilder
     ) {
+    this.name = new FormControl();
+    this.identification = new FormControl();
+    this.email = new FormControl('', [Validators.email,]);
+    this.telephone1 = new FormControl();
+    this.telephone2 = new FormControl();
+    this.telephone3 = new FormControl();
+    this.direction = new FormControl();
     this.customerId = new FormControl();
     this.customerIdentification = new FormControl();
     this.employeIdentification = new FormControl();
@@ -74,6 +96,7 @@ export class ReserveComponent implements OnInit {
     this.subtotal = new FormControl();
     this.listArticles = this.fb.group({ rows: this.fb.array([]) });
     this.listGarment = [];
+    this.listResponseArticle = [];
     this.clearData();
     this.getListCustomers();
     this.getListEmployes();
@@ -123,29 +146,83 @@ export class ReserveComponent implements OnInit {
 
     const control = this.listArticles.get('rows') as FormArray;
     const rows = control.value;
-    let articleList = [];
-
-    let articleListLocalstorage = [];
+    let arrayValidate = [],
+        articleList = [];
 
     for (let index = 0; index < rows.length; index++) {
-      const element = rows[index];
-      // Conservar artículo en lista para almacenar
-      articleList.push({ ref: element.garmentReference, price: element.price, discount: element.discount });
-      articleListLocalstorage.push({ reference: element.garmentReference, price: element.price, discount: element.discount });
+      const element = rows[index];      
+      const objeto = {
+        ref: element.garmentReference, 
+        price: element.price, 
+        discount: element.discount
+      }
+      arrayValidate.push(element.garmentReference);
+      articleList.push(objeto);
     }
-    this.localstorageArticlesValues = articleListLocalstorage;
-    this.rowsArticlesValues = articleList;
+
+    this.arrayValidateArticles = arrayValidate;
+
+    this.article = new ValidateArticle;
+    this.article.articles = this.arrayValidateArticles;
+
+    this.validateDisponibilidad(this.article);
 
 
-    this.reserve = new Reserve;
-    this.reserve.customerID = Number(this.customerId.value);
-    this.reserve.employeeID = Number(this.employeId.value);
-    this.reserve.startDate = this.convertDates(this.startDate.value);
-    this.reserve.endDate = this.convertDates(this.endDate.value);
-    this.reserve.description = this.comments.value;
-    this.reserve.articles = this.rowsArticlesValues;
+    // for (let index = 0; index < rows.length; index++) {
+    //   const element = rows[index];
+    //   // Conservar artículo en lista para almacenar
+    //   articleList.push({ ref: element.garmentReference, price: element.price, discount: element.discount });
+    //   articleListLocalstorage.push({ reference: element.garmentReference, price: element.price, discount: element.discount });
+    // }
+    // this.localstorageArticlesValues = articleListLocalstorage;
+    // this.rowsArticlesValues = articleList;
 
-    this.createReserve(this.reserve);
+
+    // this.reserve = new Reserve;
+    // this.reserve.customerID = Number(this.customerId.value);
+    // this.reserve.employeeID = Number(this.employeId.value);
+    // this.reserve.startDate = this.convertDates(this.startDate.value);
+    // this.reserve.endDate = this.convertDates(this.endDate.value);
+    // this.reserve.description = this.comments.value;
+    // this.reserve.articles = this.rowsArticlesValues;
+
+    // this.createReserve(this.reserve);
+  }
+
+  validateDisponibilidad(article: ValidateArticle): any {
+    let arrayArticleValids = [];
+    this.articleService.validateAvailability(article)
+      .subscribe((response: any) => {
+        if(response.resp){
+
+          const modal = document.getElementById('modalPreReserve');
+          modal.style.display = 'block';
+
+        }
+        // console.info(response);
+        // this.listResponseArticle.push(response);
+      },
+        (err) => {
+          // this.changeShow();
+          console.info(err.error);
+          if (err.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            Swal.fire({
+              title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
+              onClose: () => { this.router.navigate(['/login']); }
+            });
+          } else if (err.error.type === 2) {
+            err.error.msg.forEach(element => {
+              let msg = "- articulo " + element.reference + ": no existe stock actualmente, estara disponible: " + this.convertDates(element.earlyDate);
+              arrayArticleValids.push(msg);
+            });
+            this.alert('Atención Usuario', 'Se informa lo siguiente: \n' + arrayArticleValids.toString(), 'warning');
+          } else {
+            this.alert('Error', 'Ocurrió un error.', 'error');
+          }
+        }
+      );
   }
 
   private validateForm() {
@@ -429,6 +506,17 @@ export class ReserveComponent implements OnInit {
     modal.style.display = 'none';
   }
 
+  public openModalCliente() {
+    const modal = document.getElementById('modalCreateClient');
+    modal.style.display = 'block';
+
+  }
+
+  public closeModalCliente() {
+    const modal = document.getElementById('modalCreateClient');
+    modal.style.display = 'none';
+  }
+
 
   // FUNCIONES DE AYUDA
 
@@ -492,5 +580,98 @@ export class ReserveComponent implements OnInit {
     return i;
   }
 
+  private validateData() {
+    if (this.name.value === null || this.name.value === '') {
+      this.openSnackBar('Debes indicar el nombre.', 'OK');
+      return false;
+    }
+    if (this.identification.value === null || this.identification.value === '') {
+      this.openSnackBar('Debes indicar la identificación.', 'OK');
+      return false;
+    }
+    if (this.direction.value === null || this.direction.value === '') {
+      this.openSnackBar('Debes indicar la dirección.', 'OK');
+      return false;
+    }
+    if (this.email.value !== '') {
+      if (!this.formatEmail(this.email.value)) {
+        this.openSnackBar('Debe ingresar un email con formato correcto.', 'OK');
+        return false;
+      }
+    }
+    if (this.telephone1.value === null || this.telephone1.value === '') {
+      this.openSnackBar('Debes indicar el telefono 1.', 'OK');
+      return false;
+    }
+    if (this.telephone2.value === null || this.telephone2.value === '') {
+      this.openSnackBar('Debes indicar el telefono 2.', 'OK');
+      return false;
+    }
+    if (this.telephone3.value === null || this.telephone3.value === '') {
+      this.openSnackBar('Debes indicar el telefono 3.', 'OK');
+      return false;
+    }
+    return true;
+  }
+
+  private formatEmail(email) {
+    let regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(email);
+  }
+
+  private changeShowCliente() {
+    this.dsbSaveCliente = !this.dsbSaveCliente;
+  }
+
+  createCliente(){
+    this.changeShowCliente();
+    if (!this.validateData()) {
+      this.changeShowCliente();
+      return;
+    }
+    this.saveCliente();
+  }
+
+  private clearDataCliente() {
+    this.name.setValue('');
+    this.identification.setValue('');
+    this.email.setValue('');
+    this.telephone1.setValue('');
+    this.telephone2.setValue('');
+    this.telephone3.setValue('');
+    this.direction.setValue('');
+  }
+
+  saveCliente() {
+    this.dsbSaveCliente = true;
+    this.customer = new Customer;
+    this.customer.name = this.name.value;
+    this.customer.identification = this.identification.value;
+    this.customer.email = this.email.value;
+    this.customer.telephone1 = this.telephone1.value;
+    this.customer.direction = this.direction.value;
+    this.customer.telephone2 = this.telephone2.value;
+    this.customer.telephone3 = this.telephone3.value;
+
+    this.customerService.createCustomer(this.customer)
+      .subscribe((response: any) => {
+        this.changeShowCliente();
+        if (response.resp) {
+          this.alert('HECHO', 'Cliente creado.', 'success');
+          this.clearDataCliente();
+          this.getListCustomers();
+        } else {
+          this.alert('Atención', 'Cliente no creado', 'warning');
+        }
+        this.closeModalCliente();
+      },
+        (err) => {
+          this.changeShowCliente();
+          this.alert('Error', 'Cliente no creado', 'error');
+          this.closeModalCliente();
+        }
+      );
+    
+  }
 
 }
