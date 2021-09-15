@@ -18,6 +18,7 @@ import { ListsComponent } from '../../lists/lists.component';
 import { ArticleProfileComponent } from '../../article-profile/article-profile.component';
 import { ListArticleComponent } from '../../list-article/list-article.component';
 import { ListReserveComponent } from '../../list-reserve/list-reserve.component';
+import { ReserveComponent } from '../../reserve/reserve.component';
 
 import { DetailsCustomerComponent } from '../../details-customer/details-customer.component';
 import { DetailsEmployeeComponent } from '../../details-employee/details-employee.component';
@@ -96,6 +97,7 @@ import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
     ArticleProfileComponent,
     ListArticleComponent,
     ListReserveComponent,
+    ReserveComponent,
     DetailsArticleComponent,
     DetailsReserveComponent,
     ListInvoiceComponent,
