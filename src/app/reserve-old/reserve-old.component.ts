@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -13,6 +13,7 @@ import { ReserveService } from '../service/reserve.service';
 
 import { ValidateArticle } from '../models/article.model'
 import { Reserve } from '../models/reserve.model';
+import { Customer } from '../models/customer.model';
 
 @Component({
   selector: 'app-reserve-old',
@@ -24,9 +25,18 @@ export class ReserveOldComponent implements OnInit {
 
   article: ValidateArticle;
   reserve: Reserve;
+  customer: Customer;
+  name: FormControl;
+  identification: FormControl;
+  email: FormControl;
+  telephone1: FormControl;
+  telephone2: FormControl;
+  telephone3: FormControl;
+  direction: FormControl;
   public showProgBar: boolean;
   public dsbSave: boolean;
   public showRef: boolean;
+  public dsbSaveCliente: boolean;
   public showForm: boolean;
   public anyCabecera: any[];
   public anyCabeceraRef: any[];
@@ -64,6 +74,13 @@ export class ReserveOldComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private reserveService: ReserveService,
   ) {
+    this.name = new FormControl();
+    this.identification = new FormControl();
+    this.email = new FormControl('', [Validators.email,]);
+    this.telephone1 = new FormControl();
+    this.telephone2 = new FormControl();
+    this.telephone3 = new FormControl();
+    this.direction = new FormControl();
     this.showProgBar = true;
     this.showRef = true;
     this.showForm = true;
@@ -312,6 +329,10 @@ export class ReserveOldComponent implements OnInit {
     modal.style.display = 'none';
   }
 
+  private changeShowCliente() {
+    this.dsbSaveCliente = !this.dsbSaveCliente;
+  }
+
   private valDisponibilidad(){
     const control = this.anyDetalleArticle.get('rows') as FormArray;
     const rows = control.value;
@@ -551,6 +572,96 @@ export class ReserveOldComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  createCliente(){
+    this.changeShowCliente();
+    if (!this.validateData()) {
+      this.changeShowCliente();
+      return;
+    }
+    this.saveCliente();
+  }
+
+  private validateData() {
+    if (this.name.value === null || this.name.value === '') {
+      this.openSnackBar('Debes indicar el nombre.', 'OK');
+      return false;
+    }
+    if (this.identification.value === null || this.identification.value === '') {
+      this.openSnackBar('Debes indicar la identificación.', 'OK');
+      return false;
+    }
+    if (this.email.value !== '') {
+      if (!this.formatEmail(this.email.value)) {
+        this.openSnackBar('Debe ingresar un email con formato correcto.', 'OK');
+        return false;
+      }
+    }
+    if (this.direction.value === null || this.direction.value === '') {
+      this.openSnackBar('Debes indicar la dirección.', 'OK');
+      return false;
+    }
+    if (this.telephone1.value === null || this.telephone1.value === '') {
+      this.openSnackBar('Debes indicar el telefono 1.', 'OK');
+      return false;
+    }
+    if (this.telephone2.value === null || this.telephone2.value === '') {
+      this.openSnackBar('Debes indicar el telefono 2.', 'OK');
+      return false;
+    }
+    if (this.telephone3.value === null || this.telephone3.value === '') {
+      this.openSnackBar('Debes indicar el telefono 3.', 'OK');
+      return false;
+    }
+    return true;
+  }
+
+  private formatEmail(email) {
+    let regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(email);
+  }
+
+  private saveCliente() {
+    this.dsbSaveCliente = true;
+    this.customer = new Customer;
+    this.customer.name = this.name.value;
+    this.customer.identification = this.identification.value;
+    this.customer.email = this.email.value;
+    this.customer.telephone1 = this.telephone1.value;
+    this.customer.direction = this.direction.value;
+    this.customer.telephone2 = this.telephone2.value;
+    this.customer.telephone3 = this.telephone3.value;
+
+    this.customerService.createCustomer(this.customer)
+      .subscribe((response: any) => {
+        this.changeShowCliente();
+        if (response.resp) {
+          this.alert('HECHO', 'Cliente creado.', 'success');
+          this.clearDataCliente();
+          this.getListCustomers();
+        } else {
+          this.alert('Atención', 'Cliente no creado', 'warning');
+        }
+        this.closeModalCliente();
+      },
+        (err) => {
+          this.changeShowCliente();
+          this.alert('Error', 'Cliente no creado', 'error');
+          this.closeModalCliente();
+        }
+      );
+    
+  }
+
+  private clearDataCliente() {
+    this.name.setValue('');
+    this.identification.setValue('');
+    this.email.setValue('');
+    this.telephone1.setValue('');
+    this.telephone2.setValue('');
+    this.telephone3.setValue('');
+    this.direction.setValue('');
   }
 
 }
