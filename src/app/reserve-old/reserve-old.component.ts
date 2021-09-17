@@ -467,10 +467,11 @@ export class ReserveOldComponent implements OnInit {
       return;
     }
     
+    debugger;
     const control = this.anyDetalleArticle.get('rows') as FormArray;
     const rowsArticles = control.value;
     let articleList = [],
-        articleListLocalstorage;
+        articleListLocalstorage = [];
     for (let obj in rowsArticles){
       const element = rowsArticles[obj];
       const objeto = {
@@ -481,6 +482,7 @@ export class ReserveOldComponent implements OnInit {
       articleList.push(objeto);
       articleListLocalstorage.push({ reference: element.garmentReference, price: element.price, discount: element.discount });
     }
+    
     this.rowsArticlesValues = articleList;
     this.localstorageArticlesValues = articleListLocalstorage;
 
