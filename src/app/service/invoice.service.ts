@@ -42,8 +42,8 @@ export class InvoiceService {
         }).pipe(catchError(this.handleError));
     }
 
-    createInvoice(invoice: Invoice): Observable<Invoice> {
-        const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
+    createInvoice(invoice: Invoice, type: string): Observable<Invoice> {
+        const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, 'type': type });
         return this.http.post<Invoice>(this.urlApi + '/invoice/createInvoice', invoice, { headers: header })
             .pipe(catchError(this.handleError));
     }

@@ -41,14 +41,15 @@ export class InvoiceComponent implements OnInit {
   numberInvoice: string;
   depositInvoice: string;
   paymentInvoice: string;
-
   listArticlesLoads = [];
-
   dsbSave: boolean;
   hiddenProgBar: boolean;
   codeAction: string;
   showDepositInput: boolean;
   showPrintButton: boolean;
+  typeFact: string;
+  pagoDeposito: string;
+  checkDeposito: boolean;
 
   constructor(
     private router: Router,
@@ -65,7 +66,9 @@ export class InvoiceComponent implements OnInit {
     this.clientDocument = new FormControl();
     this.clientAddress = new FormControl();
     this.clientEmail = new FormControl();
-
+    this.typeFact = '';
+    this.pagoDeposito = '';
+    this.checkDeposito = false;
     this.clearData();
     this.hiddenProgBar = true;
     this.dsbSave = false;
@@ -140,6 +143,7 @@ export class InvoiceComponent implements OnInit {
     this.numberInvoice = valLocalstorage.invoiceNumber;
     this.deposit.setValue(valLocalstorage.depositInvoice);
     this.payment.setValue(valLocalstorage.paymentInvoice);
+    this.typeFact = valLocalstorage.type;
     valLocalstorage.articlesLocalStorage.forEach(element => {
       let msg = " - articulo: " + element.reference + ", Descuento: " + element.discount + ", Precio: " + element.price;
       this.descriptionArticles.push(msg);
@@ -215,11 +219,11 @@ export class InvoiceComponent implements OnInit {
     this.invoice.subTotal = this.subTotal;
     this.invoice.cost = this.total;
     this.invoice.deposit = Number(this.deposit.value);
+    this.invoice.depositState = this.checkDeposito;
     this.invoice.payment = Number(this.payment.value);
     this.invoice.description = this.descriptionArticles.toString();
-
-
-    this.invoiceService.createInvoice(this.invoice)
+    
+    this.invoiceService.createInvoice(this.invoice, this.typeFact)
       .subscribe((response: any) => {
         this.changeShow();
         if (response.resp) {
@@ -243,6 +247,7 @@ export class InvoiceComponent implements OnInit {
           this.showPrintButton = true;
           localStorage.removeItem('isCreatedInvoice');
           this.clearData();
+          this.router.navigate(['/list-invoice']);
         } else {
           this.alert('Atención', 'Factura no creada.', 'warning');
         }
@@ -346,6 +351,20 @@ export class InvoiceComponent implements OnInit {
   private changeShow() {
     this.dsbSave = !this.dsbSave;
     this.hiddenProgBar = !this.hiddenProgBar;
+  }
+
+  public setAll(bool){
+    this.pagoDeposito = (bool) ? 'SI' : 'NO';
+    this.checkDeposito = bool;
+    const valDeposito = Number(this.deposit.value);
+    const valAbono = Number(this.payment.value);
+    const total = Number(this.subTotal);
+    if (bool) {
+      this.total = total - valAbono;
+    }
+    else {
+      this.total = total + valDeposito;
+    }
   }
 
 }

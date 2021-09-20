@@ -31,7 +31,8 @@
               <div class="row" *ngIf="showDepositInput === true">
                 <div class="col-md-12">
                   <mat-checkbox class="example-margin pull-right"
-                  [color]="primary">
+                  [color]="primary"
+                  (change)="setAll($event.checked)">
                   Depósito
                   </mat-checkbox>
                 </div>
@@ -89,6 +90,14 @@
                         {{clientEmail.value}}</mat-card>
                     </div>
                   </div>
+                  <div class="row" *ngIf="showDepositInput === true">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6" style="padding: 1px;">
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Pago el depósito:
+                        {{pagoDeposito}}</mat-card>
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="col-md-12" style="padding: 1px;">
                       <mat-card
@@ -119,20 +128,19 @@
                   </div>
                   <div class="row">
                     <div class="col-md-3" style="padding: 1px;">
-                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Deposito:
-                        {{deposit.value | currency }}</mat-card>
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor:
+                        {{subTotal | currency }}</mat-card>
                     </div>
                     <div class="col-md-3" style="padding: 1px;">
                       <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Abono:
                         {{payment.value | currency }}</mat-card>
                     </div>
                     <div class="col-md-3" style="padding: 1px;">
-                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor:
-                        {{subTotal | currency }}</mat-card>
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Resta: {{total | currency }}</mat-card>
                     </div>
                     <div class="col-md-3" style="padding: 1px;">
-                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Total a
-                        Pagar: {{total | currency }}</mat-card>
+                      <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Deposito:
+                        {{deposit.value | currency }}</mat-card>
                     </div>
                   </div>
                   <div class="row">

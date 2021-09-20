@@ -475,7 +475,8 @@ export class ReserveComponent implements OnInit {
             reserveID: response.msg.id,
             total: this.totalReserve.value,
             subtotal: this.subtotal.value,
-            depositInvoice: 0
+            depositInvoice: 0,
+            type: '1'
           }
           let status = {
             created: false

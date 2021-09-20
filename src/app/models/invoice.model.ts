@@ -5,6 +5,7 @@ export interface IInvoice {
     deposit: number;
     payment: number;
     description: string;
+    depositState: boolean;
 }
 
 export class Invoice implements IInvoice {
@@ -15,6 +16,7 @@ export class Invoice implements IInvoice {
     deposit: number;
     payment: number;
     description: string;
+    depositState: boolean;
 
     constructor() {
         this.reserve = 0;
@@ -23,5 +25,6 @@ export class Invoice implements IInvoice {
         this.deposit = 0;
         this.payment = 0;
         this.description = '';
+        this.depositState = false;
     }
 }
