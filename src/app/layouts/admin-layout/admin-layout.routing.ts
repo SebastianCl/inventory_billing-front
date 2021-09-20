@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { ReserveOldComponent } from '../../reserve-old/reserve-old.component';
+import { ReserveComponent } from '../../reserve/reserve.component';
 import { ProfilesComponent } from '../../profiles/profiles.component';
 import { EmployeeProfileComponent } from '../../employee-profile/employee-profile.component';
 import { CustomerProfileComponent } from '../../customer-profile/customer-profile.component';
@@ -26,10 +26,9 @@ import { EditArticleComponent } from '../../edit-article/edit-article.component'
 import { InvoiceComponent } from '../../invoice/invoice.component';
 import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
 
-
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'reserve', component: ReserveOldComponent },
+    { path: 'reserve', component: ReserveComponent },
     { path: 'profiles', component: ProfilesComponent },
     { path: 'add-customer', component: CustomerProfileComponent },
     { path: 'list-customer', component: ListCustomerComponent },

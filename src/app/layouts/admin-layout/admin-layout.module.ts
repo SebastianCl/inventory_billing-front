@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { ReserveOldComponent } from '../../reserve-old/reserve-old.component';
+import { ReserveComponent } from '../../reserve/reserve.component';
 import { InvoiceComponent } from '../../invoice/invoice.component';
 
 import { ProfilesComponent } from '../../profiles/profiles.component';
@@ -18,7 +18,6 @@ import { ListsComponent } from '../../lists/lists.component';
 import { ArticleProfileComponent } from '../../article-profile/article-profile.component';
 import { ListArticleComponent } from '../../list-article/list-article.component';
 import { ListReserveComponent } from '../../list-reserve/list-reserve.component';
-import { ReserveComponent } from '../../reserve/reserve.component';
 
 import { DetailsCustomerComponent } from '../../details-customer/details-customer.component';
 import { DetailsEmployeeComponent } from '../../details-employee/details-employee.component';
@@ -81,7 +80,7 @@ import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
   ],
   declarations: [
     DashboardComponent,
-    ReserveOldComponent,
+    ReserveComponent,
     InvoiceComponent,
     ProfilesComponent,
     CustomerProfileComponent,
@@ -97,7 +96,6 @@ import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
     ArticleProfileComponent,
     ListArticleComponent,
     ListReserveComponent,
-    ReserveComponent,
     DetailsArticleComponent,
     DetailsReserveComponent,
     ListInvoiceComponent,
