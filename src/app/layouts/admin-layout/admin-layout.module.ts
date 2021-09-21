@@ -6,6 +6,7 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { ReserveComponent } from '../../reserve/reserve.component';
 import { InvoiceComponent } from '../../invoice/invoice.component';
+import { InvoiceTypeComponent } from '../../invoice-type/invoice-type.component'
 
 import { ProfilesComponent } from '../../profiles/profiles.component';
 import { CustomerProfileComponent } from '../../customer-profile/customer-profile.component';
@@ -82,6 +83,7 @@ import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
     DashboardComponent,
     ReserveComponent,
     InvoiceComponent,
+    InvoiceTypeComponent,
     ProfilesComponent,
     CustomerProfileComponent,
     EmployeeProfileComponent,

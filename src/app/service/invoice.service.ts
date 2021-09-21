@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Invoice } from '../models/invoice.model';
+import { Invoice, InvoiceDano, InvoiceVenta } from '../models/invoice.model';
 
 import { environment } from '../../environments/environment';
 
@@ -45,6 +45,18 @@ export class InvoiceService {
     createInvoice(invoice: Invoice, type: string): Observable<Invoice> {
         const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, 'type': type });
         return this.http.post<Invoice>(this.urlApi + '/invoice/createInvoice', invoice, { headers: header })
+            .pipe(catchError(this.handleError));
+    }
+
+    createInvoiceDano(invoice: InvoiceDano, type: string): Observable<InvoiceDano> {
+        const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, 'type': type });
+        return this.http.post<InvoiceDano>(this.urlApi + '/invoice/createInvoice', invoice, { headers: header })
+            .pipe(catchError(this.handleError));
+    }
+
+    createInvoiceVenta(invoice: InvoiceVenta, type: string): Observable<InvoiceVenta> {
+        const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, 'type': type });
+        return this.http.post<InvoiceVenta>(this.urlApi + '/invoice/createInvoice', invoice, { headers: header })
             .pipe(catchError(this.handleError));
     }
 

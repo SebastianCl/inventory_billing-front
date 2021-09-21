@@ -1,3 +1,7 @@
+export interface IReserveCancel {
+    reserveNumber: number;
+}
+
 export interface IReserve {
     id?: string;
     customerID: number;
@@ -12,6 +16,13 @@ export interface IEditReserve {
     endDate: string;
     description?: string;
     articles: Array<Object[]>;
+}
+
+export class ReserveCancel implements IReserveCancel {
+    reserveNumber: number;
+    constructor() {
+        this.reserveNumber = 0;
+    }
 }
 
 export class Reserve implements IReserve {

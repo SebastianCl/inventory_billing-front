@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
 
 // Modelo
-import { Reserve } from '../models/reserve.model';
+import { ReserveCancel } from '../models/reserve.model';
 // Servicio
 import { ReserveService } from '../service/reserve.service';
 
@@ -16,6 +16,7 @@ import { ReserveService } from '../service/reserve.service';
 })
 export class ListReserveComponent implements OnInit {
 
+  cancel_reserve: ReserveCancel;
 
   public hiddenProgBar: boolean;
   public dsbBtn: boolean;
@@ -61,7 +62,8 @@ export class ListReserveComponent implements OnInit {
               reserveDay: this.convertDates(element.reserveDay),
               endDate: this.convertDates(element.endDate),
               articles: element.articles.length,
-              isActive: boolActive
+              isActive: boolActive,
+              reserveNumber: element.reserveNumber
             }
             this.listReserves.push(dataQuotation);
             this.listReservesAllInfo.push(dataQuotation);
@@ -115,4 +117,93 @@ export class ListReserveComponent implements OnInit {
     this._snackBar.open(message, action, { duration: 5000, panelClass: ['mycsssnackbartest'] });
   }
 
+  public createInvoice(data){
+    this.reserveService.loadReserve(data.id)
+      .subscribe((response: any) => {
+        this.changeShow();
+        if (response.resp) {
+          let array_list = response.msg.articles;
+          let articleListLocalstorage = [];
+          let valTotal = 0;
+          for (let obj in array_list){
+            const element = array_list[obj];
+            valTotal = valTotal + element.price;
+            articleListLocalstorage.push({ reference: element.reference, price: element.price, discount: element.discount });
+          }
+          let dataLocalstorage = {
+            status: response.msg.active,
+            articlesIDS: response.msg.articles,
+            invoiceNumber: response.msg.invoiceNumber,
+            articlesLocalStorage: articleListLocalstorage,
+            customerID: response.msg.customer.id,
+            employeeName: response.msg.employeeName,
+            reserveNumber: response.msg.reserveNumber,
+            reserveID: data.id,
+            total: valTotal,
+            subtotal: response.msg.subTotal,
+            depositInvoice: 0,
+            type: '1'
+          }
+          let status = {
+            created: false
+          }
+          localStorage.setItem('reserve', JSON.stringify(dataLocalstorage));
+          localStorage.setItem('isCreatedInvoice', JSON.stringify(status));
+          this.router.navigate(['/invoice/', 0]);
+        }
+      },
+        (err) => {
+          this.changeShow();
+          this.alert('Atención Usuario', `${err.error.msg}`, 'warning');
+        }
+      );
+  }
+
+  public cancelReserve(data){
+    Swal.fire({
+      title: '¡Atención!',
+      icon: 'info',
+      text: `¿Seguro desea cancelar la reserva #$${data.reserveNumber}?`,
+      showCancelButton: true,
+      showCloseButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if (result.value) {
+        this.cancel_reserve = new ReserveCancel();
+        this.cancel_reserve.reserveNumber = Number(data.reserveNumber);
+        this.srvCancelReserve(this.cancel_reserve);
+      }
+    })
+  }
+
+  private srvCancelReserve(dataReserve: ReserveCancel): any {
+    this.reserveService.cancelReserve(dataReserve)
+      .subscribe((response: any) => {
+        this.changeShow();
+        if (response.resp) {
+          Swal.fire({
+            title: 'Exito',
+            html: `Reserva registrada.`,
+            icon: 'success',
+            confirmButtonText: 'OK',
+            showConfirmButton: true,
+            showCancelButton: false,
+            timer: 3000
+          }).then((resultModal: any) => {
+            this.getList();
+          })
+        } else {
+          this.alert('Error', response.msg, 'error');
+        }
+      },
+        (err) => {
+          this.changeShow();
+          this.alert('Atención Usuario', `${err.error.msg}`, 'warning');
+        }
+      );
+
+  }
+  
 }

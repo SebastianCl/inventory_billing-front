@@ -8,6 +8,23 @@ export interface IInvoice {
     depositState: boolean;
 }
 
+export interface IInvoiceDano {
+    cost: number;
+    customerName: string;
+    customerIdentification: string;
+    employeeName: string;
+    description: string;
+}
+
+export interface IInvoiceVenta {
+    cost: number;
+    customerName: string;
+    customerIdentification: string;
+    employeeName: string;
+    description: string;
+    articles: Array<Object[]>;
+}
+
 export class Invoice implements IInvoice {
     id?: string;
     reserve: number;
@@ -26,5 +43,39 @@ export class Invoice implements IInvoice {
         this.payment = 0;
         this.description = '';
         this.depositState = false;
+    }
+}
+
+export class InvoiceDano implements IInvoiceDano {
+    cost: number;
+    customerName: string;
+    customerIdentification: string;
+    employeeName: string;
+    description: string;
+
+    constructor() {
+        this.cost = 0;
+        this.customerName = '';
+        this.customerIdentification = '';
+        this.employeeName = '';
+        this.description = '';
+    }
+}
+
+export class InvoiceVenta implements IInvoiceVenta {
+    cost: number;
+    customerName: string;
+    customerIdentification: string;
+    employeeName: string;
+    description: string;
+    articles: Array<Object[]>;
+
+    constructor() {
+        this.cost = 0;
+        this.customerName = '';
+        this.customerIdentification = '';
+        this.employeeName = '';
+        this.description = '';
+        this.articles = [];
     }
 }
