@@ -80,8 +80,8 @@ export class ViewInvoiceComponent implements OnInit {
         this.employeeName = response.msg.employeeName;
         this.customName = response.msg.customerName;
         this.customDocument = response.msg.customerIdentification;
-        this.customAddress = response.msg.direction === '' || undefined ? 'Sin Dirección' : response.msg.direction;
-        this.customEmail = response.msg.email === '' || null ? 'Sin email' : response.msg.email;
+        this.customAddress = response.msg.customerDirection === '' || undefined ? 'Sin Dirección' : response.msg.direction;
+        this.customEmail = response.msg.customerEmail === '' || null ? 'Sin email' : response.msg.email;
         this.description = response.msg.description;
         this.typeDeposito = (response.msg.depositState === false) ? 'NO' : 'SI';
         this.boolDeposito = response.msg.depositState;
