@@ -117,7 +117,7 @@ export class ListReserveComponent implements OnInit {
     this._snackBar.open(message, action, { duration: 5000, panelClass: ['mycsssnackbartest'] });
   }
 
-  public createInvoice(data){
+  public createInvoice(data) {
     this.reserveService.loadReserve(data.id)
       .subscribe((response: any) => {
         this.changeShow();
@@ -125,7 +125,7 @@ export class ListReserveComponent implements OnInit {
           let array_list = response.msg.articles;
           let articleListLocalstorage = [];
           let valTotal = 0;
-          for (let obj in array_list){
+          for (let obj in array_list) {
             const element = array_list[obj];
             valTotal = valTotal + element.price;
             articleListLocalstorage.push({ reference: element.reference, price: element.price, discount: element.discount });
@@ -159,7 +159,7 @@ export class ListReserveComponent implements OnInit {
       );
   }
 
-  public cancelReserve(data){
+  public cancelReserve(data) {
     Swal.fire({
       title: '¡Atención!',
       icon: 'info',
@@ -205,5 +205,5 @@ export class ListReserveComponent implements OnInit {
       );
 
   }
-  
+
 }

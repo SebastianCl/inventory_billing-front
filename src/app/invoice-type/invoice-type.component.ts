@@ -40,7 +40,7 @@ export class InvoiceTypeComponent implements OnInit {
   private rowsArticlesValues: any[];
   //Arrays
   public anyCabecera: any[];
-  private arrayValidateArticles:any[];
+  private arrayValidateArticles: any[];
   public anyCabeceraRef: any[];
   public anyDetalleRef: any[];
   //Form bool
@@ -61,15 +61,15 @@ export class InvoiceTypeComponent implements OnInit {
   public customerName: FormControl;
   public employeId: FormControl;
   public anyDetalleArticle: FormGroup;
-  public strTitle: string;  
-   //Form cliente
-   public name: FormControl;
-   public identification: FormControl;
-   public email: FormControl;
-   public direction: FormControl;
-   public telephone1: FormControl;
-   public telephone2: FormControl;
-   public telephone3: FormControl;
+  public strTitle: string;
+  //Form cliente
+  public name: FormControl;
+  public identification: FormControl;
+  public email: FormControl;
+  public direction: FormControl;
+  public telephone1: FormControl;
+  public telephone2: FormControl;
+  public telephone3: FormControl;
   constructor(
     //Services
     private customerService: CustomerService,
@@ -89,7 +89,7 @@ export class InvoiceTypeComponent implements OnInit {
     this.anyListEmployees = [];
     this.anyListGarment = [];
     //Arrays
-    this.anyCabecera = ['','','%DESCUENTO','REFERENCIA','PRECIO','DESCUENTO','NETO','VISUALIZAR'];
+    this.anyCabecera = ['', '', '%DESCUENTO', 'REFERENCIA', 'PRECIO', 'DESCUENTO', 'NETO', 'VISUALIZAR'];
     this.anyDetalleArticle = this.fb.group({ rows: this.fb.array([]) });
     //Form bool
     this.btnSaveCliente = false;
@@ -124,7 +124,7 @@ export class InvoiceTypeComponent implements OnInit {
   ngOnInit() {
     let type = Number(this.route.snapshot.paramMap.get('id'));
     this.typeInvoice = String(type);
-    switch(type){
+    switch (type) {
       case 3:
         this.strTitle = 'Factura por daño';
         this.showFormRef = false;
@@ -225,7 +225,7 @@ export class InvoiceTypeComponent implements OnInit {
 
   public setCustomerData() {
     let customerIdentification = '',
-        customerName = '';
+      customerName = '';
     for (let index = 0; index < this.anyListCustomers.length; index++) {
       const element = this.anyListCustomers[index];
       if (element.id === this.customerId.value) {
@@ -240,7 +240,7 @@ export class InvoiceTypeComponent implements OnInit {
 
   public setEmployeData() {
     let employeName = '',
-        employeIdentification;
+      employeIdentification;
     for (let index = 0; index < this.anyListEmployees.length; index++) {
       const element = this.anyListEmployees[index];
       if (element.id === this.employeId.value) {
@@ -250,7 +250,7 @@ export class InvoiceTypeComponent implements OnInit {
       }
     }
     this.employeeName.setValue(employeName);
-    this.employeIdentification.setValue(employeIdentification); 
+    this.employeIdentification.setValue(employeIdentification);
   }
 
   public openModalCliente() {
@@ -263,7 +263,7 @@ export class InvoiceTypeComponent implements OnInit {
     modal.style.display = 'none';
   }
 
-  public createCliente(){
+  public createCliente() {
     this.changeShowCliente();
     if (!this.validateData()) {
       this.changeShowCliente();
@@ -376,7 +376,7 @@ export class InvoiceTypeComponent implements OnInit {
 
     let type = this.showFormRef;
 
-    if (type){
+    if (type) {
 
       // Validar todos los datos de productos
       if (!this.valRows()) {
@@ -388,7 +388,7 @@ export class InvoiceTypeComponent implements OnInit {
       const rowsArticles = control.value;
       let articleList = [];
 
-      for (let obj in rowsArticles){
+      for (let obj in rowsArticles) {
         const element = rowsArticles[obj];
         const objeto = {
           ref: element.garmentReference,
@@ -410,7 +410,7 @@ export class InvoiceTypeComponent implements OnInit {
 
       console.info(this.invoice_venta);
 
-      // this.createInvoiceVenta(this.invoice_venta);
+      this.createInvoiceVenta(this.invoice_venta);
 
     }
     else {
@@ -424,7 +424,7 @@ export class InvoiceTypeComponent implements OnInit {
 
       console.info(this.invoice_dano);
 
-      // this.createInvoiceDano(this.invoice_dano);
+      this.createInvoiceDano(this.invoice_dano);
 
     }
 
@@ -433,77 +433,77 @@ export class InvoiceTypeComponent implements OnInit {
   private createInvoiceDano(dataInvoice: InvoiceDano): any {
     let arrayArticleValids = [];
     this.invoiceService.createInvoiceDano(dataInvoice, this.typeInvoice)
-    .subscribe((response: any) => {
-      this.changeShow();
-      if (response.resp) {
-        Swal.fire({
-          title: 'Exito',
-          html: `Factura de daño registrada.`,
-          icon: 'success',
-          confirmButtonText: 'OK',
-          showConfirmButton: true,
-          showCancelButton: false,
-          timer: 3000
-        }).then((resultModal: any) => {
-          this.clearData();
-          this.getListCustomers();
-          this.getListEmployes();
-        })
-      } else {
-        this.alert('Error', response.msg, 'error');
-      }
-    },
-      (err) => {
+      .subscribe((response: any) => {
         this.changeShow();
-        if (err.error.type === 2) {
-          err.error.msg.forEach(element => {
-            let msg = "- articulo " + element.reference + ": no existe stock actualmente, estara disponible: " + this.convertDates(element.earlyDate);
-            arrayArticleValids.push(msg);
-          });
-          this.alert('Atención Usuario', 'Se informa lo siguiente: \n' + arrayArticleValids.toString(), 'warning');
+        if (response.resp) {
+          Swal.fire({
+            title: 'Exito',
+            html: `Factura de daño registrada.`,
+            icon: 'success',
+            confirmButtonText: 'OK',
+            showConfirmButton: true,
+            showCancelButton: false,
+            timer: 3000
+          }).then((resultModal: any) => {
+            this.clearData();
+            this.getListCustomers();
+            this.getListEmployes();
+          })
         } else {
-          this.alert('Error', 'Ocurrió un error.', 'error');
+          this.alert('Error', response.msg, 'error');
         }
-      }
-    );
+      },
+        (err) => {
+          this.changeShow();
+          if (err.error.type === 2) {
+            err.error.msg.forEach(element => {
+              let msg = "- articulo " + element.reference + ": no existe stock actualmente, estara disponible: " + this.convertDates(element.earlyDate);
+              arrayArticleValids.push(msg);
+            });
+            this.alert('Atención Usuario', 'Se informa lo siguiente: \n' + arrayArticleValids.toString(), 'warning');
+          } else {
+            this.alert('Error', 'Ocurrió un error.', 'error');
+          }
+        }
+      );
   }
-  
+
   private createInvoiceVenta(dataInvoice: InvoiceVenta): any {
     let arrayArticleValids = [];
     this.invoiceService.createInvoiceVenta(dataInvoice, this.typeInvoice)
-    .subscribe((response: any) => {
-      this.changeShow();
-      if (response.resp) {
-        Swal.fire({
-          title: 'Exito',
-          html: `Factura de venta registrada.`,
-          icon: 'success',
-          confirmButtonText: 'OK',
-          showConfirmButton: true,
-          showCancelButton: false,
-          timer: 3000
-        }).then((resultModal: any) => {
-          this.clearData();
-          this.getListCustomers();
-          this.getListEmployes();
-        })
-      } else {
-        this.alert('Error', response.msg, 'error');
-      }
-    },
-      (err) => {
+      .subscribe((response: any) => {
         this.changeShow();
-        if (err.error.type === 2) {
-          err.error.msg.forEach(element => {
-            let msg = "- articulo " + element.reference + ": no existe stock actualmente, estara disponible: " + this.convertDates(element.earlyDate);
-            arrayArticleValids.push(msg);
-          });
-          this.alert('Atención Usuario', 'Se informa lo siguiente: \n' + arrayArticleValids.toString(), 'warning');
+        if (response.resp) {
+          Swal.fire({
+            title: 'Exito',
+            html: `Factura de venta registrada.`,
+            icon: 'success',
+            confirmButtonText: 'OK',
+            showConfirmButton: true,
+            showCancelButton: false,
+            timer: 3000
+          }).then((resultModal: any) => {
+            this.clearData();
+            this.getListCustomers();
+            this.getListEmployes();
+          })
         } else {
-          this.alert('Error', 'Ocurrió un error.', 'error');
+          this.alert('Error', response.msg, 'error');
         }
-      }
-    );
+      },
+        (err) => {
+          this.changeShow();
+          if (err.error.type === 2) {
+            err.error.msg.forEach(element => {
+              let msg = "- articulo " + element.reference + ": no existe stock actualmente, estara disponible: " + this.convertDates(element.earlyDate);
+              arrayArticleValids.push(msg);
+            });
+            this.alert('Atención Usuario', 'Se informa lo siguiente: \n' + arrayArticleValids.toString(), 'warning');
+          } else {
+            this.alert('Error', 'Ocurrió un error.', 'error');
+          }
+        }
+      );
   }
 
   private convertDates(value) {
@@ -531,17 +531,19 @@ export class InvoiceTypeComponent implements OnInit {
     this.customerIdentification.setValue('');
     this.employeIdentification.setValue('');
     this.employeId.setValue('');
+    this.cost.setValue('');
+    this.description.setValue('');
     const control = this.anyDetalleArticle.get('rows') as FormArray;
     control.clear();
     this.addArticle();
   }
 
-  private valRows(){
+  private valRows() {
     const control = this.anyDetalleArticle.get('rows') as FormArray;
     const rowsArticles = control.value;
     let validRowsIndex = [];
     let sw = false;
-    for (let obj in rowsArticles){
+    for (let obj in rowsArticles) {
       const element = rowsArticles[obj];
       if (element.garmentReference === '' || element.discount > 100 || element.price < 0) {
         validRowsIndex.push(obj + 1);
@@ -600,7 +602,7 @@ export class InvoiceTypeComponent implements OnInit {
     const control = this.anyDetalleArticle.get('rows') as FormArray;
     control.removeAt(index);
     // this.calculateTotals();
-    if (control.length == 0){
+    if (control.length == 0) {
       this.showFormVal = false;
       this.showForm = false;
     }
@@ -630,12 +632,12 @@ export class InvoiceTypeComponent implements OnInit {
     modal.style.display = 'none';
   }
 
-  private valDisponibilidad(){
+  private valDisponibilidad() {
     const control = this.anyDetalleArticle.get('rows') as FormArray;
     const rows = control.value;
     let arrayValidate = [];
 
-    for (let indx in rows){
+    for (let indx in rows) {
       const element = rows[indx];
       arrayValidate.push(element.garmentReference);
     }
@@ -648,43 +650,43 @@ export class InvoiceTypeComponent implements OnInit {
 
   private srvValDisponibilidad(article: ValidateArticle): any {
     this.articleService.validateAvailability(article)
-    .subscribe((response: any) => {
-      if(response.resp){
-        this.showFormVal = false;
-        this.showForm = true;
-      }
-    },
-      (err) => {
-        console.info(err);
-        if (err.status === 401) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          Swal.fire({
-            title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
-            onClose: () => { this.router.navigate(['/login']); }
-          });
-        } else if (err.status === 400) {
-          if (err.error.type === 2){
-            this.showFormVal = true;
-            this.showForm = false;
-            this.anyCabeceraRef = ['REFERENCE','FECHA DISPONIBILIDAD'];
-            let anyResponse = err.error.msg;
-            let anyResult = [];
-            for (let obj in anyResponse){
-              const element = anyResponse[obj];
-              const objeto = {
-                reference: element.reference,
-                earlyDate: this.convertDates(element.earlyDate)
-              }
-              anyResult.push(objeto);
-            }
-            this.anyDetalleRef = anyResult;
-          }
-        } else {
-          this.alert('Error', 'Ocurrió un error.', 'error');
+      .subscribe((response: any) => {
+        if (response.resp) {
+          this.showFormVal = false;
+          this.showForm = true;
         }
-      }
-    );
+      },
+        (err) => {
+          console.info(err);
+          if (err.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            Swal.fire({
+              title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
+              onClose: () => { this.router.navigate(['/login']); }
+            });
+          } else if (err.status === 400) {
+            if (err.error.type === 2) {
+              this.showFormVal = true;
+              this.showForm = false;
+              this.anyCabeceraRef = ['REFERENCE', 'FECHA DISPONIBILIDAD'];
+              let anyResponse = err.error.msg;
+              let anyResult = [];
+              for (let obj in anyResponse) {
+                const element = anyResponse[obj];
+                const objeto = {
+                  reference: element.reference,
+                  earlyDate: this.convertDates(element.earlyDate)
+                }
+                anyResult.push(objeto);
+              }
+              this.anyDetalleRef = anyResult;
+            }
+          } else {
+            this.alert('Error', 'Ocurrió un error.', 'error');
+          }
+        }
+      );
   }
 
 }

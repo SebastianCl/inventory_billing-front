@@ -222,7 +222,7 @@ export class InvoiceComponent implements OnInit {
     this.invoice.depositState = this.checkDeposito;
     this.invoice.payment = Number(this.payment.value);
     this.invoice.description = this.descriptionArticles.toString();
-    
+
     this.invoiceService.createInvoice(this.invoice, this.typeFact)
       .subscribe((response: any) => {
         this.changeShow();
@@ -353,7 +353,7 @@ export class InvoiceComponent implements OnInit {
     this.hiddenProgBar = !this.hiddenProgBar;
   }
 
-  public setAll(bool){
+  public setAll(bool) {
     this.pagoDeposito = (bool) ? 'SI' : 'NO';
     this.checkDeposito = bool;
     const valDeposito = Number(this.deposit.value);

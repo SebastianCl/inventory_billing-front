@@ -52,8 +52,7 @@
                         </td>
                         <td>
                           <mat-form-field class="field-width">
-                            <input matInput type="number" maxlength="3" max="100" min="1"
-                              (blur)="numberOnly($event);"
+                            <input matInput type="number" maxlength="3" max="100" min="1" (blur)="numberOnly($event);"
                               [formControl]="item.get('discount')">
                             <span matPrefix>%&nbsp;</span>
                           </mat-form-field>
@@ -70,9 +69,8 @@
                         </td>
                         <td>
                           <mat-form-field>
-                            <input matInput placeholder="Precio" type="number"
-                              (keypress)="numberOnly($event);" [formControl]="item.get('price')"
-                              style="width: 50%;">
+                            <input matInput placeholder="Precio" type="number" (keypress)="numberOnly($event);"
+                              [formControl]="item.get('price')" style="width: 50%;">
                           </mat-form-field>
                         </td>
                         <td>
@@ -141,7 +139,8 @@
                 <div class="col-md-12">
                   <label for="selectRol">Cliente</label>
                   <label for="selectRol"> </label>
-                  <button mat-mini-fab matTooltip="Crear cliente" class="btn cl pull-right" (click)="openModalCliente()">+
+                  <button mat-mini-fab matTooltip="Crear cliente" class="btn cl pull-right"
+                    (click)="openModalCliente()">+
                   </button>
                   <mat-form-field>
                     <mat-select placeholder="Busca un cliente" [formControl]="customerId"
@@ -153,7 +152,7 @@
                   </mat-form-field>
                 </div>
               </div>
-  
+
               <div class="row">
                 <div class="col-md-12">
                   <label for="selectRol">Empleado</label>
@@ -167,39 +166,38 @@
                   </mat-form-field>
                 </div>
               </div>
-  
+
               <div class="row">
-  
+
                 <div class="col-md-6">
-  
+
                   <mat-form-field>
-                    <input matInput placeholder="Precio" type="number"
-                      (keypress)="numberOnly($event)" [formControl]="cost">
+                    <input matInput placeholder="Precio" type="number" (keypress)="numberOnly($event)"
+                      [formControl]="cost">
                   </mat-form-field>
-  
+
                 </div>
-  
+
                 <div class="col-md-6">
-  
+
                   <mat-form-field>
                     <input matInput placeholder="Descripción" type="text" [formControl]="description">
                   </mat-form-field>
-  
+
                 </div>
-  
+
               </div>
 
               <div class="pull-right">
 
-                <button mat-raised-button matTooltip="Finalizar"
-                  class="btn pull-right save-reserve" [attr.disabled]="btnSaveInvoice?'':null"
-                  (click)="saveReserve()">Guardar Factura</button>
-  
+                <button mat-raised-button matTooltip="Finalizar" class="btn pull-right save-reserve"
+                  [attr.disabled]="btnSaveInvoice?'':null" (click)="saveReserve()">Guardar Factura</button>
+
               </div>
 
             </div>
-            
-         </div>
+
+          </div>
 
         </div>
 
@@ -270,24 +268,21 @@
               <div class="col-md-4">
                 <mat-form-field>
                   <input matInput placeholder="Teléfono 1" type="text" maxlength="10" max="10" min="1"
-                    (blur)="numberOnly($event);"
-                    [formControl]="telephone1">
+                    (blur)="numberOnly($event);" [formControl]="telephone1">
                 </mat-form-field>
               </div>
 
               <div class="col-md-4">
                 <mat-form-field>
                   <input matInput placeholder="Teléfono 2" type="text" maxlength="10" max="10" min="1"
-                    (blur)="numberOnly($event);"
-                    [formControl]="telephone2">
+                    (blur)="numberOnly($event);" [formControl]="telephone2">
                 </mat-form-field>
               </div>
 
               <div class="col-md-4">
                 <mat-form-field>
                   <input matInput placeholder="Teléfono 3" type="text" maxlength="10" max="10" min="1"
-                    (blur)="numberOnly($event);"
-                    [formControl]="telephone3" style="width: 100%;">
+                    (blur)="numberOnly($event);" [formControl]="telephone3" style="width: 100%;">
                 </mat-form-field>
               </div>
 
