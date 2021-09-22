@@ -57,7 +57,7 @@ export class ListInvoiceComponent implements OnInit {
   }
 
   goToDetails(data) {
-    this.router.navigate(['/invoice/', data]);
+    this.router.navigate(['/view-invoice/', data]);
   }
 
   // Servicios
@@ -77,7 +77,8 @@ export class ListInvoiceComponent implements OnInit {
               totalInvoice: element.cost,
               depositInvoice: element.deposit,
               payment: element.payment,
-              nameEmployee: element.employeeName
+              nameEmployee: element.employeeName,
+              type: element.type
             }
             this.listInvoices = [... this.listInvoices, dataInvoice];
           });

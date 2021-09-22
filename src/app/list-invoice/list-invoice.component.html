@@ -73,7 +73,7 @@
                           </mat-icon>
                         </button>
                         <button mat-mini-fab matTooltip="Abonar" (click)="openModalInvoice(data)"
-                          *ngIf="data.stateInvoice === true">
+                          *ngIf="data.stateInvoice === true && data.type === '1'">
                           <mat-icon>
                             payment
                           </mat-icon>

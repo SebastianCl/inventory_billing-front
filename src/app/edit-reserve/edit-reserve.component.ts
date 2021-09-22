@@ -215,8 +215,6 @@ export class EditReserveComponent implements OnInit {
     this.edit_reserve.description = this.form.controls.description.value;
     this.edit_reserve.articles = articleList;
 
-    console.info(this.edit_reserve);
-
     this.reserveService.editReserve(this.edit_reserve, this.idReserve)
       .subscribe((response: any) => {
         console.info(response);

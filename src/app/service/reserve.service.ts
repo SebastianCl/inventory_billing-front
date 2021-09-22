@@ -63,7 +63,7 @@ export class ReserveService {
 
   editReserve(reserve: EditReserve, idReserve: string): Observable<EditReserve> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, 'id': idReserve});
-    return this.http.put<EditReserve>(this.urlApi + '/reserve/updateReserve', reserve, { headers: header })
+    return this.http.put<EditReserve>(this.urlApi + '/reserve/editReserve', reserve, { headers: header })
       .pipe(catchError(this.handleError));
   }
 

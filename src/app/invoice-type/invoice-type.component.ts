@@ -408,8 +408,6 @@ export class InvoiceTypeComponent implements OnInit {
       this.invoice_venta.employeeName = this.employeeName.value;
       this.invoice_venta.articles = this.rowsArticlesValues;
 
-      console.info(this.invoice_venta);
-
       this.createInvoiceVenta(this.invoice_venta);
 
     }
@@ -421,8 +419,6 @@ export class InvoiceTypeComponent implements OnInit {
       this.invoice_dano.description = this.description.value;
       this.invoice_dano.customerName = this.customerName.value;
       this.invoice_dano.employeeName = this.employeeName.value;
-
-      console.info(this.invoice_dano);
 
       this.createInvoiceDano(this.invoice_dano);
 
@@ -448,6 +444,7 @@ export class InvoiceTypeComponent implements OnInit {
             this.clearData();
             this.getListCustomers();
             this.getListEmployes();
+            this.router.navigate(['/invoice/', response.msg.id]);
           })
         } else {
           this.alert('Error', response.msg, 'error');
@@ -486,6 +483,7 @@ export class InvoiceTypeComponent implements OnInit {
             this.clearData();
             this.getListCustomers();
             this.getListEmployes();
+            this.router.navigate(['/invoice/', response.msg.id]);
           })
         } else {
           this.alert('Error', response.msg, 'error');

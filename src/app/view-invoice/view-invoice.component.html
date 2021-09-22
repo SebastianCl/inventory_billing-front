@@ -1,0 +1,232 @@
+<div class="main-content">
+
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-md-12">
+
+        <div class="card">
+
+          <div class="card-header card-header-warning">
+            <h4 class="card-title">{{stringInvoice}}</h4>
+            <button mat-raised-button class="btn btn-default pull-right" (click)="printPage()">Imprimir Factura</button>
+          </div>
+
+          <div class="card-body">
+
+            <p class="card-category">Previsualización de factura</p>
+
+            <hr>
+
+            <div id="row-invoice-print">
+
+              <div class="row">
+
+                <div class="col-md-4" style="padding: 1px;">
+                  <img src="/assets/img/InvoiceBellarose.jpg" alt="logoFactura" width="280" height="160">
+                </div>
+
+                <div class="col-md-4" style="padding: 1px;">
+                  <p>Siguenos en:
+                    <a href="https://www.instagram.com/bellarose.alquiler" target="_blank"><span class="iconify"
+                        data-icon="mdi-instagram" data-inline="false"></span>@bellarose.alquiler</a>
+                  </p>
+                  <p>317 500 93 38
+                    <br>
+                    www.bellarosealquiler.com
+                  </p>
+                </div>
+
+                <div class="col-md-4" style="padding: 1px;">
+                  Número de factura: {{numberInvoice}}
+                </div>
+
+              </div>
+
+              <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
+
+                <div class="row">
+
+                  <div class="col-md-6" style="padding: 1px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Fecha de
+                      Factura: {{dateInvoice}}</mat-card>
+                  </div>
+
+                  <div class="col-md-6" style="padding: 1px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Empleado:
+                      {{employeeName}}</mat-card>
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-6" style="padding: 1px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Nombre:
+                      {{customName}}</mat-card>
+                  </div>
+
+                  <div class="col-md-6" style="padding: 1px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Documento:
+                      {{customDocument}}</mat-card>
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-6" style="padding: 1px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Dirección:
+                      {{customAddress}}</mat-card>
+                  </div>
+
+                  <div class="col-md-6" style="padding: 1px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Email:
+                      {{customEmail}}</mat-card>
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-12" style="padding: 1px;">
+
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Concepto:
+                      {{description}}</mat-card>
+                  
+                  </div>
+
+                </div>
+
+                <div class="row" *ngIf="typeInvoice != '3'">
+
+                  <div class="col-md-12" style="padding: 1px;">
+
+                    <mat-card
+                        style="border: 6px solid gray;border-radius: 2%;padding: 5px !important;text-align: center;">
+                        <mat-card-title style="text-align: center;"> Descripción artículos </mat-card-title>
+                        <mat-card-content>
+                          <div class="table-responsive">
+                            <table class="table table-hover">
+                              <thead>
+                                <th id=""> Referencia </th>
+                                <th id=""> Precio Original </th>
+                                <th id=""> % Descuento</th>
+                                <th id=""> NETO </th>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of anyArticles">
+                                  <td>{{item.reference}}</td>
+                                  <td>{{item.price | currency }}</td>
+                                  <td>% {{item.discount}}</td>
+                                  <td>{{item.price - ((item.price * item.discount)/100) | currency }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </mat-card-content>
+                      </mat-card>
+
+                  </div>
+
+                </div>
+
+                <div class="row" *ngIf="typeInvoice == '3'">
+
+                  <div class="col-md-6"></div>
+
+                  <div class="col-md-6" style="padding: 1px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor a pagar:
+                      {{subTotal | currency }}</mat-card>
+                  </div>
+
+                </div>
+
+                <div class="row" *ngIf="typeInvoice != '3'">
+
+                  <div class="col-md-4" style="padding: 1px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor a pagar:
+                      {{subTotal | currency }}</mat-card>
+                  </div>
+
+                  <div class="col-md-4" style="padding: 1px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Abono:
+                      {{payment | currency }}</mat-card>
+                  </div>
+
+                  <div class="col-md-4" style="padding: 1px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Resta: {{total | currency }}</mat-card>
+                  </div>
+
+                </div>
+
+                <div class="row" *ngIf="typeInvoice != '3'">
+
+                  <div class="col-md-6" style="padding: 1px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Pago el depósito: {{typeDeposito}}</mat-card>
+                  </div>
+                  <div class="col-md-6" style="padding: 1px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor depósito: {{deposit | currency }}</mat-card>
+                  </div>
+                  
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-6" style="padding: 1px;">
+
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
+                      <p>* No se hace devolución de dinero</p>
+                      <p>* El deposito cubrira cualquier tipo de daño en la prenda o artículo</p>
+                      <p>* Pasados 30 dias no se hacen cambios</p>
+                    </mat-card>
+
+                  </div>
+
+                  <div class="col-md-6" style="padding: 1px;">
+
+                    <mat-card
+                      style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;height: 136px;">
+                      <div class="row">
+                        <div class="col-md-6">
+                          Vendedor:
+                        </div>
+                        <div class="col-md-6">
+                          Cliente:
+                        </div>
+                      </div>
+                      <br>
+                      <br>
+                      <div class="row">
+                        <div class="col-md-6">
+                          _____________________________
+                        </div>
+                        <div class="col-md-6">
+                          _____________________________
+                        </div>
+                      </div>
+                    </mat-card>
+
+                  </div>
+
+                </div>
+
+                <p style="text-align: center;">Carrera 52 No. 45 - 116 Local 201 - Pasaje Pasteur / Medellin</p>
+                <p style="text-align: center;">tels: 293 33 93 / 293 33 91</p>
+              
+              </mat-card>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

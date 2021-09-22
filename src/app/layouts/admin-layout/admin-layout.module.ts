@@ -27,6 +27,8 @@ import { DetailsArticleComponent } from '../../details-article/details-article.c
 import { DetailsReserveComponent } from '../../details-reserve/details-reserve.component';
 import { EditReserveComponent } from '../../edit-reserve/edit-reserve.component';
 import { EditArticleComponent } from '../../edit-article/edit-article.component'
+import { ViewInvoiceComponent } from '../../view-invoice/view-invoice.component'
+
 // Primeng
 import { TableModule } from 'primeng/table';
 
@@ -101,6 +103,7 @@ import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
     DetailsArticleComponent,
     DetailsReserveComponent,
     ListInvoiceComponent,
+    ViewInvoiceComponent,
     EditReserveComponent,
     EditArticleComponent
   ]
