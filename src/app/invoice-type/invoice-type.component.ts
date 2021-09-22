@@ -57,8 +57,6 @@ export class InvoiceTypeComponent implements OnInit {
   public employeIdentification: FormControl;
   public cost: FormControl;
   public description: FormControl;
-  public employeeName: FormControl;
-  public customerName: FormControl;
   public employeId: FormControl;
   public anyDetalleArticle: FormGroup;
   public strTitle: string;
@@ -104,8 +102,6 @@ export class InvoiceTypeComponent implements OnInit {
     this.employeIdentification = new FormControl;
     this.cost = new FormControl();
     this.description = new FormControl();
-    this.employeeName = new FormControl();
-    this.customerName = new FormControl();
     this.employeId = new FormControl();
     //Form cliente
     this.name = new FormControl();
@@ -225,31 +221,30 @@ export class InvoiceTypeComponent implements OnInit {
 
   public setCustomerData() {
     let customerIdentification = '',
-      customerName = '';
+      customerId = '';
     for (let index = 0; index < this.anyListCustomers.length; index++) {
       const element = this.anyListCustomers[index];
       if (element.id === this.customerId.value) {
         customerIdentification = element.identification;
-        customerName = element.name
+        customerId = element.id;
         break;
       }
     }
     this.customerIdentification.setValue(customerIdentification);
-    this.customerName.setValue(customerName);
   }
 
   public setEmployeData() {
-    let employeName = '',
-      employeIdentification;
+    let employeIdentification,
+        employeId;
     for (let index = 0; index < this.anyListEmployees.length; index++) {
       const element = this.anyListEmployees[index];
       if (element.id === this.employeId.value) {
-        employeName = element.name;
+        employeId = element.id;
         employeIdentification = element.identification;
         break;
       }
     }
-    this.employeeName.setValue(employeName);
+    this.employeId.setValue(employeId);
     this.employeIdentification.setValue(employeIdentification);
   }
 
@@ -402,10 +397,9 @@ export class InvoiceTypeComponent implements OnInit {
 
       this.invoice_venta = new InvoiceVenta;
       this.invoice_venta.cost = Number(this.cost.value);
-      this.invoice_venta.customerIdentification = this.customerIdentification.value;
+      this.invoice_venta.customerID = this.customerId.value;
+      this.invoice_venta.employeeID = this.employeId.value;
       this.invoice_venta.description = this.description.value;
-      this.invoice_venta.customerName = this.customerName.value;
-      this.invoice_venta.employeeName = this.employeeName.value;
       this.invoice_venta.articles = this.rowsArticlesValues;
 
       this.createInvoiceVenta(this.invoice_venta);
@@ -415,10 +409,9 @@ export class InvoiceTypeComponent implements OnInit {
 
       this.invoice_dano = new InvoiceDano;
       this.invoice_dano.cost = Number(this.cost.value);
-      this.invoice_dano.customerIdentification = this.customerIdentification.value;
+      this.invoice_dano.customerID = this.customerId.value;
+      this.invoice_dano.employeeID = this.employeId.value;
       this.invoice_dano.description = this.description.value;
-      this.invoice_dano.customerName = this.customerName.value;
-      this.invoice_dano.employeeName = this.employeeName.value;
 
       this.createInvoiceDano(this.invoice_dano);
 

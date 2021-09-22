@@ -10,17 +10,15 @@ export interface IInvoice {
 
 export interface IInvoiceDano {
     cost: number;
-    customerName: string;
-    customerIdentification: string;
-    employeeName: string;
+    customerID: number;
+    employeeID: number;
     description: string;
 }
 
 export interface IInvoiceVenta {
     cost: number;
-    customerName: string;
-    customerIdentification: string;
-    employeeName: string;
+    customerID: number;
+    employeeID: number;
     description: string;
     articles: Array<Object[]>;
 }
@@ -48,33 +46,29 @@ export class Invoice implements IInvoice {
 
 export class InvoiceDano implements IInvoiceDano {
     cost: number;
-    customerName: string;
-    customerIdentification: string;
-    employeeName: string;
+    customerID: number;
+    employeeID: number;
     description: string;
 
     constructor() {
         this.cost = 0;
-        this.customerName = '';
-        this.customerIdentification = '';
-        this.employeeName = '';
+        this.customerID = 0;
+        this.employeeID = 0;
         this.description = '';
     }
 }
 
 export class InvoiceVenta implements IInvoiceVenta {
     cost: number;
-    customerName: string;
-    customerIdentification: string;
-    employeeName: string;
+    customerID: number;
+    employeeID: number;
     description: string;
     articles: Array<Object[]>;
 
     constructor() {
         this.cost = 0;
-        this.customerName = '';
-        this.customerIdentification = '';
-        this.employeeName = '';
+        this.customerID = 0;
+        this.employeeID = 0;
         this.description = '';
         this.articles = [];
     }
