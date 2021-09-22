@@ -437,7 +437,7 @@ export class InvoiceTypeComponent implements OnInit {
             this.clearData();
             this.getListCustomers();
             this.getListEmployes();
-            this.router.navigate(['/invoice/', response.msg.id]);
+            this.router.navigate(['/view-invoice/', response.msg.id]);
           })
         } else {
           this.alert('Error', response.msg, 'error');
@@ -476,7 +476,7 @@ export class InvoiceTypeComponent implements OnInit {
             this.clearData();
             this.getListCustomers();
             this.getListEmployes();
-            this.router.navigate(['/invoice/', response.msg.id]);
+            this.router.navigate(['/view-invoice/', response.msg.id]);
           })
         } else {
           this.alert('Error', response.msg, 'error');
