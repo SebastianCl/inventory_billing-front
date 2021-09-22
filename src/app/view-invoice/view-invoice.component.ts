@@ -76,7 +76,7 @@ export class ViewInvoiceComponent implements OnInit {
             break;
         }
         this.numberInvoice = response.msg.invoiceNumber;
-        this.dateInvoice = response.msg.date;
+        this.dateInvoice = this.convertDates(response.msg.date);
         this.employeeName = response.msg.employeeName;
         this.customName = response.msg.customerName;
         this.customDocument = response.msg.customerIdentification;
@@ -97,6 +97,21 @@ export class ViewInvoiceComponent implements OnInit {
     }, (err) => {
       console.info(err);
     });
+  }
+
+  private convertDates(value) {
+    const now = new Date(value);
+    const dd = this.addZero(now.getDate());
+    const mm = this.addZero(now.getMonth() + 1);
+    const yyyy = now.getFullYear();
+    return yyyy + '-' + mm + '-' + dd;
+  }
+
+  private addZero(i) {
+    if (i < 10) {
+      i = '0' + i;
+    }
+    return i;
   }
 
   private alert(title: any, text: any, icon: any) {
