@@ -247,7 +247,7 @@ export class InvoiceComponent implements OnInit {
           this.showPrintButton = true;
           localStorage.removeItem('isCreatedInvoice');
           this.clearData();
-          this.router.navigate(['/list-invoice']);
+          this.router.navigate(['/view-invoice/', response.msg.id]);
         } else {
           this.alert('Atención', 'Factura no creada.', 'warning');
         }
