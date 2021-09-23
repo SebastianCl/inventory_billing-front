@@ -11,8 +11,8 @@
           <div class="card-header card-header-warning">
 
             <h4 class="card-title ">Reserva # {{form.controls.reserveNumber.value}}</h4>
-            <p class="card-category"> Fecha de registro: {{form.controls.startDate.value}}</p>
-            <p class="card-category"> Nro factura: {{form.controls.invoiceNumber.value}}</p>
+            <p class="card-category"> Fecha de registro: {{form.controls.reserveDay.value}}</p>
+            <p class="card-category"> Factura: {{form.controls.invoiceNumber.value}}</p>
             <p class="card-category"> Estado: {{form.controls.isActive.value}}</p>
             <button mat-raised-button matTooltip="Listar reservas" class="btn pull-right back"
               (click)="back()">Volver</button>
@@ -45,7 +45,7 @@
 
               <div class="col-md-6">
 
-                <mat-card><strong>Fecha inicio reserva:</strong> {{form.controls.reserveDay.value}}</mat-card>
+                <mat-card><strong>Fecha inicio reserva:</strong> {{form.controls.startDate.value}}</mat-card>
 
               </div>
 
@@ -87,7 +87,7 @@
                     <tr *ngFor="let item of listArticlesLoads; let i = index;">
 
                       <td>
-                        %{{item.discount}}
+                        {{item.discount}} %
                       </td>
                       <td>
                         {{item.reference}}

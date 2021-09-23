@@ -35,16 +35,44 @@ export class DetailsReserveComponent implements OnInit {
     this.router.navigate(['/list-reserve']);
   }
 
+  formatDate(strDate, isDetail: Boolean) {
+    debugger;
+    let date = new Date(strDate);
+    let dmy = date.toLocaleDateString();
+
+    let msgDate = dmy;
+    // Si se solicita detalle se envia con hora y dia de la semana
+    if (isDetail) {
+      const days = [
+        'Domingo',
+        'Lunes',
+        'Martes',
+        'Miércoles',
+        'Jueves',
+        'Viernes',
+        'Sábado',
+      ];
+
+      const numberDay = date.getDay();
+      const nameDay = days[numberDay];
+
+      let hour = date.toLocaleTimeString();
+      msgDate = `${dmy} | ${nameDay} | ${hour}`;
+    }
+    return msgDate;
+  }
 
   setData(data) {
-    console.info(data);
+    this.form.controls.reserveDay.setValue(this.formatDate(data.reserveDay, true));
+    this.form.controls.startDate.setValue(this.formatDate(data.reserveDay, false));
+    this.form.controls.endDate.setValue(this.formatDate(data.reserveDay, false));
+
+    let invoiceNumber = data.invoiceNumber === 0 ? 'SIN FACTURAR' : data.invoiceNumber;
+    this.form.controls.invoiceNumber.setValue(invoiceNumber);
+
     this.form.controls.reserveNumber.setValue(data.reserveNumber);
-    this.form.controls.startDate.setValue(data.startDate);
-    this.form.controls.invoiceNumber.setValue(data.invoiceNumber);
     this.form.controls.customerName.setValue(data.customerName);
     this.form.controls.employeName.setValue(data.employeeName);
-    this.form.controls.reserveDay.setValue(data.reserveDay);
-    this.form.controls.endDate.setValue(data.endDate);
     this.form.controls.description.setValue(data.description);
     this.listArticlesLoads = data.articles;
     let isActive = data.active ? 'ACTIVA' : 'CERRADA';

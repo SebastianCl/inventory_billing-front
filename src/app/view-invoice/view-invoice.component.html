@@ -94,7 +94,7 @@
 
                     <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Concepto:
                       {{description}}</mat-card>
-                  
+
                   </div>
 
                 </div>
@@ -104,29 +104,29 @@
                   <div class="col-md-12" style="padding: 1px;">
 
                     <mat-card
-                        style="border: 6px solid gray;border-radius: 2%;padding: 5px !important;text-align: center;">
-                        <mat-card-title style="text-align: center;"> Descripción artículos </mat-card-title>
-                        <mat-card-content>
-                          <div class="table-responsive">
-                            <table class="table table-hover">
-                              <thead>
-                                <th id=""> Referencia </th>
-                                <th id=""> Precio Original </th>
-                                <th id=""> % Descuento</th>
-                                <th id=""> NETO </th>
-                              </thead>
-                              <tbody>
-                                <tr *ngFor="let item of anyArticles">
-                                  <td>{{item.reference}}</td>
-                                  <td>{{item.price | currency }}</td>
-                                  <td>% {{item.discount}}</td>
-                                  <td>{{item.price - ((item.price * item.discount)/100) | currency }}</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </mat-card-content>
-                      </mat-card>
+                      style="border: 6px solid gray;border-radius: 2%;padding: 5px !important;text-align: center;">
+                      <mat-card-title style="text-align: center;"> Descripción artículos </mat-card-title>
+                      <mat-card-content>
+                        <div class="table-responsive">
+                          <table class="table table-hover">
+                            <thead>
+                              <th id=""> Referencia </th>
+                              <th id=""> Precio Original </th>
+                              <th id=""> % Descuento</th>
+                              <th id=""> NETO </th>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let item of anyArticles">
+                                <td>{{item.reference}}</td>
+                                <td>{{item.price | currency }}</td>
+                                <td>% {{item.discount}}</td>
+                                <td>{{item.price - ((item.price * item.discount)/100) | currency }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </mat-card-content>
+                    </mat-card>
 
                   </div>
 
@@ -156,7 +156,8 @@
                   </div>
 
                   <div class="col-md-4" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Resta: {{total | currency }}</mat-card>
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Resta: {{total
+                      | currency }}</mat-card>
                   </div>
 
                 </div>
@@ -164,12 +165,14 @@
                 <div class="row" *ngIf="typeInvoice != '3'">
 
                   <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Pago el depósito: {{typeDeposito}}</mat-card>
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Pago el
+                      depósito: {{typeDeposito}}</mat-card>
                   </div>
                   <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor depósito: {{deposit | currency }}</mat-card>
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor depósito:
+                      {{deposit | currency }}</mat-card>
                   </div>
-                  
+
                 </div>
 
                 <div class="row">
@@ -186,8 +189,7 @@
 
                   <div class="col-md-6" style="padding: 1px;">
 
-                    <mat-card
-                      style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;height: 136px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;height: 136px;">
                       <div class="row">
                         <div class="col-md-6">
                           Vendedor:
@@ -214,7 +216,7 @@
 
                 <p style="text-align: center;">Carrera 52 No. 45 - 116 Local 201 - Pasaje Pasteur / Medellin</p>
                 <p style="text-align: center;">tels: 293 33 93 / 293 33 91</p>
-              
+
               </mat-card>
 
             </div>

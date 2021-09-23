@@ -64,7 +64,7 @@ export class ViewInvoiceComponent implements OnInit {
     this.invoiceService.loadInvoice(idInvoice).subscribe((response: any) => {
       if (response.resp) {
         this.typeInvoice = response.msg.type;
-        switch(this.typeInvoice){
+        switch (this.typeInvoice) {
           case '1':
             this.stringInvoice = 'Factura reserva';
             break;
