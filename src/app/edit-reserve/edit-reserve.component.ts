@@ -206,7 +206,7 @@ export class EditReserveComponent implements OnInit {
     for (let indx in rows) {
 
       const element = rows[indx];
-      articleList.push({ ref: element.garmentReference, price: element.price, discount: element.discount });
+      articleList.push({ reference: element.garmentReference, price: element.price, discount: element.discount });
 
     }
 

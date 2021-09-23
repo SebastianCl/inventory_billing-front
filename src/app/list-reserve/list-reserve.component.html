@@ -14,7 +14,7 @@
 
               <p-table #dt [columns]="cols" [value]="listReserves" [paginator]="true" [responsive]="true" [rows]="10"
                 [rowsPerPageOptions]="[5,10,20]"
-                [globalFilterFields]="['customerName','reserveDay','endDate','articles']">
+                [globalFilterFields]="['customerName','reserveDay','endDate','status']">
                 <ng-template pTemplate="caption">
                   <div style="text-align: right">
                     <em class="fa fa-search" style="margin:4px 4px 0 0"></em>
@@ -28,14 +28,10 @@
                         [field]="'customerName'">
                       </p-sortIcon>
                     </th>
-                    <th id="reserveDay" [pSortableColumn]="'reserveDay'">Fecha/Reserva<p-sortIcon
-                        [field]="'reserveDay'">
+                    <th id="reserveDay" [pSortableColumn]="'reserveDay'">Creada<p-sortIcon [field]="'reserveDay'">
                       </p-sortIcon>
                     </th>
-                    <th id="endDate" [pSortableColumn]="'endDate'">Fecha/Cierre<p-sortIcon [field]="'endDate'">
-                      </p-sortIcon>
-                    </th>
-                    <th id="articles" [pSortableColumn]="'articles'">Artículos<p-sortIcon [field]="'articles'">
+                    <th id="status" [pSortableColumn]="'status'">Estado<p-sortIcon [field]="'status'">
                       </p-sortIcon>
                     </th>
                     <th id="detail">
@@ -47,26 +43,25 @@
                   <tr>
                     <td>{{data.customerName}}</td>
                     <td>{{data.reserveDay}}</td>
-                    <td>{{data.endDate}}</td>
-                    <td>{{data.articles}}</td>
+                    <td>{{data.status}}</td>
                     <td>
                       <div style="text-align: center;">
                         <button mat-mini-fab color="primary" matTooltip="Ver detalle" [attr.disabled]="dsbBtn?'':null"
                           (click)="goToDetails(data)">
                           <mat-icon> preview </mat-icon>
                         </button>
-                        <button mat-mini-fab matTooltip="Editar" [attr.disabled]="dsbBtn?'':null"
+                        <button mat-mini-fab matTooltip="Editar" [attr.disabled]="dsbBtn?'':null" *ngIf="data.isEdit"
                           (click)="goToEdit(data)">
                           <mat-icon> edit </mat-icon>
                         </button>
-                        <button mat-mini-fab color="danger" matTooltip="Crear factura"
-                          *ngIf="data.isActive === 'ACTIVA'" (click)="createInvoice(data)">
+                        <button mat-mini-fab color="danger" matTooltip="Crear factura" *ngIf="data.isInvoice"
+                          (click)="createInvoice(data)">
                           <mat-icon>
                             monetization_on
                           </mat-icon>
                         </button>
-                        <button mat-mini-fab color="warn" matTooltip="Cancelar reserva"
-                          *ngIf="data.isActive === 'ACTIVA'" (click)="cancelReserve(data)">
+                        <button mat-mini-fab color="warn" matTooltip="Cancelar reserva" *ngIf="data.isCancel"
+                          (click)="cancelReserve(data)">
                           <mat-icon>
                             cancel
                           </mat-icon>

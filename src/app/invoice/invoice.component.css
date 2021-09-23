@@ -15,3 +15,9 @@
   background-color: gray !important;
   color: rgb(170, 19, 19) !important;
 }
+
+.border{
+  border: 6px solid gray !important;
+  border-radius: 2% !important;
+  padding: 10px !important;
+}

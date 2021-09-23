@@ -38,7 +38,7 @@ export class ReserveComponent implements OnInit {
   //Arrays
   public anyCabecera: any[];
   public anyDetalleArticle: FormGroup;
-  private arrayValidateArticles:any[];
+  private arrayValidateArticles: any[];
   public anyCabeceraRef: any[];
   public anyDetalleRef: any[];
   private rowsArticlesValues: any[];
@@ -85,7 +85,7 @@ export class ReserveComponent implements OnInit {
     this.anyListCustomers = [];
     this.anyListEmployees = []
     //Arrays
-    this.anyCabecera = ['','','% DESCUENTO','REFERENCIA','PRECIO','DESCUENTO','NETO','VISUALIZAR'];
+    this.anyCabecera = ['', '', '% DESCUENTO', 'REFERENCIA', 'PRECIO', 'DESCUENTO', 'NETO', 'VISUALIZAR'];
     this.anyDetalleArticle = this.fb.group({ rows: this.fb.array([]) });
     //Form bool
     this.showFormRef = true;
@@ -257,7 +257,7 @@ export class ReserveComponent implements OnInit {
     const control = this.anyDetalleArticle.get('rows') as FormArray;
     control.removeAt(index);
     this.calculateTotals();
-    if (control.length == 0){
+    if (control.length == 0) {
       this.showValRef = true;
       this.showForm = true;
     }
@@ -325,12 +325,12 @@ export class ReserveComponent implements OnInit {
     modal.style.display = 'none';
   }
 
-  private valDisponibilidad(){
+  private valDisponibilidad() {
     const control = this.anyDetalleArticle.get('rows') as FormArray;
     const rows = control.value;
     let arrayValidate = [];
 
-    for (let indx in rows){
+    for (let indx in rows) {
       const element = rows[indx];
       arrayValidate.push(element.garmentReference);
     }
@@ -343,43 +343,43 @@ export class ReserveComponent implements OnInit {
 
   private srvValDisponibilidad(article: ValidateArticle): any {
     this.articleService.validateAvailability(article)
-    .subscribe((response: any) => {
-      if(response.resp){
-        this.showValRef = true;
-        this.showForm = false;
-      }
-    },
-      (err) => {
-        console.info(err);
-        if (err.status === 401) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          Swal.fire({
-            title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
-            onClose: () => { this.router.navigate(['/login']); }
-          });
-        } else if (err.status === 400) {
-          if (err.error.type === 2){
-            this.showValRef = false;
-            this.showForm = true;
-            this.anyCabeceraRef = ['REFERENCE','FECHA DISPONIBILIDAD'];
-            let anyResponse = err.error.msg;
-            let anyResult = [];
-            for (let obj in anyResponse){
-              const element = anyResponse[obj];
-              const objeto = {
-                reference: element.reference,
-                earlyDate: this.convertDates(element.earlyDate)
-              }
-              anyResult.push(objeto);
-            }
-            this.anyDetalleRef = anyResult;
-          }
-        } else {
-          this.alert('Error', 'Ocurrió un error.', 'error');
+      .subscribe((response: any) => {
+        if (response.resp) {
+          this.showValRef = true;
+          this.showForm = false;
         }
-      }
-    );
+      },
+        (err) => {
+          console.info(err);
+          if (err.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            Swal.fire({
+              title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
+              onClose: () => { this.router.navigate(['/login']); }
+            });
+          } else if (err.status === 400) {
+            if (err.error.type === 2) {
+              this.showValRef = false;
+              this.showForm = true;
+              this.anyCabeceraRef = ['REFERENCE', 'FECHA DISPONIBILIDAD'];
+              let anyResponse = err.error.msg;
+              let anyResult = [];
+              for (let obj in anyResponse) {
+                const element = anyResponse[obj];
+                const objeto = {
+                  reference: element.reference,
+                  earlyDate: this.convertDates(element.earlyDate)
+                }
+                anyResult.push(objeto);
+              }
+              this.anyDetalleRef = anyResult;
+            }
+          } else {
+            this.alert('Error', 'Ocurrió un error.', 'error');
+          }
+        }
+      );
   }
 
   private convertDates(value) {
@@ -430,19 +430,20 @@ export class ReserveComponent implements OnInit {
     const control = this.anyDetalleArticle.get('rows') as FormArray;
     const rowsArticles = control.value;
     let articleList = [],
-        articleListLocalstorage = [];
+      articleListLocalstorage = [];
 
-    for (let obj in rowsArticles){
+    for (let obj in rowsArticles) {
       const element = rowsArticles[obj];
+      let discount = (element.discount === '') ? 0 : element.discount;
       const objeto = {
-        ref: element.garmentReference,
+        reference: element.garmentReference,
         price: element.price,
-        discount: (element.discount === '') ? 0 : element.discount
+        discount
       }
       articleList.push(objeto);
-      articleListLocalstorage.push({ reference: element.garmentReference, price: element.price, discount: element.discount });
+      articleListLocalstorage.push({ reference: element.garmentReference, price: element.price, discount });
     }
-    
+
     this.rowsArticlesValues = articleList;
     this.localstorageArticlesValues = articleListLocalstorage;
 
@@ -562,12 +563,12 @@ export class ReserveComponent implements OnInit {
     return true;
   }
 
-  private valRows(){
+  private valRows() {
     const control = this.anyDetalleArticle.get('rows') as FormArray;
     const rowsArticles = control.value;
     let validRowsIndex = [];
     let sw = false;
-    for (let obj in rowsArticles){
+    for (let obj in rowsArticles) {
       const element = rowsArticles[obj];
       if (element.reference === '' || element.discount > 100 || element.price < 0 || element.quantity < 0) {
         validRowsIndex.push(obj + 1);
@@ -592,7 +593,7 @@ export class ReserveComponent implements OnInit {
     modal.style.display = 'none';
   }
 
-  public createCliente(){
+  public createCliente() {
     this.changeShowCliente();
     if (!this.validateData()) {
       this.changeShowCliente();

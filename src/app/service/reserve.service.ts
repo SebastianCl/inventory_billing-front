@@ -50,7 +50,7 @@ export class ReserveService {
 
   getDataArticles(reserve: ReserveCancel): Observable<any[]> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
-    return this.http.post<any[]>(this.urlApi + '/reserve/getDataArticlesReserved', reserve, {
+    return this.http.post<any[]>(this.urlApi + '/reserve/dataArticlesReserved', reserve, {
       headers: header
     }).pipe(catchError(this.handleError));
   }

@@ -66,13 +66,13 @@ export class ViewInvoiceComponent implements OnInit {
         this.typeInvoice = response.msg.type;
         switch (this.typeInvoice) {
           case '1':
-            this.stringInvoice = 'Factura reserva';
+            this.stringInvoice = 'Factura de reserva';
             break;
           case '2':
-            this.stringInvoice = 'Factura venta';
+            this.stringInvoice = 'Factura de venta';
             break;
           default:
-            this.stringInvoice = 'Factura daño';
+            this.stringInvoice = 'Factura de daño';
             break;
         }
         this.numberInvoice = response.msg.invoiceNumber;

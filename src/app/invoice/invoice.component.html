@@ -44,13 +44,11 @@
                                             height="160">
                                     </div>
                                     <div class="col-md-4" style="padding: 1px;">
-                                        <p>Siguenos en:
-                                            <a href="https://www.instagram.com/bellarose.alquiler" target="_blank"><span
-                                                    class="iconify" data-icon="mdi-instagram"
-                                                    data-inline="false"></span>@bellarose.alquiler</a>
+                                        <p>
+                                            Siguenos en: @bellarose.alquiler
                                         </p>
-                                        <p>317 500 93 38
-                                            <br>
+                                        <p>
+                                            317 500 93 38
                                             www.bellarosealquiler.com
                                         </p>
                                     </div>
@@ -58,58 +56,43 @@
                                         Número de factura: {{numberInvoice}}
                                     </div>
                                 </div>
-                                <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
+                                <mat-card class="border">
                                     <div class="row">
                                         <div class="col-md-6" style="padding: 1px;">
-                                            <mat-card
-                                                style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
-                                                Fecha de
-                                                Factura: {{dateInvoice.value}}</mat-card>
+                                            <mat-card class="border">
+                                                Fecha de Factura: {{dateInvoice.value}}</mat-card>
                                         </div>
                                         <div class="col-md-6" style="padding: 1px;">
-                                            <mat-card
-                                                style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
-                                                Empleado:
-                                                {{employeeName.value}}</mat-card>
+                                            <mat-card class="border">
+                                                Empleado: {{employeeName.value}}</mat-card>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6" style="padding: 1px;">
-                                            <mat-card
-                                                style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
-                                                Nombre:
-                                                {{clientName.value}}</mat-card>
+                                            <mat-card class="border">
+                                                Nombre: {{clientName.value}}</mat-card>
                                         </div>
                                         <div class="col-md-6" style="padding: 1px;">
-                                            <mat-card
-                                                style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
-                                                Documento:
-                                                {{clientDocument.value}}</mat-card>
+                                            <mat-card class="border">
+                                                Documento: {{clientDocument.value}}</mat-card>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6" style="padding: 1px;">
-                                            <mat-card
-                                                style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
-                                                Dirección:
-                                                {{clientAddress.value}}</mat-card>
+                                            <mat-card class="border">
+                                                Dirección: {{clientAddress.value}}</mat-card>
                                         </div>
                                         <div class="col-md-6" style="padding: 1px;">
-                                            <mat-card
-                                                style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
-                                                Email:
-                                                {{clientEmail.value}}</mat-card>
+                                            <mat-card class="border">
+                                                Email: {{clientEmail.value}}</mat-card>
                                         </div>
                                     </div>
                                     <div class="row" *ngIf="showDepositInput === true">
                                         <div class="col-md-6">
                                         </div>
                                         <div class="col-md-6" style="padding: 1px;">
-                                            <mat-card
-                                                style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
-                                                Pago el
-                                                depósito:
-                                                {{pagoDeposito}}</mat-card>
+                                            <mat-card class="border">
+                                                Pago el depósito: {{pagoDeposito}}</mat-card>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -132,7 +115,7 @@
                                                                     *ngFor="let item of listArticlesLoads; let i = index;">
                                                                     <td>{{item.reference}}</td>
                                                                     <td>{{item.price | currency }}</td>
-                                                                    <td>% {{item.discount}}</td>
+                                                                    <td>{{item.discount}} %</td>
                                                                     <td>{{item.price - ((item.price *
                                                                         item.discount)/100) | currency }}</td>
                                                                 </tr>
@@ -145,34 +128,29 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3" style="padding: 1px;">
-                                            <mat-card
-                                                style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
+                                            <mat-card class="border">
                                                 Valor:
                                                 {{subTotal | currency }}</mat-card>
                                         </div>
                                         <div class="col-md-3" style="padding: 1px;">
-                                            <mat-card
-                                                style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
+                                            <mat-card class="border">
                                                 Abono:
                                                 {{payment.value | currency }}</mat-card>
                                         </div>
                                         <div class="col-md-3" style="padding: 1px;">
-                                            <mat-card
-                                                style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
+                                            <mat-card class="border">
                                                 Resta:
                                                 {{total | currency }}</mat-card>
                                         </div>
                                         <div class="col-md-3" style="padding: 1px;">
-                                            <mat-card
-                                                style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
+                                            <mat-card class="border">
                                                 Deposito:
                                                 {{deposit.value | currency }}</mat-card>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6" style="padding: 1px;">
-                                            <mat-card
-                                                style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
+                                            <mat-card class="border">
                                                 <p>* No se hace devolución de dinero</p>
                                                 <p>* El deposito cubrira cualquier tipo de daño en la prenda o artículo
                                                 </p>

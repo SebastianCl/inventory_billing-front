@@ -28,12 +28,12 @@
                 </div>
 
                 <div class="col-md-4" style="padding: 1px;">
-                  <p>Siguenos en:
-                    <a href="https://www.instagram.com/bellarose.alquiler" target="_blank"><span class="iconify"
-                        data-icon="mdi-instagram" data-inline="false"></span>@bellarose.alquiler</a>
+                  <p>
+                    Siguenos en: @bellarose.alquiler
                   </p>
-                  <p>317 500 93 38
-                    <br>
+                  <br>
+                  <p>
+                    317 500 93 38
                     www.bellarosealquiler.com
                   </p>
                 </div>
@@ -44,17 +44,17 @@
 
               </div>
 
-              <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
+              <mat-card class="border">
 
                 <div class="row">
 
                   <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Fecha de
+                    <mat-card class="border">Fecha de
                       Factura: {{dateInvoice}}</mat-card>
                   </div>
 
                   <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Empleado:
+                    <mat-card class="border">Empleado:
                       {{employeeName}}</mat-card>
                   </div>
 
@@ -63,12 +63,12 @@
                 <div class="row">
 
                   <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Nombre:
+                    <mat-card class="border">Nombre:
                       {{customName}}</mat-card>
                   </div>
 
                   <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Documento:
+                    <mat-card class="border">Documento:
                       {{customDocument}}</mat-card>
                   </div>
 
@@ -77,12 +77,12 @@
                 <div class="row">
 
                   <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Dirección:
+                    <mat-card class="border">Dirección:
                       {{customAddress}}</mat-card>
                   </div>
 
                   <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Email:
+                    <mat-card class="border">Email:
                       {{customEmail}}</mat-card>
                   </div>
 
@@ -92,7 +92,7 @@
 
                   <div class="col-md-12" style="padding: 1px;">
 
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Concepto:
+                    <mat-card class="border">Concepto:
                       {{description}}</mat-card>
 
                   </div>
@@ -119,7 +119,7 @@
                               <tr *ngFor="let item of anyArticles">
                                 <td>{{item.reference}}</td>
                                 <td>{{item.price | currency }}</td>
-                                <td>% {{item.discount}}</td>
+                                <td>{{item.discount}} %</td>
                                 <td>{{item.price - ((item.price * item.discount)/100) | currency }}</td>
                               </tr>
                             </tbody>
@@ -137,7 +137,7 @@
                   <div class="col-md-6"></div>
 
                   <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor a pagar:
+                    <mat-card class="border">Valor a pagar:
                       {{subTotal | currency }}</mat-card>
                   </div>
 
@@ -146,17 +146,17 @@
                 <div class="row" *ngIf="typeInvoice != '3'">
 
                   <div class="col-md-4" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor a pagar:
+                    <mat-card class="border">Valor a pagar:
                       {{subTotal | currency }}</mat-card>
                   </div>
 
                   <div class="col-md-4" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Abono:
+                    <mat-card class="border">Abono:
                       {{payment | currency }}</mat-card>
                   </div>
 
                   <div class="col-md-4" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Resta: {{total
+                    <mat-card class="border">Resta: {{total
                       | currency }}</mat-card>
                   </div>
 
@@ -165,11 +165,11 @@
                 <div class="row" *ngIf="typeInvoice != '3'">
 
                   <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Pago el
+                    <mat-card class="border">Pago el
                       depósito: {{typeDeposito}}</mat-card>
                   </div>
                   <div class="col-md-6" style="padding: 1px;">
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">Valor depósito:
+                    <mat-card class="border">Valor depósito:
                       {{deposit | currency }}</mat-card>
                   </div>
 
@@ -179,7 +179,7 @@
 
                   <div class="col-md-6" style="padding: 1px;">
 
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;">
+                    <mat-card class="border">
                       <p>* No se hace devolución de dinero</p>
                       <p>* El deposito cubrirá cualquier tipo de daño en la prenda o artículo</p>
                       <p>* Pasados 30 días no se hacen cambios</p>

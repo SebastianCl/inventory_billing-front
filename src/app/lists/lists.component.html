@@ -19,11 +19,13 @@
 
           <div class="card-header card-header-warning">
             <h4 class="card-title ">Facturas</h4>
-            <p class="card-category"> Buscar facturas</p>
+            <p class="card-category"> Crea o visualiza facturas</p>
             <button mat-raised-button class="btn btn-action" (click)="goToPage('/list-invoice')">Ver
               lista</button>
-              <button mat-raised-button class="btn pull-right btn-action" matTooltip="Crear factura" (click)="goToPage('/invoice-type/2')">Factura venta</button>
-              <button mat-raised-button class="btn pull-right btn-action" matTooltip="Crear factura" (click)="goToPage('/invoice-type/3')">Factura daño</button>
+            <button mat-raised-button class="btn pull-right btn-action" matTooltip="Crear factura de venta"
+              (click)="goToPage('/invoice-type/2')">Factura de venta</button>
+            <button mat-raised-button class="btn pull-right btn-action" matTooltip="Crear factura de daño"
+              (click)="goToPage('/invoice-type/3')">Factura de daño</button>
           </div>
           <br><br><br>
 

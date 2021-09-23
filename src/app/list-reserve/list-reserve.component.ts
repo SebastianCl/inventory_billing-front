@@ -54,16 +54,26 @@ export class ListReserveComponent implements OnInit {
     this.reserveService.loadReserves()
       .subscribe((response: any) => {
         if (response.resp) {
-          response.msg.forEach(element => {
-            let boolActive = element.active ? 'ACTIVA' : 'CERRADA';
+          response.msg.forEach(reserveData => {
+
+            let isEdit = false;
+            if (reserveData.active) isEdit = true;
+
+            let isCancel = false;
+            if (reserveData.active) isCancel = true;
+
+            let isInvoice = false;
+            if (reserveData.invoiceNumber === 0) isInvoice = true;
+
             const dataQuotation = {
-              id: element.id,
-              customerName: element.customerName,
-              reserveDay: this.convertDates(element.reserveDay),
-              endDate: this.convertDates(element.endDate),
-              articles: element.articles.length,
-              isActive: boolActive,
-              reserveNumber: element.reserveNumber
+              id: reserveData.id,
+              customerName: reserveData.customerName,
+              reserveDay: this.formatDate(reserveData.reserveDay),
+              status: reserveData.status,
+              isEdit,
+              isCancel,
+              isInvoice,
+              reserveNumber: reserveData.reserveNumber
             }
             this.listReserves.push(dataQuotation);
             this.listReservesAllInfo.push(dataQuotation);
@@ -101,6 +111,13 @@ export class ListReserveComponent implements OnInit {
       i = '0' + i;
     }
     return i;
+  }
+
+  formatDate(strDate) {
+    let date = new Date(strDate);
+    let dmy = date.toLocaleDateString();
+    let hour = date.toLocaleTimeString();
+    return `${dmy} ${hour}`;;
   }
 
   private changeShow() {

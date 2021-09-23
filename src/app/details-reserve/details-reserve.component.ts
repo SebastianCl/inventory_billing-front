@@ -36,7 +36,6 @@ export class DetailsReserveComponent implements OnInit {
   }
 
   formatDate(strDate, isDetail: Boolean) {
-    debugger;
     let date = new Date(strDate);
     let dmy = date.toLocaleDateString();
 
