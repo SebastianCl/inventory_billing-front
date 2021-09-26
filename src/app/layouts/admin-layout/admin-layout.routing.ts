@@ -5,6 +5,7 @@ import { ReserveComponent } from '../../reserve/reserve.component';
 import { ProfilesComponent } from '../../profiles/profiles.component';
 import { EmployeeProfileComponent } from '../../employee-profile/employee-profile.component';
 import { CustomerProfileComponent } from '../../customer-profile/customer-profile.component';
+import { EditCustomerComponent } from '../../edit-customer/edit-customer.component'
 import { ListCustomerComponent } from '../../list-customer/list-customer.component';
 import { ListEmployeeComponent } from '../../list-employee/list-employee.component';
 import { EditEmployeeComponent } from '../../edit-employee/edit-employee.component'
@@ -34,6 +35,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'reserve', component: ReserveComponent },
     { path: 'profiles', component: ProfilesComponent },
     { path: 'add-customer', component: CustomerProfileComponent },
+    { path: 'edit-customer', component: EditCustomerComponent },
     { path: 'list-customer', component: ListCustomerComponent },
     { path: 'details-customer/:id', component: DetailsCustomerComponent },
     { path: 'add-employee', component: EmployeeProfileComponent },

@@ -51,7 +51,6 @@ export class EditEmployeeComponent implements OnInit {
 
   ngOnInit() {
     const infoEmployee = JSON.parse(localStorage.getItem('info-edit-employee'));
-    console.info(infoEmployee);
     this.setEmployee(infoEmployee);
   }
 
@@ -107,14 +106,14 @@ export class EditEmployeeComponent implements OnInit {
       .subscribe((response: any) => {
         this.changeShow();
         if (response.resp) {
-          this.alert('HECHO', 'Empleado creado.', 'success');
+          this.alert('HECHO', 'Empleado editado.', 'success');
         } else {
-          this.alert('Atención', 'Empleado no creado.', 'warning');
+          this.alert('Atención', 'Empleado no editado.', 'warning');
         }
         this.clearData();
       },
         (err) => {
-          this.alert('Error', 'Empleado no creado.', 'error');
+          this.alert('Error', 'Empleado no editado.', 'error');
           this.changeShow();
           this.clearData();
         }
@@ -135,6 +134,7 @@ export class EditEmployeeComponent implements OnInit {
     this.employeeTelephone.setValue('');
     this.employeeActive = false;
     localStorage.removeItem('info-edit-employee');
+    this.back();
   }
 
   private changeShow() {

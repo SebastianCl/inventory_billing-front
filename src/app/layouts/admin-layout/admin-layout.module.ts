@@ -10,6 +10,7 @@ import { InvoiceTypeComponent } from '../../invoice-type/invoice-type.component'
 
 import { ProfilesComponent } from '../../profiles/profiles.component';
 import { CustomerProfileComponent } from '../../customer-profile/customer-profile.component';
+import { EditCustomerComponent } from '../../edit-customer/edit-customer.component'
 import { ListCustomerComponent } from '../../list-customer/list-customer.component';
 import { EmployeeProfileComponent } from '../../employee-profile/employee-profile.component';
 import { ListEmployeeComponent } from '../../list-employee/list-employee.component';
@@ -89,6 +90,7 @@ import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
     InvoiceTypeComponent,
     ProfilesComponent,
     CustomerProfileComponent,
+    EditCustomerComponent,
     EmployeeProfileComponent,
     UserProfileComponent,
     ListUserComponent,

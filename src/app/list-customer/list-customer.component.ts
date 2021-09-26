@@ -73,7 +73,18 @@ export class ListCustomerComponent implements OnInit {
   }
 
   public goToEdit(data) {
-    console.info(data);
+    let infoCustomer = {
+      customerId: data.id,
+      customerName: data.name,
+      customerIdentificacion: data.identification,
+      customerEmail: data.email,
+      customerDirection: data.direction,
+      customerTelephone1: data.telephone1,
+      customerTelephone2: data.telephone2,
+      customerTelephone3: data.telephone3,
+    }
+    localStorage.setItem('info-edit-customer', JSON.stringify(infoCustomer));
+    this.router.navigate(['/edit-customer']);
   }
 
 }
