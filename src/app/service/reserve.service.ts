@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Reserve, EditReserve, ReserveCancel } from '../models/reserve.model';
+import { Reserve, EditReserve, ReserveCancel, ReserveByDate } from '../models/reserve.model';
 
 import { environment } from '../../environments/environment';
 
@@ -51,6 +51,13 @@ export class ReserveService {
   getDataArticles(reserve: ReserveCancel): Observable<any[]> {
     const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
     return this.http.post<any[]>(this.urlApi + '/reserve/dataArticlesReserved', reserve, {
+      headers: header
+    }).pipe(catchError(this.handleError));
+  }
+
+  getDataByDate(reserve: ReserveByDate): Observable<any[]> {
+    const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token });
+    return this.http.post<any[]>(this.urlApi + '/reserve/findReserveByDate', reserve, {
       headers: header
     }).pipe(catchError(this.handleError));
   }
