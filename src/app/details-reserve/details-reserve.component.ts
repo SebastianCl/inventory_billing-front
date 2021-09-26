@@ -63,8 +63,8 @@ export class DetailsReserveComponent implements OnInit {
 
   setData(data) {
     this.form.controls.reserveDay.setValue(this.formatDate(data.reserveDay, true));
-    this.form.controls.startDate.setValue(this.formatDate(data.reserveDay, false));
-    this.form.controls.endDate.setValue(this.formatDate(data.reserveDay, false));
+    this.form.controls.startDate.setValue(this.formatDate(data.startDate, false));
+    this.form.controls.endDate.setValue(this.formatDate(data.endDate, false));
 
     let invoiceNumber = data.invoiceNumber === 0 ? 'SIN FACTURAR' : data.invoiceNumber;
     this.form.controls.invoiceNumber.setValue(invoiceNumber);
