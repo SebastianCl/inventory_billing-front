@@ -30,8 +30,6 @@ import { InvoiceTypeComponent } from '../../invoice-type/invoice-type.component'
 import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
 import { ViewInvoiceComponent } from '../../view-invoice/view-invoice.component';
 
-import { AnalyticsComponent } from '../../analytics/analytics.component';
-
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
     { path: 'reserve', component: ReserveComponent },
@@ -59,5 +57,4 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'edit-article/:id', component: EditArticleComponent },
     { path: 'invoice-type/:id', component: InvoiceTypeComponent },
     { path: 'view-invoice/:id', component: ViewInvoiceComponent },
-    { path: 'analytics', component: AnalyticsComponent },
 ];

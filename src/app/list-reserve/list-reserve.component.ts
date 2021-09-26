@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
 
 // Modelo
-import { ReserveCancel } from '../models/reserve.model';
+import { ReserveCancel, ReserveByDate } from '../models/reserve.model';
 // Servicio
 import { ReserveService } from '../service/reserve.service';
 
@@ -18,6 +18,7 @@ import { ReserveService } from '../service/reserve.service';
 export class ListReserveComponent implements OnInit {
 
   cancel_reserve: ReserveCancel;
+  reserve_date: ReserveByDate;
 
   public hiddenProgBar: boolean;
   public dsbBtn: boolean;
@@ -28,7 +29,6 @@ export class ListReserveComponent implements OnInit {
 
   //Form search range reserve
   public startDate: FormControl;
-  public endDate: FormControl;
 
   constructor(
     private router: Router,
@@ -40,7 +40,6 @@ export class ListReserveComponent implements OnInit {
     this.dsbBtn = false;
     //Form search range reserve
     this.startDate = new FormControl();
-    this.endDate = new FormControl();
   }
 
   ngOnInit() {
@@ -230,21 +229,79 @@ export class ListReserveComponent implements OnInit {
 
   }
 
-  public dateLessThan(event) {
-    const now = new Date(event);
-    const dd = this.addZero(now.getDate());
-    const mm = this.addZero(now.getMonth() + 1);
-    const yyyy = now.getFullYear();
+  public dateLessThan() {
+    this.reserve_date = new ReserveByDate();
+    this.reserve_date.startDate = this.convertDates(this.startDate.value);
+    this.reserve_date.endDate   = this.convertDates('09/27/2021');
+    this.filterReserve(this.reserve_date);
+  }
 
-    if (dd != '0' && mm != '0' && yyyy > 2000) {
-      if (new Date(this.startDate.value) >= new Date(this.endDate.value)) {
-        this.openSnackBar('La fecha final de reserva debe ser mayor a la fecha inicial de reserva', 'OK');
-        this.endDate.reset();
-      }
-      else {
-        
-      }
+  private filterReserve(dataReserve: ReserveByDate): any {
+
+    this.reserveService.getDataByDate(dataReserve)
+      .subscribe((response: any) => {
+
+        if (response.resp && typeof(response.msg) != 'string') {
+
+          this.listReserves = [];
+          response.msg.forEach(reserveData => {
+
+            let isEdit = false;
+            if (reserveData.active) isEdit = true;
+
+            let isCancel = false;
+            if (reserveData.active) isCancel = true;
+
+            let isInvoice = false;
+            if (reserveData.invoiceNumber === 0) isInvoice = true;
+
+            const dataQuotation = {
+              id: reserveData.id,
+              customerName: reserveData.customerName,
+              reserveDay: this.formatDate(reserveData.reserveDay),
+              status: reserveData.status,
+              isEdit,
+              isCancel,
+              isInvoice,
+              reserveNumber: reserveData.reserveNumber
+            }
+            this.listReserves.push(dataQuotation);
+
+          });
+          
+        }
+        else{
+          this.openSnackBar('Sin registros de reservas.', 'OK');
+          this.listReserves = [];
+        }
+
+      },
+        (err) => {
+          if (err.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            Swal.fire({
+              title: 'Sesión expirada', text: 'Debes iniciar sesión.', icon: 'warning',
+              onClose: () => { this.router.navigate(['/login']); }
+            });
+          } else {
+            console.log(err.message);
+            this.alert('Error', 'Ocurrió un error.', 'error');
+          }
+        }
+      );
+    
+  }
+
+  public setCheck(bool){
+
+    if(bool){
+      this.getList();
     }
+    else{
+      this.dateLessThan();
+    }
+
   }
 
 }
