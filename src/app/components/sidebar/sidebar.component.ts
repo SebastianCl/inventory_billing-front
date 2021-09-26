@@ -14,7 +14,8 @@ export const ROUTES: RouteInfo[] = [
   { path: '/reserve', title: 'Nueva reserva', icon: 'content_paste', class: '' },
   { path: '/list-article', title: 'Inventario', icon: 'source', class: '' },
   { path: '/lists', title: 'Reservas | Facturas', icon: 'list', class: '' },
-  { path: '/profiles', title: 'Perfiles', icon: 'face', class: '' }
+  { path: '/profiles', title: 'Perfiles', icon: 'face', class: '' },
+  { path: '/analytics', title: 'Informes', icon: 'analytics', class: '' }
 ];
 
 @Component({

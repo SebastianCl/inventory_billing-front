@@ -5,10 +5,10 @@ import { ReserveComponent } from '../../reserve/reserve.component';
 import { ProfilesComponent } from '../../profiles/profiles.component';
 import { EmployeeProfileComponent } from '../../employee-profile/employee-profile.component';
 import { CustomerProfileComponent } from '../../customer-profile/customer-profile.component';
-import { EditCustomerComponent } from '../../edit-customer/edit-customer.component'
+import { EditCustomerComponent } from '../../edit-customer/edit-customer.component';
 import { ListCustomerComponent } from '../../list-customer/list-customer.component';
 import { ListEmployeeComponent } from '../../list-employee/list-employee.component';
-import { EditEmployeeComponent } from '../../edit-employee/edit-employee.component'
+import { EditEmployeeComponent } from '../../edit-employee/edit-employee.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { ListUserComponent } from '../../list-user/list-user.component';
 import { ArticleProfileComponent } from '../../article-profile/article-profile.component';
@@ -23,12 +23,14 @@ import { DetailsUserComponent } from '../../details-user/details-user.component'
 import { DetailsArticleComponent } from '../../details-article/details-article.component';
 import { DetailsReserveComponent } from '../../details-reserve/details-reserve.component';
 import { EditReserveComponent } from '../../edit-reserve/edit-reserve.component';
-import { EditArticleComponent } from '../../edit-article/edit-article.component'
+import { EditArticleComponent } from '../../edit-article/edit-article.component';
 
 import { InvoiceComponent } from '../../invoice/invoice.component';
-import { InvoiceTypeComponent } from '../../invoice-type/invoice-type.component'
+import { InvoiceTypeComponent } from '../../invoice-type/invoice-type.component';
 import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
-import { ViewInvoiceComponent } from '../../view-invoice/view-invoice.component'
+import { ViewInvoiceComponent } from '../../view-invoice/view-invoice.component';
+
+import { AnalyticsComponent } from '../../analytics/analytics.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
@@ -57,4 +59,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'edit-article/:id', component: EditArticleComponent },
     { path: 'invoice-type/:id', component: InvoiceTypeComponent },
     { path: 'view-invoice/:id', component: ViewInvoiceComponent },
+    { path: 'analytics', component: AnalyticsComponent },
 ];

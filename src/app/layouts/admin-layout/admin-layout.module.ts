@@ -6,11 +6,11 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { ReserveComponent } from '../../reserve/reserve.component';
 import { InvoiceComponent } from '../../invoice/invoice.component';
-import { InvoiceTypeComponent } from '../../invoice-type/invoice-type.component'
+import { InvoiceTypeComponent } from '../../invoice-type/invoice-type.component';
 
 import { ProfilesComponent } from '../../profiles/profiles.component';
 import { CustomerProfileComponent } from '../../customer-profile/customer-profile.component';
-import { EditCustomerComponent } from '../../edit-customer/edit-customer.component'
+import { EditCustomerComponent } from '../../edit-customer/edit-customer.component';
 import { ListCustomerComponent } from '../../list-customer/list-customer.component';
 import { EmployeeProfileComponent } from '../../employee-profile/employee-profile.component';
 import { ListEmployeeComponent } from '../../list-employee/list-employee.component';
@@ -28,8 +28,9 @@ import { DetailsUserComponent } from '../../details-user/details-user.component'
 import { DetailsArticleComponent } from '../../details-article/details-article.component';
 import { DetailsReserveComponent } from '../../details-reserve/details-reserve.component';
 import { EditReserveComponent } from '../../edit-reserve/edit-reserve.component';
-import { EditArticleComponent } from '../../edit-article/edit-article.component'
-import { ViewInvoiceComponent } from '../../view-invoice/view-invoice.component'
+import { EditArticleComponent } from '../../edit-article/edit-article.component';
+import { ViewInvoiceComponent } from '../../view-invoice/view-invoice.component';
+import { AnalyticsComponent } from '../../analytics/analytics.component';
 
 // Primeng
 import { TableModule } from 'primeng/table';
@@ -109,7 +110,8 @@ import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
     ListInvoiceComponent,
     ViewInvoiceComponent,
     EditReserveComponent,
-    EditArticleComponent
+    EditArticleComponent,
+    AnalyticsComponent
   ]
 })
 
