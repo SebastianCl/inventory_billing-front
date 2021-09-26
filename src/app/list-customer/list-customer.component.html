@@ -37,10 +37,12 @@
                     <td>{{data.name}}</td>
                     <td>{{data.identification}}</td>
                     <td>
-                      <div>
-                        <button mat-raised-button class="btn" (click)="goToDetails(data)">Detalles
-                        </button>
-                      </div>
+                      <button mat-mini-fab color="primary" matTooltip="Ver detalle" (click)="goToDetails(data)">
+                        <mat-icon> preview </mat-icon>
+                      </button>
+                      <button mat-mini-fab matTooltip="Editar" (click)="goToEdit(data)">
+                        <mat-icon> edit </mat-icon>
+                      </button>
                     </td>
                   </tr>
                 </ng-template>

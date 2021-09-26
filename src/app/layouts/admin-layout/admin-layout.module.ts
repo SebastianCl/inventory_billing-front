@@ -13,6 +13,7 @@ import { CustomerProfileComponent } from '../../customer-profile/customer-profil
 import { ListCustomerComponent } from '../../list-customer/list-customer.component';
 import { EmployeeProfileComponent } from '../../employee-profile/employee-profile.component';
 import { ListEmployeeComponent } from '../../list-employee/list-employee.component';
+import { EditEmployeeComponent } from '../../edit-employee/edit-employee.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { ListUserComponent } from '../../list-user/list-user.component';
 import { ListsComponent } from '../../lists/lists.component';
@@ -95,6 +96,7 @@ import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
     ListCustomerComponent,
     DetailsCustomerComponent,
     ListEmployeeComponent,
+    EditEmployeeComponent,
     DetailsEmployeeComponent,
     DetailsUserComponent,
     ArticleProfileComponent,

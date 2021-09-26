@@ -30,6 +30,20 @@ export class ListEmployeeComponent implements OnInit {
     this.router.navigate(['/details-employee', data.id]);
   }
 
+  goToEdit(data) {
+    let infoEmployee = {
+      employeeId: data.id,
+      employeeName: data.name,
+      employeeIdentificacion: data.identification,
+      employeeTelephone: data.telephone,
+      employeeEmail: data.email,
+      employeeDirection: data.direction,
+      employeeActive: data.state
+    }
+    localStorage.setItem('info-edit-employee', JSON.stringify(infoEmployee));
+    this.router.navigate(['/edit-employee']);
+  }
+
   // Servicios
   getList(): any {
     this.employeeService.loadEmployees()
@@ -40,7 +54,11 @@ export class ListEmployeeComponent implements OnInit {
               id: element.id,
               name: element.name,
               identification: element.identification,
-              telephone: element.telephone
+              telephone: element.telephone,
+              email: element.email,
+              direction: element.direction,
+              state: element.active,
+              srtstate: (element.active == true) ? 'ACTIVO' : 'INACTIVO'
             }
             this.listEmployee.push(dataEmployee);
           });

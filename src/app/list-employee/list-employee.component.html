@@ -11,7 +11,7 @@
             <div class="table-responsive">
 
               <p-table #dt [columns]="cols" [value]="listEmployee" [paginator]="true" [responsive]="true" [rows]="10"
-                [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['name','identification']">
+                [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['name','identification','estado']">
                 <ng-template pTemplate="caption">
                   <div style="text-align: right">
                     <em class="fa fa-search" style="margin:4px 4px 0 0"></em>
@@ -28,6 +28,10 @@
                         [field]="'identification'">
                       </p-sortIcon>
                     </th>
+                    <th id="estado" [pSortableColumn]="'estado'">Estado<p-sortIcon
+                      [field]="'estado'">
+                    </p-sortIcon>
+                  </th>
                     <th id="change">
                     </th>
                   </tr>
@@ -36,11 +40,14 @@
                   <tr>
                     <td>{{data.name}}</td>
                     <td>{{data.identification}}</td>
+                    <td>{{data.srtstate}}</td>
                     <td>
-                      <div>
-                        <button mat-raised-button class="btn" (click)="goToDetails(data)">Detalles
-                        </button>
-                      </div>
+                      <button mat-mini-fab color="primary" matTooltip="Ver detalle" (click)="goToDetails(data)">
+                        <mat-icon> preview </mat-icon>
+                      </button>
+                      <button mat-mini-fab matTooltip="Editar" (click)="goToEdit(data)">
+                        <mat-icon> edit </mat-icon>
+                      </button>
                     </td>
                   </tr>
                 </ng-template>

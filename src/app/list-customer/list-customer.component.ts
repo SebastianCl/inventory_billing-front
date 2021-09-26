@@ -38,8 +38,13 @@ export class ListCustomerComponent implements OnInit {
           response.msg.forEach(element => {
             const dataCustomer = {
               id: element.id,
+              identification: element.identification,
               name: element.name,
-              identification: element.identification
+              direction: element.direction,
+              email: element.email,
+              telephone1: element.telephone1,
+              telephone2: element.telephone2,
+              telephone3: element.telephone3,
             }
             this.listCustomer.push(dataCustomer);
           });
@@ -65,6 +70,10 @@ export class ListCustomerComponent implements OnInit {
 
   alert(title: any, text: any, icon: any) {
     Swal.fire({ title, text, icon });
+  }
+
+  public goToEdit(data) {
+    console.info(data);
   }
 
 }

@@ -7,6 +7,7 @@ import { EmployeeProfileComponent } from '../../employee-profile/employee-profil
 import { CustomerProfileComponent } from '../../customer-profile/customer-profile.component';
 import { ListCustomerComponent } from '../../list-customer/list-customer.component';
 import { ListEmployeeComponent } from '../../list-employee/list-employee.component';
+import { EditEmployeeComponent } from '../../edit-employee/edit-employee.component'
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { ListUserComponent } from '../../list-user/list-user.component';
 import { ArticleProfileComponent } from '../../article-profile/article-profile.component';
@@ -37,6 +38,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'details-customer/:id', component: DetailsCustomerComponent },
     { path: 'add-employee', component: EmployeeProfileComponent },
     { path: 'list-employee', component: ListEmployeeComponent },
+    { path: 'edit-employee', component: EditEmployeeComponent },
     { path: 'details-employee/:id', component: DetailsEmployeeComponent },
     { path: 'add-user', component: UserProfileComponent },
     { path: 'list-user', component: ListUserComponent },
