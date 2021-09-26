@@ -10,6 +10,34 @@
             </mat-progress-bar>
           </div>
           <div class="card-body">
+
+            <div class="row">
+
+              <div class="col-md-6">
+
+                <mat-form-field appearance="fill">
+                  <mat-label>Seleccionar fecha inicial de reserva</mat-label>
+                  <input matInput [matDatepicker]="pickerStart" readonly [formControl]="startDate">
+                  <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerStart></mat-datepicker>
+                </mat-form-field>
+
+              </div>
+
+              <div class="col-md-6">
+
+                <mat-form-field appearance="fill">
+                  <mat-label>Seleccionar fecha final de reserva</mat-label>
+                  <input matInput [matDatepicker]="pickerEnd" readonly [formControl]="endDate"
+                    (dateChange)="dateLessThan($event.target.value)">
+                  <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerEnd></mat-datepicker>
+                </mat-form-field>
+
+              </div>
+
+            </div>
+
             <div class="table-responsive">
 
               <p-table #dt [columns]="cols" [value]="listReserves" [paginator]="true" [responsive]="true" [rows]="10"
@@ -45,7 +73,7 @@
                     <td>{{data.reserveDay}}</td>
                     <td>{{data.status}}</td>
                     <td>
-                      <div style="text-align: center;">
+                      <div>
                         <button mat-mini-fab color="primary" matTooltip="Ver detalle" [attr.disabled]="dsbBtn?'':null"
                           (click)="goToDetails(data)">
                           <mat-icon> preview </mat-icon>

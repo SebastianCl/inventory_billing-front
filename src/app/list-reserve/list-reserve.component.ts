@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
@@ -25,6 +26,10 @@ export class ListReserveComponent implements OnInit {
   public listReservesAllInfo: any[];
   public cols: any;
 
+  //Form search range reserve
+  public startDate: FormControl;
+  public endDate: FormControl;
+
   constructor(
     private router: Router,
     public reserveService: ReserveService,
@@ -33,8 +38,10 @@ export class ListReserveComponent implements OnInit {
     this.listReservesAllInfo = [];
     this.hiddenProgBar = true;
     this.dsbBtn = false;
+    //Form search range reserve
+    this.startDate = new FormControl();
+    this.endDate = new FormControl();
   }
-
 
   ngOnInit() {
     this.getList();
@@ -221,6 +228,23 @@ export class ListReserveComponent implements OnInit {
         }
       );
 
+  }
+
+  public dateLessThan(event) {
+    const now = new Date(event);
+    const dd = this.addZero(now.getDate());
+    const mm = this.addZero(now.getMonth() + 1);
+    const yyyy = now.getFullYear();
+
+    if (dd != '0' && mm != '0' && yyyy > 2000) {
+      if (new Date(this.startDate.value) >= new Date(this.endDate.value)) {
+        this.openSnackBar('La fecha final de reserva debe ser mayor a la fecha inicial de reserva', 'OK');
+        this.endDate.reset();
+      }
+      else {
+        
+      }
+    }
   }
 
 }
