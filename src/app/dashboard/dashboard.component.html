@@ -1,3 +1,78 @@
 <div class="main-content">
-    
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <div class="card">
+
+                    <div class="card-header card-header-warning">
+
+                        <h4 class="card-title">En construcción..</h4>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <mat-tab-group>
+                        
+                          <mat-tab label="Pie Chart">
+                            <ng-template matTabContent>
+
+                                <div style="display: block">
+                                    <canvas baseChart
+                                        [data]="pieChartData"
+                                        [labels]="pieChartLabels"
+                                        [chartType]="pieChartType">
+                                    </canvas>
+                                </div>
+
+                            </ng-template>
+                          </mat-tab>
+
+                          <mat-tab label="Doughnut Chart">
+                            <ng-template matTabContent>
+
+                                <div style="display: block">
+                                    <canvas baseChart
+                                        [data]="doughnutChartData"
+                                        [labels]="doughnutChartLabels"
+                                        [chartType]="doughnutChartType">
+                                    </canvas>
+                                  </div>
+                              
+                            </ng-template>
+                          </mat-tab>
+
+                          <mat-tab label="Bar Chart">
+                            <ng-template matTabContent>
+
+                                <div style="display: block">
+                                    <canvas baseChart
+                                        [datasets]="barChartData"
+                                        [labels]="barChartLabels"
+                                        [options]="barChartOptions"
+                                        [legend]="barChartLegend"
+                                        [chartType]="barChartType">
+                                    </canvas>
+                                  </div>
+
+                            </ng-template>
+                          </mat-tab>  
+
+                        </mat-tab-group>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        
+    </div>
+
 </div>
+

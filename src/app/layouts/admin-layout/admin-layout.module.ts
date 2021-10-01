@@ -41,9 +41,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 import { CdkTableModule } from '@angular/cdk/table';
+import { ChartsModule } from 'ng2-charts';
 
 
 
@@ -81,7 +83,9 @@ import { ListInvoiceComponent } from 'app/list-invoice/list-invoice.component';
     MatIconModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    CdkTableModule
+    CdkTableModule,
+    ChartsModule,
+    MatTabsModule
   ],
   declarations: [
     DashboardComponent,
