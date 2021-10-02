@@ -50,7 +50,7 @@ export class EmployeeService {
 
     // Servicio que actualiza un usuario en el sistema
     updateEmployee(id: string, employee: Employee): Observable<Employee> {
-        const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, id });
+        const header = new HttpHeaders({ 'Content-Type': 'application/json', 'x-access-token': this.token, 'id': id });
         return this.http.put<Employee>(this.urlApi + '/employee/updateEmployee', employee, { headers: header })
             .pipe(catchError(this.handleError));
     }

@@ -87,10 +87,10 @@ export class EditEmployeeComponent implements OnInit {
         this.employee = new Employee;
         this.employee.id = this.employeeId.value;
         this.employee.name = this.employeeName.value;
-        this.employee.identification = this.employeeIdentificacion.value;
+        this.employee.identification = String(this.employeeIdentificacion.value);
         this.employee.direction = this.employeeDirection.value;
         this.employee.email = this.employeeEmail.value;
-        this.employee.telephone = this.employeeTelephone.value;
+        this.employee.telephone = String(this.employeeTelephone.value);
         this.employee.active = this.employeeActive;
 
         this.saveEdit(this.employee);
