@@ -75,19 +75,19 @@
               <div class="row">
 
                 <div class="col-md-12">
-                    <mat-checkbox class="example-margin pull-right" [color]="primary"
-                        [checked]="employeeActive"
-                        (change)="setActive($event.checked)">
-                        Activo
-                    </mat-checkbox>
+                  <mat-checkbox class="example-margin pull-right" [checked]="employeeActive"
+                    (change)="setActive($event.checked)">
+                    Activo
+                  </mat-checkbox>
                 </div>
 
-            </div>
+              </div>
 
               <button mat-raised-button type="submit" class="btn btn-default pull-right"
-              [attr.disabled]="dsbSave?'':null" (click)="edit()">Editar empleado</button>
+                [attr.disabled]="dsbSave?'':null" (click)="edit()">Editar empleado</button>
 
-              <button mat-raised-button type="submit" class="btn btn-default pull-right" (click)="back()">Volver</button>
+              <button mat-raised-button type="submit" class="btn btn-default pull-right"
+                (click)="back()">Volver</button>
 
             </form>
 

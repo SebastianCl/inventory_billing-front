@@ -186,12 +186,13 @@ export class ListReserveComponent implements OnInit {
     Swal.fire({
       title: '¡Atención!',
       icon: 'info',
-      text: `¿Seguro desea cancelar la reserva #$${data.reserveNumber}?`,
+      text: `¿Seguro desea cancelar la reserva #${data.reserveNumber}?`,
       showCancelButton: true,
       showCloseButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes'
+      confirmButtonText: 'Si',
+      cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
         this.cancel_reserve = new ReserveCancel();
@@ -232,7 +233,7 @@ export class ListReserveComponent implements OnInit {
   public dateLessThan() {
     this.reserve_date = new ReserveByDate();
     this.reserve_date.startDate = this.convertDates(this.startDate.value);
-    this.reserve_date.endDate   = this.convertDates('09/27/2021');
+    this.reserve_date.endDate = this.convertDates('09/27/2021');
     this.filterReserve(this.reserve_date);
   }
 
@@ -241,7 +242,7 @@ export class ListReserveComponent implements OnInit {
     this.reserveService.getDataByDate(dataReserve)
       .subscribe((response: any) => {
 
-        if (response.resp && typeof(response.msg) != 'string') {
+        if (response.resp && typeof (response.msg) != 'string') {
 
           this.listReserves = [];
           response.msg.forEach(reserveData => {
@@ -268,9 +269,9 @@ export class ListReserveComponent implements OnInit {
             this.listReserves.push(dataQuotation);
 
           });
-          
+
         }
-        else{
+        else {
           this.openSnackBar('Sin registros de reservas.', 'OK');
           this.listReserves = [];
         }
@@ -290,15 +291,15 @@ export class ListReserveComponent implements OnInit {
           }
         }
       );
-    
+
   }
 
-  public setCheck(bool){
+  public setCheck(bool) {
 
-    if(bool){
+    if (bool) {
       this.getList();
     }
-    else{
+    else {
       this.dateLessThan();
     }
 
