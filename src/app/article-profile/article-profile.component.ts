@@ -4,8 +4,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import Swal from 'sweetalert2';
 
-import { Article } from '../models/article.model';
+//Service
 import { ArticleService } from '../service/article.service';
+//Models
+import { Article } from '../models/article.model';
 
 @Component({
   selector: 'app-article-profile',
@@ -14,41 +16,44 @@ import { ArticleService } from '../service/article.service';
   providers: [ArticleService]
 })
 export class ArticleProfileComponent implements OnInit {
-
+  //Models
   article: Article;
-
-  type: FormControl;
-
+  //Arrays
+  anySize: any[];
+  //Form article
   reference: FormControl;
-  brand: FormControl;
-  color: FormControl;
   size: FormControl;
-
-  comments: FormControl;
-  price: FormControl;
   quantity: FormControl;
-  available: FormControl;
+  brand: FormControl;
+  price: FormControl;
+  color: FormControl;
+  type: FormControl; 
+  comments: FormControl;
   base64Data: string;
-
+  available: FormControl;
   dsbSave: boolean;
   hiddenProgBar: boolean;
 
-  public dataEventFileValid: any = null;
-
-  constructor(public articleService: ArticleService, private _snackBar: MatSnackBar) {
-    this.base64Data = null;
-    this.type = new FormControl();
+  constructor(
+    public articleService: ArticleService, 
+    private _snackBar: MatSnackBar
+  ) {
+    //Arrays
+    this.anySize = ['S','M','L','XL','XXL'];
+    //Form article
     this.reference = new FormControl();
-    this.brand = new FormControl();
-    this.color = new FormControl();
     this.size = new FormControl();
-    this.comments = new FormControl();
-    this.price = new FormControl();
     this.quantity = new FormControl();
+    this.brand = new FormControl();
+    this.price = new FormControl();
+    this.color = new FormControl();
+    this.type = new FormControl();
+    this.comments = new FormControl();
+    this.base64Data = null;
     this.available = new FormControl();
-    this.clearData();
-    this.hiddenProgBar = true;
     this.dsbSave = false;
+    this.hiddenProgBar = true;
+    this.clearData();
   }
 
   async encodeImageFileAsURL(element) {
@@ -72,7 +77,6 @@ export class ArticleProfileComponent implements OnInit {
     }
   }
 
-
   ngOnInit() { }
 
   private clearData() {
@@ -85,6 +89,7 @@ export class ArticleProfileComponent implements OnInit {
     this.price.setValue('');
     this.quantity.setValue('');
     this.available.setValue(false);
+    this.base64Data = null;
   }
 
   create() {
@@ -110,50 +115,52 @@ export class ArticleProfileComponent implements OnInit {
     this.article.quantity = Number(this.quantity.value);
     this.article.imageBase64 = this.base64Data;
 
-    this.articleService.createArticle(this.article)
-      .subscribe((response: any) => {
-        this.changeShow();
-        if (response.resp) {
-          this.alert('HECHO', 'Artículo creado.', 'success');
-          this.clearData();
-        } else {
-          this.alert('Atención', 'Artículo no creado.', 'warning');
-        }
-      },
-        (err) => {
-          this.changeShow();
-          this.alert('Error', 'Ocurrio un error al crear artículo.', 'error');
-        }
-      );
+    console.info(this.article);
+
+    // this.articleService.createArticle(this.article)
+    //   .subscribe((response: any) => {
+    //     this.changeShow();
+    //     if (response.resp) {
+    //       this.alert('HECHO', 'Artículo creado.', 'success');
+    //       this.clearData();
+    //     } else {
+    //       this.alert('Atención', 'Artículo no creado.', 'warning');
+    //     }
+    //   },
+    //     (err) => {
+    //       this.changeShow();
+    //       this.alert('Error', 'Ocurrio un error al crear artículo.', 'error');
+    //     }
+    //   );
   }
 
   private validateData() {
-    if (this.type.value === null || this.type.value === '') {
-      this.openSnackBar('Debes indicar el tipo.', 'OK');
-      return false;
-    }
     if (this.reference.value === null || this.reference.value === '') {
       this.openSnackBar('Debes indicar la referencia.', 'OK');
+      return false;
+    }
+    if (this.size.value === null || this.size.value === '') {
+      this.openSnackBar('Debes seleccionar una talla.', 'OK');
+      return false;
+    }
+    if (this.quantity.value === null || this.quantity.value === '') {
+      this.openSnackBar('Debes indicar la cantidad.', 'OK');
       return false;
     }
     if (this.brand.value === null || this.brand.value === '') {
       this.openSnackBar('Debes indicar la marca.', 'OK');
       return false;
     }
+    if (this.price.value === null || this.price.value === '') {
+      this.openSnackBar('Debes indicar el precio.', 'OK');
+      return false;
+    }
     if (this.color.value === null || this.color.value === '') {
       this.openSnackBar('Debes indicar el color.', 'OK');
       return false;
     }
-    if (this.size.value === null || this.size.value === '') {
-      this.openSnackBar('Debes indicar el tamaño.', 'OK');
-      return false;
-    }
-    if (this.comments.value === null || this.comments.value === '') {
-      this.openSnackBar('Debes indicar el comentario.', 'OK');
-      return false;
-    }
-    if (this.price.value === null || this.price.value === '') {
-      this.openSnackBar('Debes indicar el precio.', 'OK');
+    if (this.type.value === null || this.type.value === '') {
+      this.openSnackBar('Debes indicar el tipo.', 'OK');
       return false;
     }
     if (this.base64Data === null || this.base64Data === '') {

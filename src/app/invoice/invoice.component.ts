@@ -66,7 +66,7 @@ export class InvoiceComponent implements OnInit {
     this.clientAddress = new FormControl();
     this.clientEmail = new FormControl();
     this.typeFact = '';
-    this.pagoDeposito = '';
+    this.pagoDeposito = 'NO';
     this.checkDeposito = false;
     this.clearData();
     this.hiddenProgBar = true;

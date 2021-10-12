@@ -38,7 +38,7 @@
 
               <p-table #dt [columns]="cols" [value]="listReserves" [paginator]="true" [responsive]="true" [rows]="10"
                 [rowsPerPageOptions]="[5,10,20]"
-                [globalFilterFields]="['customerName','reserveDay','endDate','status']">
+                [globalFilterFields]="['customerName','reserveDay','endDate','startDate','status']">
                 <ng-template pTemplate="caption">
                   <div style="text-align: right">
                     <em class="fa fa-search" style="margin:4px 4px 0 0"></em>
@@ -52,14 +52,16 @@
                         [field]="'customerName'">
                       </p-sortIcon>
                     </th>
-                    <th id="reserveDay" [pSortableColumn]="'reserveDay'">Creada<p-sortIcon [field]="'reserveDay'">
+                    <th id="reserveDay" [pSortableColumn]="'reserveDay'">F/Creación<p-sortIcon [field]="'reserveDay'">
                       </p-sortIcon>
                     </th>
-                    <th id="status" [pSortableColumn]="'status'">Estado<p-sortIcon [field]="'status'">
+                    <th id="startDate" [pSortableColumn]="'startDate'">F/Entrega<p-sortIcon [field]="'startDate'">
                       </p-sortIcon>
                     </th>
-                    <th id="detail">
-                      Detalles
+                    <th id="endDate" [pSortableColumn]="'endDate'">F/Devolución<p-sortIcon [field]="'endDate'">
+                    </p-sortIcon>
+                    </th>
+                    <th id="actions">
                     </th>
                   </tr>
                 </ng-template>
@@ -67,7 +69,8 @@
                   <tr>
                     <td>{{data.customerName}}</td>
                     <td>{{data.reserveDay}}</td>
-                    <td>{{data.status}}</td>
+                    <td>{{data.endDate}}</td>
+                    <td>{{data.startDate}}</td>
                     <td>
                       <div>
                         <button mat-mini-fab color="primary" matTooltip="Ver detalle" [attr.disabled]="dsbBtn?'':null"

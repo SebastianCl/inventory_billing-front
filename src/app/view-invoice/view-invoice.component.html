@@ -180,15 +180,16 @@
 
                     <mat-card class="border">
                       <p>* No se hace devolución de dinero</p>
-                      <p>* El deposito cubrirá cualquier tipo de daño en la prenda o artículo</p>
+                      <p *ngIf="typeInvoice == '1'">* Recuerda traer al momento del retiro el valor del depósito, este cubrirá los posibles daños que ocurran</p>
                       <p>* Pasados 30 días no se hacen cambios</p>
+                      <p>* Los cambios de vestuario se pueden hacer con 15 días antes de la fecha de entrega</p>
                     </mat-card>
 
                   </div>
 
                   <div class="col-md-6" style="padding: 1px;">
 
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;height: 136px;">
+                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;height: 222px;">
                       <div class="row">
                         <div class="col-md-6">
                           Vendedor:

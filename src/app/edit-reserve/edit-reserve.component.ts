@@ -90,7 +90,7 @@ export class EditReserveComponent implements OnInit {
 
       const control = this.listArticles.get('rows') as FormArray;
       control.push(this.fb.group({
-        discount: element.discount,
+        discount: (element.discount) === 0 ? '' : element.discount,
         garmentReference: element.reference,
         price: element.price,
         quantity: 1,
@@ -109,7 +109,7 @@ export class EditReserveComponent implements OnInit {
 
     const control = this.listArticles.get('rows') as FormArray;
     control.push(this.fb.group({
-      discount: 0,
+      discount: '',
       garmentReference: '',
       price: 0,
       quantity: 1,

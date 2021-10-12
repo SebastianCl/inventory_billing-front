@@ -49,7 +49,7 @@
                 <mat-form-field appearance="fill">
 
                   <mat-label>Fecha inicio reserva</mat-label>
-                  <input matInput [matDatepicker]="pickerStart" disabled readonly [formControl]="startDate">
+                  <input matInput [matDatepicker]="pickerStart" readonly [formControl]="startDate">
                   <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
                   <mat-datepicker #pickerStart></mat-datepicker>
 
@@ -137,7 +137,7 @@
                             <mat-select placeholder="Busca por referencia" [formControl]="item.get('garmentReference')"
                               (selectionChange)="setGarmentPrice(item.get('garmentReference'), i)">
                               <mat-option *ngFor="let garment of listGarment" value="{{garment.reference}}">
-                                {{garment.reference}}
+                                {{garment.reference}}-{{garment.size}}
                               </mat-option>
                             </mat-select>
                           </mat-form-field>

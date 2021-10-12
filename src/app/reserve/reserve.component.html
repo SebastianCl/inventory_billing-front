@@ -85,7 +85,7 @@
                             <mat-select placeholder="Busca por referencia" [formControl]="item.get('garmentReference')"
                               (selectionChange)="setGarmentPrice(item.get('garmentReference'), i)">
                               <mat-option *ngFor="let garment of anyListGarment" value="{{garment.reference}}">
-                                {{garment.reference}}
+                                {{garment.reference}}-{{garment.size}}
                               </mat-option>
                             </mat-select>
                           </mat-form-field>

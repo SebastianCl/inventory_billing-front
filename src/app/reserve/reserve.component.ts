@@ -362,7 +362,7 @@ export class ReserveComponent implements OnInit {
             if (err.error.type === 2) {
               this.showValRef = false;
               this.showForm = true;
-              this.anyCabeceraRef = ['REFERENCE', 'FECHA DISPONIBILIDAD'];
+              this.anyCabeceraRef = ['REFERENCE', 'ARTÍCULO RESERVADO EN'];
               let anyResponse = err.error.msg;
               let anyResult = [];
               for (let obj in anyResponse) {

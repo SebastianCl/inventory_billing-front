@@ -74,7 +74,9 @@ export class ListReserveComponent implements OnInit {
             const dataQuotation = {
               id: reserveData.id,
               customerName: reserveData.customerName,
-              reserveDay: this.formatDate(reserveData.reserveDay),
+              reserveDay: this.formatDate(reserveData.startDate),
+              endDate: this.formatDate(reserveData.endDate),
+              startDate: this.formatDate(reserveData.startDate),
               status: reserveData.status,
               isEdit,
               isCancel,
@@ -259,7 +261,9 @@ export class ListReserveComponent implements OnInit {
             const dataQuotation = {
               id: reserveData.id,
               customerName: reserveData.customerName,
-              reserveDay: this.formatDate(reserveData.reserveDay),
+              reserveDay: this.formatDate(reserveData.startDate),
+              endDate: this.formatDate(reserveData.endDate),
+              startDate: this.formatDate(reserveData.startDate),
               status: reserveData.status,
               isEdit,
               isCancel,
