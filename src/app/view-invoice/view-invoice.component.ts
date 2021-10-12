@@ -72,7 +72,7 @@ export class ViewInvoiceComponent implements OnInit {
             this.stringInvoice = 'Factura de venta';
             break;
           default:
-            this.stringInvoice = 'Factura de daño';
+            this.stringInvoice = 'Factura otros servicios';
             break;
         }
         this.numberInvoice = response.msg.invoiceNumber;
