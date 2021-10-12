@@ -1,5 +1,5 @@
 export const environment = {
-  apiUrl: 'https://bellarose-qa.herokuapp.com',
-  urlImage: 'https://storage.googleapis.com/bellarose-qa.appspot.com',
+  apiUrl: 'https://bellarose-prd.herokuapp.com',
+  urlImage: 'https://storage.googleapis.com/bellarose-inventarioyreservas.appspot.com',
   production: true
 };
