@@ -29,8 +29,8 @@ export class InvoiceTypeComponent implements OnInit {
   invoice_dano: InvoiceDano;
   invoice_venta: InvoiceVenta;
   public typeInvoice: string;
-  //Info imagen reference
-  public referenceProduct: any;
+  //Info imagen code
+  public codeProduct: any;
   public imageProduct: any;
   public quantityProduct: any;
   //Array select
@@ -87,7 +87,7 @@ export class InvoiceTypeComponent implements OnInit {
     this.anyListEmployees = [];
     this.anyListGarment = [];
     //Arrays
-    this.anyCabecera = ['', '', '%DESCUENTO', 'REFERENCIA', 'PRECIO', 'DESCUENTO', 'NETO', 'VISUALIZAR'];
+    this.anyCabecera = ['', '', '%DESCUENTO', 'CÓDIGO', 'PRECIO', 'DESCUENTO', 'NETO', 'VISUALIZAR'];
     this.anyDetalleArticle = this.fb.group({ rows: this.fb.array([]) });
     //Form bool
     this.btnSaveCliente = false;
@@ -141,7 +141,7 @@ export class InvoiceTypeComponent implements OnInit {
     this.articleService.loadArticles()
       .subscribe((response: any) => {
         if (response.resp && response.msg.length > 0) {
-          response.msg.sort((a, b) => a.reference.localeCompare(b.reference)).forEach(element => {
+          response.msg.sort((a, b) => a.code.localeCompare(b.code)).forEach(element => {
             this.anyListGarment.push(element);
           });
         } else {
@@ -235,7 +235,7 @@ export class InvoiceTypeComponent implements OnInit {
 
   public setEmployeData() {
     let employeIdentification,
-        employeId;
+      employeId;
     for (let index = 0; index < this.anyListEmployees.length; index++) {
       const element = this.anyListEmployees[index];
       if (element.id === this.employeId.value) {
@@ -386,7 +386,7 @@ export class InvoiceTypeComponent implements OnInit {
       for (let obj in rowsArticles) {
         const element = rowsArticles[obj];
         const objeto = {
-          ref: element.garmentReference,
+          code: element.garmentCode,
           price: element.price,
           discount: (element.discount === '') ? 0 : element.discount
         }
@@ -447,7 +447,7 @@ export class InvoiceTypeComponent implements OnInit {
           this.changeShow();
           if (err.error.type === 2) {
             err.error.msg.forEach(element => {
-              let msg = "- articulo " + element.reference + ": no existe stock actualmente, estara disponible: " + this.convertDates(element.earlyDate);
+              let msg = "- articulo " + element.code + ": no existe stock actualmente, estara disponible: " + this.convertDates(element.earlyDate);
               arrayArticleValids.push(msg);
             });
             this.alert('Atención Usuario', 'Se informa lo siguiente: \n' + arrayArticleValids.toString(), 'warning');
@@ -486,7 +486,7 @@ export class InvoiceTypeComponent implements OnInit {
           this.changeShow();
           if (err.error.type === 2) {
             err.error.msg.forEach(element => {
-              let msg = "- articulo " + element.reference + ": no existe stock actualmente, estara disponible: " + this.convertDates(element.earlyDate);
+              let msg = "- articulo " + element.code + ": no existe stock actualmente, estara disponible: " + this.convertDates(element.earlyDate);
               arrayArticleValids.push(msg);
             });
             this.alert('Atención Usuario', 'Se informa lo siguiente: \n' + arrayArticleValids.toString(), 'warning');
@@ -536,7 +536,7 @@ export class InvoiceTypeComponent implements OnInit {
     let sw = false;
     for (let obj in rowsArticles) {
       const element = rowsArticles[obj];
-      if (element.garmentReference === '' || element.discount > 100 || element.price < 0) {
+      if (element.garmentCode === '' || element.discount > 100 || element.price < 0) {
         validRowsIndex.push(obj + 1);
       } else {
         sw = true
@@ -582,7 +582,7 @@ export class InvoiceTypeComponent implements OnInit {
   private createArticle(): FormGroup {
     return this.fb.group({
       discount: '',
-      garmentReference: '',
+      garmentCode: '',
       price: 0,
       quantity: 1,
       total: 0
@@ -603,15 +603,15 @@ export class InvoiceTypeComponent implements OnInit {
   }
 
   public setGarmentPrice(garment, index) {
-    var dataArticle = this.anyListGarment.filter((e) => e.reference === garment.value);
+    var dataArticle = this.anyListGarment.filter((e) => e.code === garment.value);
     ((this.anyDetalleArticle.get('rows') as FormArray).at(index) as FormGroup).get('price').setValue(dataArticle[0].price);
     // this.calculateTotals();
     this.valDisponibilidad();
   }
 
   public openModalImg(input) {
-    this.referenceProduct = input.value;
-    var article = this.anyListGarment.filter((e) => e.reference === input.value);
+    this.codeProduct = input.value;
+    var article = this.anyListGarment.filter((e) => e.code === input.value);
     this.imageProduct = `${environment.urlImage}/${article[0].imageURL}`;
     this.quantityProduct = article[0].quantity;
     const modal = document.getElementById('myModalImg');
@@ -630,7 +630,7 @@ export class InvoiceTypeComponent implements OnInit {
 
     for (let indx in rows) {
       const element = rows[indx];
-      arrayValidate.push(element.garmentReference);
+      arrayValidate.push(element.garmentCode);
     }
 
     this.arrayValidateArticles = arrayValidate;
@@ -660,13 +660,13 @@ export class InvoiceTypeComponent implements OnInit {
             if (err.error.type === 2) {
               this.showFormVal = true;
               this.showForm = false;
-              this.anyCabeceraRef = ['REFERENCE', 'FECHA DISPONIBILIDAD'];
+              this.anyCabeceraRef = ['CÓDIGO', 'FECHA DISPONIBILIDAD'];
               let anyResponse = err.error.msg;
               let anyResult = [];
               for (let obj in anyResponse) {
                 const element = anyResponse[obj];
                 const objeto = {
-                  reference: element.reference,
+                  code: element.code,
                   earlyDate: this.convertDates(element.earlyDate)
                 }
                 anyResult.push(objeto);

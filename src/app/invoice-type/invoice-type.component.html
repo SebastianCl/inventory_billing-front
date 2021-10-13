@@ -59,10 +59,10 @@
                         </td>
                         <td>
                           <mat-form-field>
-                            <mat-select placeholder="Busca por referencia" [formControl]="item.get('garmentReference')"
-                              (selectionChange)="setGarmentPrice(item.get('garmentReference'), i)">
-                              <mat-option *ngFor="let garment of anyListGarment" value="{{garment.reference}}">
-                                {{garment.reference}}
+                            <mat-select placeholder="Busca por código" [formControl]="item.get('garmentCode')"
+                              (selectionChange)="setGarmentPrice(item.get('garmentCode'), i)">
+                              <mat-option *ngFor="let garment of anyListGarment" value="{{garment.code}}">
+                                {{garment.code}}
                               </mat-option>
                             </mat-select>
                           </mat-form-field>
@@ -82,8 +82,8 @@
                           (item.get('discount').value / 100)) | currency }}
                         </td>
                         <td style="text-align: center">
-                          <button mat-mini-fab color="primary" (click)="openModalImg(item.get('garmentReference'))"
-                            [disabled]="item.get('garmentReference').value === ''">
+                          <button mat-mini-fab color="primary" (click)="openModalImg(item.get('garmentCode'))"
+                            [disabled]="item.get('garmentCode').value === ''">
                             <mat-icon>image</mat-icon>
                           </button>
                         </td>
@@ -118,7 +118,7 @@
 
                     <tr *ngFor="let det of anyDetalleRef">
                       <td>
-                        {{det.reference}}
+                        {{det.code}}
                       </td>
                       <td>
                         {{det.earlyDate}}
@@ -311,7 +311,7 @@
   <!-- Modal content -->
   <div class="modal0-content">
     <div class="modal0-header">
-      <h2>Referencia: {{referenceProduct}}</h2>
+      <h2>Código: {{codeProduct}}</h2>
       <span class="close0" (click)="closeModalImg()">X</span>
     </div>
     <div class="modal0-body">
