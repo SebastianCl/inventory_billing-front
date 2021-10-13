@@ -27,8 +27,8 @@ export class ReserveComponent implements OnInit {
   article: ValidateArticle;
   reserve: Reserve;
   customer: Customer;
-  //Info imagen reference
-  public referenceProduct: any;
+  //Info imagen code
+  public codeProduct: any;
   public imageProduct: any;
   public quantityProduct: any;
   //Arrays select
@@ -179,7 +179,7 @@ export class ReserveComponent implements OnInit {
     this.articleService.loadArticles()
       .subscribe((response: any) => {
         if (response.resp && response.msg.length > 0) {
-          response.msg.sort((a, b) => a.reference.localeCompare(b.reference)).forEach(element => {
+          response.msg.sort((a, b) => a.code.localeCompare(b.code)).forEach(element => {
             this.anyListGarment.push(element);
           });
         } else {
@@ -231,7 +231,7 @@ export class ReserveComponent implements OnInit {
   private createArticle(): FormGroup {
     return this.fb.group({
       discount: '',
-      garmentReference: '',
+      garmentCode: '',
       price: 0,
       quantity: 1,
       total: 0
@@ -305,15 +305,15 @@ export class ReserveComponent implements OnInit {
   }
 
   public setGarmentPrice(garment, index) {
-    var dataArticle = this.anyListGarment.filter((e) => e.reference === garment.value);
+    var dataArticle = this.anyListGarment.filter((e) => e.code === garment.value);
     ((this.anyDetalleArticle.get('rows') as FormArray).at(index) as FormGroup).get('price').setValue(dataArticle[0].price);
     this.calculateTotals();
     this.valDisponibilidad();
   }
 
   public openModalImg(input) {
-    this.referenceProduct = input.value;
-    var article = this.anyListGarment.filter((e) => e.reference === input.value);
+    this.codeProduct = input.value;
+    var article = this.anyListGarment.filter((e) => e.code === input.value);
     this.imageProduct = `${environment.urlImage}/${article[0].imageURL}`;
     this.quantityProduct = article[0].quantity;
     const modal = document.getElementById('myModalImg');
@@ -332,7 +332,7 @@ export class ReserveComponent implements OnInit {
 
     for (let indx in rows) {
       const element = rows[indx];
-      arrayValidate.push(element.garmentReference);
+      arrayValidate.push(element.garmentCode);
     }
 
     this.arrayValidateArticles = arrayValidate;
@@ -362,13 +362,13 @@ export class ReserveComponent implements OnInit {
             if (err.error.type === 2) {
               this.showValRef = false;
               this.showForm = true;
-              this.anyCabeceraRef = ['REFERENCE', 'ARTÍCULO RESERVADO EN'];
+              this.anyCabeceraRef = ['REFERENCIA', 'ARTÍCULO RESERVADO EN'];
               let anyResponse = err.error.msg;
               let anyResult = [];
               for (let obj in anyResponse) {
                 const element = anyResponse[obj];
                 const objeto = {
-                  reference: element.reference,
+                  code: element.code,
                   earlyDate: this.convertDates(element.earlyDate)
                 }
                 anyResult.push(objeto);
@@ -436,12 +436,12 @@ export class ReserveComponent implements OnInit {
       const element = rowsArticles[obj];
       let discount = (element.discount === '') ? 0 : element.discount;
       const objeto = {
-        reference: element.garmentReference,
+        code: element.garmentCode,
         price: element.price,
         discount
       }
       articleList.push(objeto);
-      articleListLocalstorage.push({ reference: element.garmentReference, price: element.price, discount });
+      articleListLocalstorage.push({ code: element.garmentCode, price: element.price, discount });
     }
 
     this.rowsArticlesValues = articleList;
@@ -506,7 +506,7 @@ export class ReserveComponent implements OnInit {
           this.changeShow();
           if (err.error.type === 2) {
             err.error.msg.forEach(element => {
-              let msg = "- articulo " + element.reference + ": no existe stock actualmente, estara disponible: " + this.convertDates(element.earlyDate);
+              let msg = "- articulo " + element.code + ": no existe stock actualmente, estara disponible: " + this.convertDates(element.earlyDate);
               arrayArticleValids.push(msg);
             });
             this.alert('Atención Usuario', 'Se informa lo siguiente: \n' + arrayArticleValids.toString(), 'warning');
@@ -570,7 +570,7 @@ export class ReserveComponent implements OnInit {
     let sw = false;
     for (let obj in rowsArticles) {
       const element = rowsArticles[obj];
-      if (element.reference === '' || element.discount > 100 || element.price < 0 || element.quantity < 0) {
+      if (element.code === '' || element.discount > 100 || element.price < 0 || element.quantity < 0) {
         validRowsIndex.push(obj + 1);
       } else {
         sw = true

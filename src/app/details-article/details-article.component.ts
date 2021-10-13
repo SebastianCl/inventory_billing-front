@@ -39,7 +39,7 @@ export class DetailsArticleComponent implements OnInit {
     this.form.controls.color.setValue(data.color);
     this.form.controls.brand.setValue(data.brand);
     this.form.controls.comments.setValue(data.comments);
-    this.form.controls.reference.setValue(data.reference);
+    this.form.controls.code.setValue(data.code);
     this.form.controls.price.setValue(data.price);
     this.form.controls.size.setValue(data.size);
     this.form.controls.quantity.setValue(data.quantity);
@@ -79,7 +79,7 @@ export class DetailsArticleComponent implements OnInit {
       color: new FormControl(''),
       brand: new FormControl(''),
       comments: new FormControl(''),
-      reference: new FormControl(''),
+      code: new FormControl(''),
       price: new FormControl(0),
       size: new FormControl(''),
       quantity: new FormControl(''),

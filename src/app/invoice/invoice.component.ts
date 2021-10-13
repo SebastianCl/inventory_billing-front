@@ -96,9 +96,7 @@ export class InvoiceComponent implements OnInit {
         this.dateInvoice.setValue(this.convertDates(response.msg.date));
         this.employeeName.setValue(response.msg.employeeName);
         this.getCustomerData(response.msg.reserve.customer.id);
-
-        debugger;
-        this.listArticlesLoads = response.msg.articles
+        this.listArticlesLoads = response.msg.articles;
         this.subTotal = response.msg.subTotal;
         this.total = response.msg.cost;
         this.deposit.setValue(response.msg.deposit);
@@ -124,7 +122,6 @@ export class InvoiceComponent implements OnInit {
 
 
   loadDataLocalstorage() {
-    debugger;
     if (localStorage.getItem('isCreatedInvoice') !== null) {
       const valStateLocalStorage = JSON.parse(localStorage.getItem('isCreatedInvoice'));
       if (valStateLocalStorage.created === false) {
@@ -171,9 +168,9 @@ export class InvoiceComponent implements OnInit {
         this.alert('Error', 'Ocurrió un error.', 'error');
       }
     });
-    this.listArticlesLoads = valLocalstorage.articlesLocalStorage
-    this.subTotal = valLocalstorage.subtotal
-    this.total = valLocalstorage.total
+    this.listArticlesLoads = valLocalstorage.articlesLocalStorage;
+    this.subTotal = valLocalstorage.subtotal;
+    this.total = valLocalstorage.total;
   }
 
   getCustomerData(customerID) {
@@ -225,7 +222,6 @@ export class InvoiceComponent implements OnInit {
         if (response.resp) {
           this.alert('Exito', 'Factura creada.', 'success');
           this.numberInvoice = response.msg.invoiceNumber;
-          debugger;
           let resetDataLocalstorage = {
             status: response.msg.active,
             articlesIDS: [],

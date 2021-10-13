@@ -46,7 +46,7 @@ export class ListArticleComponent implements OnInit {
           response.msg.forEach(element => {
             const dataArticle = {
               id: element.id,
-              reference: element.reference,
+              code: element.code,
               size: element.size,
               color: element.color,
               quantity: element.quantity,

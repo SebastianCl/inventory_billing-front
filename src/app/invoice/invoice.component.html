@@ -105,7 +105,7 @@
                                                     <div class="table-responsive">
                                                         <table class="table table-hover">
                                                             <thead>
-                                                                <th id=""> Referencia </th>
+                                                                <th id=""> Código </th>
                                                                 <th id=""> Precio Original </th>
                                                                 <th id=""> % Descuento</th>
                                                                 <th id=""> NETO </th>
@@ -113,7 +113,7 @@
                                                             <tbody>
                                                                 <tr
                                                                     *ngFor="let item of listArticlesLoads; let i = index;">
-                                                                    <td>{{item.reference}}</td>
+                                                                    <td>{{item.code}}</td>
                                                                     <td>{{item.price | currency }}</td>
                                                                     <td>{{item.discount}} %</td>
                                                                     <td>{{item.price - ((item.price *

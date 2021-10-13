@@ -82,10 +82,10 @@
                         </td>
                         <td>
                           <mat-form-field>
-                            <mat-select placeholder="Busca por referencia" [formControl]="item.get('garmentReference')"
-                              (selectionChange)="setGarmentPrice(item.get('garmentReference'), i)">
-                              <mat-option *ngFor="let garment of anyListGarment" value="{{garment.reference}}">
-                                {{garment.reference}}-{{garment.size}}
+                            <mat-select placeholder="Busca por código" [formControl]="item.get('garmentCode')"
+                              (selectionChange)="setGarmentPrice(item.get('garmentCode'), i)">
+                              <mat-option *ngFor="let garment of anyListGarment" value="{{garment.code}}">
+                                {{garment.code}}
                               </mat-option>
                             </mat-select>
                           </mat-form-field>
@@ -93,8 +93,7 @@
                         <td>
                           <mat-form-field>
                             <input matInput placeholder="Precio" type="number"
-                              (keypress)="numberOnly($event);calculateTotals();" [formControl]="item.get('price')"
-                              style="width: 50%;">
+                              (keypress)="numberOnly($event);calculateTotals();" [formControl]="item.get('price')">
                           </mat-form-field>
                         </td>
                         <td>
@@ -105,9 +104,9 @@
                           {{item.get('price').value - ((item.get('quantity').value * item.get('price').value) *
                           (item.get('discount').value / 100)) | currency }}
                         </td>
-                        <td style="text-align: center">
-                          <button mat-mini-fab color="primary" (click)="openModalImg(item.get('garmentReference'))"
-                            [disabled]="item.get('garmentReference').value === ''">
+                        <td>
+                          <button mat-mini-fab color="primary" (click)="openModalImg(item.get('garmentCode'))"
+                            [disabled]="item.get('garmentCode').value === ''">
                             <mat-icon>image</mat-icon>
                           </button>
                         </td>
@@ -156,7 +155,7 @@
 
                         <tr *ngFor="let det of anyDetalleRef">
                           <td>
-                            {{det.reference}}
+                            {{det.code}}
                           </td>
                           <td>
                             {{det.earlyDate}}
@@ -249,7 +248,7 @@
   <!-- Modal content -->
   <div class="modal0-content">
     <div class="modal0-header">
-      <h2>Referencia: {{referenceProduct}}</h2>
+      <h2>Referencia: {{codeProduct}}</h2>
       <span class="close0" (click)="closeModalImg()">X</span>
     </div>
     <div class="modal0-body">
@@ -344,7 +343,7 @@
               <div class="col-md-4">
                 <mat-form-field>
                   <input matInput placeholder="Teléfono 3" type="text" maxlength="10" max="10" min="1"
-                    (blur)="numberOnly($event);" [formControl]="telephone3" style="width: 100%;">
+                    (blur)="numberOnly($event);" [formControl]="telephone3">
                 </mat-form-field>
               </div>
 

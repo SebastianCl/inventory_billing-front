@@ -153,7 +153,7 @@ export class ListReserveComponent implements OnInit {
           for (let obj in array_list) {
             const element = array_list[obj];
             valTotal = valTotal + element.price;
-            articleListLocalstorage.push({ reference: element.reference, price: element.price, discount: element.discount });
+            articleListLocalstorage.push({ code: element.code, price: element.price, discount: element.discount });
           }
           let dataLocalstorage = {
             status: response.msg.active,

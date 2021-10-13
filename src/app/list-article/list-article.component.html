@@ -14,7 +14,7 @@
             <div class="table-responsive">
 
               <p-table #dt [columns]="cols" [value]="listArticle" [paginator]="true" [responsive]="true" [rows]="10"
-                [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['reference','color','quantity','brand']">
+                [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['code','color','quantity','brand']">
                 <ng-template pTemplate="caption">
                   <div style="text-align: right">
                     <em class="fa fa-search" style="margin:4px 4px 0 0"></em>
@@ -24,7 +24,7 @@
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
                   <tr>
-                    <th id="reference" [pSortableColumn]="'reference'">Referencia<p-sortIcon [field]="'reference'">
+                    <th id="code" [pSortableColumn]="'code'">Código<p-sortIcon [field]="'code'">
                       </p-sortIcon>
                     </th>
                     <th id="size" [pSortableColumn]="'size'">Tamaño<p-sortIcon [field]="'size'">
@@ -42,7 +42,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-data>
                   <tr>
-                    <td>{{data.reference}}-{{data.size}}</td>
+                    <td>{{data.code}}</td>
                     <td>{{data.color}}</td>
                     <td>{{data.quantity}}</td>
                     <td>{{data.brand}}</td>

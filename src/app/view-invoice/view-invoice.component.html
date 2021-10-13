@@ -109,14 +109,14 @@
                         <div class="table-responsive">
                           <table class="table table-hover">
                             <thead>
-                              <th id=""> Referencia </th>
+                              <th id=""> Código </th>
                               <th id=""> Precio Original </th>
                               <th id=""> % Descuento</th>
                               <th id=""> NETO </th>
                             </thead>
                             <tbody>
                               <tr *ngFor="let item of anyArticles">
-                                <td>{{item.reference}}</td>
+                                <td>{{item.code}}</td>
                                 <td>{{item.price | currency }}</td>
                                 <td>{{item.discount}} %</td>
                                 <td>{{item.price - ((item.price * item.discount)/100) | currency }}</td>
@@ -180,7 +180,8 @@
 
                     <mat-card class="border">
                       <p>* No se hace devolución de dinero</p>
-                      <p *ngIf="typeInvoice == '1'">* Recuerda traer al momento del retiro el valor del depósito, este cubrirá los posibles daños que ocurran</p>
+                      <p *ngIf="typeInvoice == '1'">* Recuerda traer al momento del retiro el valor del depósito, este
+                        cubrirá los posibles daños que ocurran</p>
                       <p>* Pasados 30 días no se hacen cambios</p>
                       <p>* Los cambios de vestuario se pueden hacer con 15 días antes de la fecha de entrega</p>
                     </mat-card>

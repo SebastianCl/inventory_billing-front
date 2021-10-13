@@ -38,7 +38,6 @@ export class ListInvoiceComponent implements OnInit {
   }
 
   openModalInvoice(data) {
-    debugger;
     this.classMove = '';
     this.showUpdate = true;
     this.numberInvoiceTittle = data.numberInvoice;
