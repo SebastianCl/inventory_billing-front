@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { environment } from '../../environments/environment';
+
 import Swal from 'sweetalert2';
 
 // Servicio
@@ -43,7 +45,7 @@ export class DetailsArticleComponent implements OnInit {
     this.form.controls.price.setValue(data.price);
     this.form.controls.size.setValue(data.size);
     this.form.controls.quantity.setValue(data.quantity);
-    this.imagePreview = 'https://storage.googleapis.com/bellarose-qa.appspot.com/' + data.imageURL;
+    this.imagePreview = `${environment.urlImage}/${data.imageURL}`;
     let available = data.available ? 'DISPONIBLE' : 'NO DISPONIBLE';
     this.form.controls.available.setValue(available);
   }

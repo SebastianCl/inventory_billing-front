@@ -27,7 +27,7 @@ export class ArticleProfileComponent implements OnInit {
   brand: FormControl;
   price: FormControl;
   color: FormControl;
-  type: FormControl; 
+  type: FormControl;
   comments: FormControl;
   base64Data: string;
   available: FormControl;
@@ -35,11 +35,11 @@ export class ArticleProfileComponent implements OnInit {
   hiddenProgBar: boolean;
 
   constructor(
-    public articleService: ArticleService, 
+    public articleService: ArticleService,
     private _snackBar: MatSnackBar
   ) {
     //Arrays
-    this.anySize = ['S','M','L','XL','XXL'];
+    this.anySize = ['S', 'M', 'L', 'XL', 'XXL'];
     //Form article
     this.reference = new FormControl();
     this.size = new FormControl();
@@ -117,21 +117,21 @@ export class ArticleProfileComponent implements OnInit {
 
     console.info(this.article);
 
-    // this.articleService.createArticle(this.article)
-    //   .subscribe((response: any) => {
-    //     this.changeShow();
-    //     if (response.resp) {
-    //       this.alert('HECHO', 'Artículo creado.', 'success');
-    //       this.clearData();
-    //     } else {
-    //       this.alert('Atención', 'Artículo no creado.', 'warning');
-    //     }
-    //   },
-    //     (err) => {
-    //       this.changeShow();
-    //       this.alert('Error', 'Ocurrio un error al crear artículo.', 'error');
-    //     }
-    //   );
+    this.articleService.createArticle(this.article)
+      .subscribe((response: any) => {
+        this.changeShow();
+        if (response.resp) {
+          this.alert('HECHO', 'Artículo creado.', 'success');
+          this.clearData();
+        } else {
+          this.alert('Atención', 'Artículo no creado.', 'warning');
+        }
+      },
+        (err) => {
+          this.changeShow();
+          this.alert('Error', 'Ocurrio un error al crear artículo.', 'error');
+        }
+      );
   }
 
   private validateData() {
