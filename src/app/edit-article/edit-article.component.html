@@ -99,7 +99,7 @@
 
             <div class="row">
 
-              <div class="col-md-10" style="text-align: center;">
+              <div class="col-md-10 text_center">
 
                 <input type="file" #fileInputFrontal id="fileInputFrontal" name="fileInputFrontal"
                   (change)="uploadFile($event.target.files)" />
@@ -122,10 +122,10 @@
 
               <div class="col-md-3"></div>
 
-              <div class="col-md-6" style="text-align: center;">
+              <div class="col-md-6 text_center">
 
                 <mat-card>
-                  <img src="{{imagePreview}}" alt="product" id="ImageProduct" width="340" style="text-align: center;">
+                  <img src="{{imagePreview}}" alt="product" id="ImageProduct" width="340 text_center">
                 </mat-card>
 
               </div>
@@ -138,7 +138,7 @@
 
             <div class="pull-right">
 
-              <button mat-raised-button class="btn pull-right save-reserve" [attr.disabled]="dsbSave?'':null"
+              <button mat-raised-button class="btn pull-right action" [attr.disabled]="dsbSave?'':null"
                 (click)="editArticle()">Editar</button>
 
             </div>

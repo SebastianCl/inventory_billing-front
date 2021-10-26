@@ -31,6 +31,8 @@ export class ViewInvoiceComponent implements OnInit {
   public payment: number;
   public total: number;
   public deposit: number;
+  public startDate: string;
+  public typePay: string;
   constructor(
     //Services
     public invoiceService: InvoiceService,
@@ -54,6 +56,8 @@ export class ViewInvoiceComponent implements OnInit {
     this.payment = 0;
     this.total = 0;
     this.deposit = 0;
+    this.startDate = '';
+    this.typePay = '';
   }
 
   ngOnInit() {
@@ -90,6 +94,13 @@ export class ViewInvoiceComponent implements OnInit {
         this.payment = Number(response.msg.payment);
         this.deposit = Number(response.msg.deposit);
         this.total = this.subTotal - this.payment;
+
+        let startDate = new Date(response.msg.reserve.startDate);
+        this.startDate = startDate.toLocaleDateString();
+
+        let transfer = response.msg.transfer ? 'Transferencia' : '';
+        let cash = response.msg.cash ? 'Efectivo' : '';
+        this.typePay = `${transfer} ${cash}`;
       }
       else {
         this.alert('Atención', 'No se encontro ninguna factura por este id.', 'warning');

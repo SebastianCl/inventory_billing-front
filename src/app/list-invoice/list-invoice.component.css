@@ -63,3 +63,8 @@
   .moveButtonCancel {
     margin-left: 34%;
   }
+
+  .action{
+    margin-left: 34%;
+    background-color: #DBCBCA  !important;
+  }

@@ -6,6 +6,8 @@ export interface IInvoice {
     payment: number;
     description: string;
     depositState: boolean;
+    transfer: boolean;
+    cash: boolean;
 }
 
 export interface IInvoiceDano {
@@ -13,6 +15,8 @@ export interface IInvoiceDano {
     customerID: number;
     employeeID: number;
     description: string;
+    transfer: boolean;
+    cash: boolean;
 }
 
 export interface IInvoiceVenta {
@@ -21,6 +25,8 @@ export interface IInvoiceVenta {
     employeeID: number;
     description: string;
     articles: Array<Object[]>;
+    transfer: boolean;
+    cash: boolean;
 }
 
 export class Invoice implements IInvoice {
@@ -32,6 +38,8 @@ export class Invoice implements IInvoice {
     payment: number;
     description: string;
     depositState: boolean;
+    transfer: boolean;
+    cash: boolean;
 
     constructor() {
         this.reserve = 0;
@@ -41,6 +49,8 @@ export class Invoice implements IInvoice {
         this.payment = 0;
         this.description = '';
         this.depositState = false;
+        this.transfer = false;
+        this.cash = false;
     }
 }
 
@@ -49,12 +59,16 @@ export class InvoiceDano implements IInvoiceDano {
     customerID: number;
     employeeID: number;
     description: string;
+    transfer: boolean;
+    cash: boolean;
 
     constructor() {
         this.cost = 0;
         this.customerID = 0;
         this.employeeID = 0;
         this.description = '';
+        this.transfer = false;
+        this.cash = false;
     }
 }
 
@@ -64,6 +78,8 @@ export class InvoiceVenta implements IInvoiceVenta {
     employeeID: number;
     description: string;
     articles: Array<Object[]>;
+    transfer: boolean;
+    cash: boolean;
 
     constructor() {
         this.cost = 0;
@@ -71,5 +87,7 @@ export class InvoiceVenta implements IInvoiceVenta {
         this.employeeID = 0;
         this.description = '';
         this.articles = [];
+        this.transfer = false;
+        this.cash = false;
     }
 }

@@ -1,5 +1,29 @@
+.action {background-color: #DBCBCA  !important;}
+
 .border{
     border: 6px solid gray !important;
     border-radius: 2% !important;
     padding: 10px !important;
 }
+
+.line{
+    padding: 1px;
+}
+
+.description_art{
+    border: 6px solid gray;
+    border-radius: 2%;
+    padding: 5px !important;
+    text-align: center;
+  }
+
+  .text_center{
+    text-align: center;
+  }
+
+  .firm{
+    border: 6px solid gray;
+    border-radius: 2%;
+    padding: 10px !important;
+    height: 222px;
+  }

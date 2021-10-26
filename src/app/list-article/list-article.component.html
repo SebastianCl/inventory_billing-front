@@ -7,8 +7,8 @@
             <h4 class="card-title ">Inventario</h4>
             <p class="card-category"> Lista de artículos</p>
             <button mat-raised-button matTooltip="Agregar un nuevo artículo al inventario."
-              class="btn pull-right btn-action" (click)="goToPage('/add-article')">Agregar
-              artículo</button>
+              class="btn pull-right btn-action action" (click)="goToPage('/add-article')">
+              Agregar artículo</button>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -36,7 +36,7 @@
                     <th id="brand" [pSortableColumn]="'brand'">Marca<p-sortIcon [field]="'brand'">
                       </p-sortIcon>
                     </th>
-                    <th id="change">
+                    <th>
                     </th>
                   </tr>
                 </ng-template>

@@ -59,7 +59,7 @@
                       </p-sortIcon>
                     </th>
                     <th id="endDate" [pSortableColumn]="'endDate'">F/Devolución<p-sortIcon [field]="'endDate'">
-                    </p-sortIcon>
+                      </p-sortIcon>
                     </th>
                     <th id="actions">
                     </th>
@@ -69,8 +69,8 @@
                   <tr>
                     <td>{{data.customerName}}</td>
                     <td>{{data.reserveDay}}</td>
-                    <td>{{data.endDate}}</td>
                     <td>{{data.startDate}}</td>
+                    <td>{{data.endDate}}</td>
                     <td>
                       <div>
                         <button mat-mini-fab color="primary" matTooltip="Ver detalle" [attr.disabled]="dsbBtn?'':null"

@@ -8,33 +8,24 @@
                     <div class="card-header card-header-warning">
                         <h4 class="card-title ">Cliente</h4>
                         <p class="card-category"> Crea o visualiza el perfil de un cliente</p>
-                        <button mat-raised-button class="btn btn-action" (click)="goToPage('/list-customer')">Ver
-                            lista</button>
-                        <button mat-raised-button class="btn pull-right btn-action"
-                            (click)="goToPage('/add-customer')">Agregar cliente</button>
+                        <button mat-raised-button class="btn action" (click)="goToPage('/list-customer')"
+                            matTooltip="Ver lista de clientes">
+                            Ver lista</button>
+                        <button mat-raised-button class="btn pull-right action" (click)="goToPage('/add-customer')"
+                            matTooltip="Crear un nuevo cliente">Agregar cliente</button>
                     </div>
 
                     <br><br><br>
                     <div class="card-header card-header-warning">
                         <h4 class="card-title ">Empleado</h4>
                         <p class="card-category"> Crea o visualiza el perfil de un empleado</p>
-                        <button mat-raised-button class="btn btn-action" (click)="goToPage('/list-employee')">Ver
-                            lista</button>
-                        <button mat-raised-button class="btn pull-right btn-action" [disabled]="boolRole"
-                        (click)="goToPage('/add-employee')">Agregar empleado</button>
+                        <button mat-raised-button class="btn action" (click)="goToPage('/list-employee')"
+                            matTooltip="Ver lista de vendedores">
+                            Ver lista</button>
+                        <button mat-raised-button class="btn pull-right action" [disabled]="boolRole"
+                            (click)="goToPage('/add-employee')" matTooltip="Crear un nuevo empleado">
+                            Agregar empleado</button>
                     </div>
-
-                    <br><br><br>
-                    <!--- 
-                        <div class="card-header card-header-warning">
-                        <h4 class="card-title ">Usuario</h4>
-                        <p class="card-category"> Crea o visualiza el perfil de un usuario</p>
-                        <button mat-raised-button class="btn btn-action" (click)="goToPage('/list-user')">Ver
-                            lista</button>
-                        <button mat-raised-button class="btn pull-right btn-action"
-                            (click)="goToPage('/add-user')">Agregar usuario</button>
-                    </div>
-                    --->
 
                     <br><br><br>
                 </div>

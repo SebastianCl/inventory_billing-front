@@ -37,7 +37,8 @@
                 <div class="col-md-4">
 
                   <mat-form-field>
-                    <input matInput type="number" placeholder="Cantidad" (keypress)="numberOnly($event)" [formControl]="quantity">
+                    <input matInput type="number" placeholder="Cantidad" (keypress)="numberOnly($event)"
+                      [formControl]="quantity">
                   </mat-form-field>
 
                 </div>
@@ -57,7 +58,8 @@
                 <div class="col-md-4">
 
                   <mat-form-field>
-                    <input matInput type="number" placeholder="Precio" (keypress)="numberOnly($event)" [formControl]="price">
+                    <input matInput type="number" placeholder="Precio" (keypress)="numberOnly($event)"
+                      [formControl]="price">
                   </mat-form-field>
 
                 </div>
@@ -69,7 +71,7 @@
                   </mat-form-field>
 
                 </div>
-                
+
               </div>
 
               <div class="row">
@@ -81,7 +83,7 @@
                   </mat-form-field>
 
                 </div>
-                
+
                 <div class="col-md-6">
 
                   <mat-form-field>
@@ -94,22 +96,19 @@
 
               <div class="row">
 
-                <div class="col-md-10">
-
-                  <input type="file" #fileInputFrontal id="fileInputFrontal" name="fileInputFrontal" (change)="uploadFile($event.target.files)"/>
+                <div class="col-md-10 text_center">
+                  <input type="file" #fileInputFrontal id="fileInputFrontal" name="fileInputFrontal"
+                    (change)="uploadFile($event.target.files)" />
                   <label for="fileInputFrontal" class="md-button md-raised md-primary">Cargar imagen</label>
-
                 </div>
 
                 <div class="col-md-2">
-                  
                   <mat-checkbox class="example-margin" [formControl]="available">¿Esta disponible?</mat-checkbox>
-
                 </div>
 
               </div>
 
-              <button mat-raised-button type="submit" class="btn btn-default pull-right"
+              <button mat-raised-button type="submit" class="btn btn-default pull-right action"
                 [attr.disabled]="dsbSave?'':null" (click)="create()">Crear artículo</button>
 
             </form>

@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-edit-article',
   templateUrl: './edit-article.component.html',
-  styleUrls: ['./edit-article.component.scss'],
+  styleUrls: ['./edit-article.component.css'],
   providers: [ArticleService]
 })
 export class EditArticleComponent implements OnInit {

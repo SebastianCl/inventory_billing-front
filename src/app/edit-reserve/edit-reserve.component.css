@@ -1,7 +1,9 @@
-.back {background-color: #f3ef0885  !important;}
+.back {background-color: #F2D6D3  !important;}
+
+.action {background-color: #DBCBCA  !important;}
+
+.delete {background-color: #f3080885  !important;}
+.add {background-color: #F2D6D3  !important;}
 
 .row {padding: 8px;}
-
-.add {background-color: rgb(0, 0, 0)  !important;}
-
 .rg {text-align: right; }

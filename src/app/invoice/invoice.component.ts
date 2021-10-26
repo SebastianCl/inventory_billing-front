@@ -29,6 +29,8 @@ export class InvoiceComponent implements OnInit {
   clientDocument: FormControl;
   clientAddress: FormControl;
   clientEmail: FormControl;
+  transfer: FormControl;
+  cash: FormControl;
   subTotal: number;
   total: number;
   employee: number;
@@ -49,6 +51,8 @@ export class InvoiceComponent implements OnInit {
   typeFact: string;
   pagoDeposito: string;
   checkDeposito: boolean;
+  startDate: string;
+  description: string;
 
   constructor(
     private router: Router,
@@ -56,8 +60,9 @@ export class InvoiceComponent implements OnInit {
     public customerService: CustomerService,
     private _snackBar: MatSnackBar,
     public route: ActivatedRoute) {
-    this.deposit = new FormControl();
+
     this.payment = new FormControl();
+    this.deposit = new FormControl();
     this.invoiceNumber = new FormControl();
     this.dateInvoice = new FormControl();
     this.employeeName = new FormControl();
@@ -65,13 +70,23 @@ export class InvoiceComponent implements OnInit {
     this.clientDocument = new FormControl();
     this.clientAddress = new FormControl();
     this.clientEmail = new FormControl();
+    this.transfer = new FormControl();
+    this.cash = new FormControl();
+
+    this.transfer.setValue(false);
+    this.cash.setValue(false);
+
     this.typeFact = '';
     this.pagoDeposito = 'NO';
     this.checkDeposito = false;
     this.clearData();
     this.hiddenProgBar = true;
     this.dsbSave = false;
+    this.startDate = '';
+    this.description = '';
     this.codeAction = this.route.snapshot.paramMap.get('id');
+
+    // Validar si se va a crear una factura (0) o se va ver el detalle
     if (this.codeAction === '0') {
       this.tittle = 'Agregar factura';
       this.subtittle = 'Complete toda la información';
@@ -101,6 +116,10 @@ export class InvoiceComponent implements OnInit {
         this.total = response.msg.cost;
         this.deposit.setValue(response.msg.deposit);
         this.payment.setValue(response.msg.payment);
+
+        let startDate = new Date(response.msg.reserve.startDate);
+        this.startDate = startDate.toLocaleDateString();
+        this.description = response.msg.reserve.description;
       } else {
         this.alert('Atención', 'No se encontro ninguna factura por este id.', 'warning');
       }
@@ -171,6 +190,10 @@ export class InvoiceComponent implements OnInit {
     this.listArticlesLoads = valLocalstorage.articlesLocalStorage;
     this.subTotal = valLocalstorage.subtotal;
     this.total = valLocalstorage.total;
+
+    let startDate = new Date(valLocalstorage.startDate);
+    this.startDate = startDate.toLocaleDateString();
+    this.description = valLocalstorage.description;
   }
 
   getCustomerData(customerID) {
@@ -215,6 +238,9 @@ export class InvoiceComponent implements OnInit {
     this.invoice.deposit = Number(this.deposit.value);
     this.invoice.depositState = this.checkDeposito;
     this.invoice.payment = Number(this.payment.value);
+    this.invoice.transfer = this.transfer.value;
+    this.invoice.cash = this.cash.value;
+    this.description = this.description;
 
     this.invoiceService.createInvoice(this.invoice, this.typeFact)
       .subscribe((response: any) => {
@@ -234,7 +260,10 @@ export class InvoiceComponent implements OnInit {
             total: response.msg.cost,
             subtotal: response.msg.subTotal,
             depositInvoice: this.deposit.value,
-            paymentInvoice: this.payment.value
+            paymentInvoice: this.payment.value,
+            startDate: response.msg.reserve.startDate,
+            transfer: this.transfer.value,
+            cash: this.cash.value
           }
           localStorage.setItem('reserve', JSON.stringify(resetDataLocalstorage));
           this.showPrintButton = true;
@@ -262,13 +291,25 @@ export class InvoiceComponent implements OnInit {
   }
 
   private validateData(totalInvoice) {
-    if (this.deposit.value === null || this.deposit.value === 0) {
-      this.openSnackBar('Debe ingresar un deposito.', 'OK');
+
+    if (this.payment.value === null || this.payment.value === 0) {
+      this.openSnackBar('Debe ingresar un abono.', 'OK');
       return false;
     }
 
     if (this.payment.value > totalInvoice) {
       this.openSnackBar('Debe ingresar un abono menor al total de la factura.', 'OK');
+      return false;
+    }
+
+
+    if (this.deposit.value === null || this.deposit.value === 0) {
+      this.openSnackBar('Debe ingresar un deposito.', 'OK');
+      return false;
+    }
+
+    if (this.cash.value === false && this.transfer.value === false) {
+      this.openSnackBar('Debe ingresar el medio de pago.', 'OK');
       return false;
     }
     return true;

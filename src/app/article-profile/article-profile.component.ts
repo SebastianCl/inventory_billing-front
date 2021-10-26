@@ -38,9 +38,13 @@ export class ArticleProfileComponent implements OnInit {
     public articleService: ArticleService,
     private _snackBar: MatSnackBar
   ) {
-    //Arrays
+    // Lista de tallas
     this.anySize = ['S', 'M', 'L', 'XL', 'XXL'];
-    //Form article
+    for (let index = 6; index <= 50; index = index + 2) {
+      this.anySize.push(index);
+
+    }
+
     this.reference = new FormControl();
     this.size = new FormControl();
     this.quantity = new FormControl();

@@ -1,5 +1,7 @@
-.add {background-color: rgb(0, 0, 0)  !important;} 
-.save-reserve {background-color: #ffffff;} 
+.delete {background-color: #f3080885  !important;}
+.add {background-color: #F2D6D3  !important;}
+
+.action {background-color: #DBCBCA  !important;}
 
 .cl { background-color: #888; }
 
@@ -70,7 +72,7 @@
 
 .modal0-header {
   padding: 2px 16px;
-  background-color: #00808E;
+  background-color: #c5b39a;
   color: white;
   text-align: center;
 }
@@ -82,6 +84,6 @@
 
 .modal0-footer {
   text-align: right;
-  background-color: #d0cfcf;
+  background-color: #c5b39a;
   color: white;
 }

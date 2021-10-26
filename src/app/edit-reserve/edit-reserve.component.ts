@@ -44,7 +44,7 @@ export class EditReserveComponent implements OnInit {
     this.totalReserve = new FormControl();
     this.endDate = new FormControl();
     this.startDate = new FormControl();
-    this.getListGarments();
+    this.getListArticles();
   }
 
   ngOnInit() {
@@ -71,13 +71,38 @@ export class EditReserveComponent implements OnInit {
       );
   }
 
+  formatDate(strDate) {
+    let date = new Date(strDate);
+    let dmy = date.toLocaleDateString();
+
+    let msgDate = dmy;
+
+    const days = [
+      'Domingo',
+      'Lunes',
+      'Martes',
+      'Miércoles',
+      'Jueves',
+      'Viernes',
+      'Sábado',
+    ];
+
+    const numberDay = date.getDay();
+    const nameDay = days[numberDay];
+
+    let hour = date.toLocaleTimeString();
+    msgDate = `${dmy} | ${nameDay} | ${hour}`;
+
+    return msgDate;
+  }
+
   setData(data, idReserve) {
     this.form.controls.reserveNumber.setValue(data.reserveNumber);
     this.form.controls.invoiceNumber.setValue(data.invoiceNumber);
     this.form.controls.customerName.setValue(data.customerName);
     this.form.controls.employeName.setValue(data.employeeName);
-    this.form.controls.reserveDay.setValue(this.convertDates(data.reserveDay));
-    this.startDate.setValue(data.reserveDay);
+    this.form.controls.reserveDay.setValue(this.formatDate(data.reserveDay));
+    this.startDate.setValue(data.startDate);
     this.endDate.setValue(data.endDate);
     this.idReserve = idReserve;
     this.form.controls.description.setValue(data.description);
@@ -149,7 +174,7 @@ export class EditReserveComponent implements OnInit {
     return true;
   }
 
-  getListGarments(): any {
+  getListArticles(): any {
     this.articleService.loadArticles()
       .subscribe((response: any) => {
         if (response.resp && response.msg.length > 0) {

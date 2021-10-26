@@ -10,7 +10,8 @@
 
           <div class="card-header card-header-warning">
             <h4 class="card-title">{{stringInvoice}}</h4>
-            <button mat-raised-button class="btn btn-default pull-right" (click)="printPage()">Imprimir Factura</button>
+            <button mat-raised-button class="btn btn-default pull-right action" (click)="printPage()"
+              matTooltip="Imprimir">Imprimir Factura</button>
           </div>
 
           <div class="card-body">
@@ -23,22 +24,21 @@
 
               <div class="row">
 
-                <div class="col-md-4" style="padding: 1px;">
+                <div class="col-md-4 line">
                   <img src="/assets/img/InvoiceBellarose.jpg" alt="logoFactura" width="280" height="160">
                 </div>
 
-                <div class="col-md-4" style="padding: 1px;">
+                <div class="col-md-4 line">
                   <p>
                     Siguenos en Instagram: @bellarose.alquiler
                   </p>
-                  <br>
                   <p>
                     www.bellarosealquiler.com.co
                   </p>
                 </div>
 
-                <div class="col-md-4" style="padding: 1px;">
-                  Número de factura: {{numberInvoice}}
+                <div class="col-md-4 line">
+                  <h4>Número de factura: {{numberInvoice}}</h4>
                 </div>
 
               </div>
@@ -47,64 +47,61 @@
 
                 <div class="row">
 
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card class="border">Fecha de
-                      Factura: {{dateInvoice}}</mat-card>
+                  <div class="col-md-6 line">
+                    <mat-card class="border">Fecha de factura: {{dateInvoice}}</mat-card>
                   </div>
 
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card class="border">Empleado:
-                      {{employeeName}}</mat-card>
-                  </div>
-
-                </div>
-
-                <div class="row">
-
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card class="border">Nombre:
-                      {{customName}}</mat-card>
-                  </div>
-
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card class="border">Documento:
-                      {{customDocument}}</mat-card>
+                  <div class="col-md-6 line">
+                    <mat-card class="border">Vendedor: {{employeeName}}</mat-card>
                   </div>
 
                 </div>
 
                 <div class="row">
 
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card class="border">Dirección:
-                      {{customAddress}}</mat-card>
+                  <div class="col-md-6 line">
+                    <mat-card class="border">Nombre: {{customName}}</mat-card>
                   </div>
 
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card class="border">Email:
-                      {{customEmail}}</mat-card>
+                  <div class="col-md-6 line">
+                    <mat-card class="border">Documento: {{customDocument}}</mat-card>
                   </div>
 
                 </div>
 
                 <div class="row">
 
-                  <div class="col-md-12" style="padding: 1px;">
-
-                    <mat-card class="border">Descripción:
-                      {{description}}</mat-card>
-
+                  <div class="col-md-6 line">
+                    <mat-card class="border">Dirección: {{customAddress}}</mat-card>
                   </div>
 
+                  <div class="col-md-6 line">
+                    <mat-card class="border">Email: {{customEmail}}</mat-card>
+                  </div>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 line">
+                    <mat-card class="border">Fecha de entrega: {{startDate}}</mat-card>
+                  </div>
+                  <div class="col-md-6 line">
+                    <mat-card class="border">Metodo de pago: {{typePay}}</mat-card>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12 line">
+                    <mat-card class="border">Descripción: {{description}}</mat-card>
+                  </div>
                 </div>
 
                 <div class="row" *ngIf="typeInvoice != '3'">
 
-                  <div class="col-md-12" style="padding: 1px;">
+                  <div class="col-md-12 line">
 
-                    <mat-card
-                      style="border: 6px solid gray;border-radius: 2%;padding: 5px !important;text-align: center;">
-                      <mat-card-title style="text-align: center;"> Descripción artículos </mat-card-title>
+                    <mat-card class="description_art">
+                      <mat-card-title class="text_center"> Descripción artículos </mat-card-title>
                       <mat-card-content>
                         <div class="table-responsive">
                           <table class="table table-hover">
@@ -135,62 +132,56 @@
 
                   <div class="col-md-6"></div>
 
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card class="border">Valor a pagar:
-                      {{subTotal | currency }}</mat-card>
+                  <div class="col-md-6 line">
+                    <mat-card class="border">Valor a pagar: {{subTotal | currency }}</mat-card>
                   </div>
 
                 </div>
 
                 <div class="row" *ngIf="typeInvoice != '3'">
 
-                  <div class="col-md-4" style="padding: 1px;">
-                    <mat-card class="border">Valor a pagar:
-                      {{subTotal | currency }}</mat-card>
+                  <div class="col-md-4 line">
+                    <mat-card class="border">Valor a pagar: {{subTotal | currency }}</mat-card>
                   </div>
 
-                  <div class="col-md-4" style="padding: 1px;">
-                    <mat-card class="border">Abono:
-                      {{payment | currency }}</mat-card>
+                  <div class="col-md-4 line">
+                    <mat-card class="border">Abono: {{payment | currency }}</mat-card>
                   </div>
 
-                  <div class="col-md-4" style="padding: 1px;">
-                    <mat-card class="border">Resta: {{total
-                      | currency }}</mat-card>
+                  <div class="col-md-4 line">
+                    <mat-card class="border">Resta: {{total | currency }}</mat-card>
                   </div>
 
                 </div>
 
                 <div class="row" *ngIf="typeInvoice != '3'">
 
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card class="border">Pago el
-                      depósito: {{typeDeposito}}</mat-card>
+                  <div class="col-md-6 line">
+                    <mat-card class="border">Pago el depósito: {{typeDeposito}}</mat-card>
                   </div>
-                  <div class="col-md-6" style="padding: 1px;">
-                    <mat-card class="border">Valor depósito:
-                      {{deposit | currency }}</mat-card>
+                  <div class="col-md-6 line">
+                    <mat-card class="border">Valor depósito: {{deposit | currency }}</mat-card>
                   </div>
 
                 </div>
 
                 <div class="row">
 
-                  <div class="col-md-6" style="padding: 1px;">
+                  <div class="col-md-6 line">
 
                     <mat-card class="border">
-                      <p>* No se hace devolución de dinero</p>
+                      <p>* No se hace devolución de dinero.</p>
                       <p *ngIf="typeInvoice == '1'">* Recuerda traer al momento del retiro el valor del depósito, este
-                        cubrirá los posibles daños que ocurran</p>
-                      <p>* Pasados 30 días no se hacen cambios</p>
-                      <p>* Los cambios de vestuario se pueden hacer con 15 días antes de la fecha de entrega</p>
+                        cubrirá los posibles daños que ocurran.</p>
+                      <p>* Pasados 30 días no se hacen cambios.</p>
+                      <p>* Los cambios de vestuario se pueden hacer con 15 días antes de la fecha de entrega.</p>
                     </mat-card>
 
                   </div>
 
-                  <div class="col-md-6" style="padding: 1px;">
+                  <div class="col-md-6 line">
 
-                    <mat-card style="border: 6px solid gray;border-radius: 2%;padding: 10px !important;height: 222px;">
+                    <mat-card class="firm">
                       <div class="row">
                         <div class="col-md-6">
                           Vendedor:
@@ -215,9 +206,9 @@
 
                 </div>
 
-                <p style="text-align: center;">Carrera 52 No. 45 - 116 Local 201 - Pasaje Pasteur / Medellin</p>
-                <p style="text-align: center;">Teléfono fijo: 5298724</p>
-                <p style="text-align: center;">Celulares whatsaap: 3175009338- 3104998977</p>
+                <p class="text_center">Carrera 52 No. 45 - 116 Local 201 - Pasaje Pasteur / Medellin</p>
+                <p class="text_center">Teléfono fijo: 5298724</p>
+                <p class="text_center">Celulares whatsaap: 3175009338- 3104998977</p>
 
               </mat-card>
 

@@ -12,7 +12,7 @@
             <h4 class="card-title">{{strTitle}}</h4>
             <p class="card-category">Complete toda la información</p>
             <p class="card-category">Reserva para el cliente con identificación: {{customerIdentification.value}}</p>
-            <p class="card-category">Registra el empleado con identificación: {{employeIdentification.value}}</p>
+            <p class="card-category">Registra el vendedor con identificación: {{employeIdentification.value}}</p>
             <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="showProgBar?'':null">
             </mat-progress-bar>
           </div>
@@ -23,8 +23,7 @@
 
               <div class="rg">
 
-                <button mat-raised-button matTooltip="Agregar" class="btn save-reserve"
-                  (click)="addArticle()">+</button>
+                <button mat-raised-button matTooltip="Agregar" class="btn add" (click)="addArticle()">+</button>
 
               </div>
 
@@ -44,7 +43,7 @@
                       <tr *ngFor="let item of anyDetalleArticle.get('rows')['controls'] ; let i = index;">
 
                         <td>
-                          <button mat-raised-button matTooltip="Eliminar" class="btn save-reserve"
+                          <button mat-raised-button matTooltip="Eliminar" class="btn delete"
                             (click)="removeArticle(i)">X</button>
                         </td>
                         <td>
@@ -155,7 +154,7 @@
 
               <div class="row">
                 <div class="col-md-12">
-                  <label for="selectRol">Empleado</label>
+                  <label for="selectRol">Vendedor</label>
                   <mat-form-field>
                     <mat-select placeholder="Busca un empleado" [formControl]="employeId"
                       (selectionChange)="setEmployeData()">
@@ -190,7 +189,7 @@
 
               <div class="pull-right">
 
-                <button mat-raised-button matTooltip="Finalizar" class="btn pull-right save-reserve"
+                <button mat-raised-button matTooltip="Finalizar" class="btn pull-right action"
                   [attr.disabled]="btnSaveInvoice?'':null" (click)="saveReserve()">Guardar Factura</button>
 
               </div>
@@ -217,7 +216,7 @@
     <div class="modal0-header">
 
       <h2>Crear cliente</h2>
-      <h4>Complete todos los datos del perfil para el cliente</h4>
+      <h4>Complete todos los datos del nuevo cliente</h4>
 
     </div>
 
@@ -297,9 +296,9 @@
     </div>
 
     <div class="modal0-footer">
-      <button class="btn btn-default" [attr.disabled]="btnSaveCliente?'':null" (click)="createCliente()">Crear
-        cliente</button>
-      <button class="btn btn-default pull-right" (click)="closeModalCliente()">X</button>
+      <button class="btn btn-default action" [attr.disabled]="btnSaveCliente?'':null" (click)="createCliente()">
+        Crear cliente</button>
+      <button class="btn btn-default pull-right" (click)="closeModalCliente()">Cancelar</button>
     </div>
 
   </div>

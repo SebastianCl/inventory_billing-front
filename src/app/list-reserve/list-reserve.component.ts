@@ -74,9 +74,9 @@ export class ListReserveComponent implements OnInit {
             const dataQuotation = {
               id: reserveData.id,
               customerName: reserveData.customerName,
-              reserveDay: this.formatDate(reserveData.startDate),
-              endDate: this.formatDate(reserveData.endDate),
-              startDate: this.formatDate(reserveData.startDate),
+              reserveDay: this.formatDate(reserveData.reserveDay, true),
+              startDate: this.formatDate(reserveData.startDate, false),
+              endDate: this.formatDate(reserveData.endDate, false),
               status: reserveData.status,
               isEdit,
               isCancel,
@@ -121,11 +121,17 @@ export class ListReserveComponent implements OnInit {
     return i;
   }
 
-  formatDate(strDate) {
+  formatDate(strDate, isHour) {
     let date = new Date(strDate);
     let dmy = date.toLocaleDateString();
-    let hour = date.toLocaleTimeString();
-    return `${dmy} ${hour}`;;
+
+    let respDate = dmy;
+    if (isHour) {
+      let hour = date.toLocaleTimeString();
+      respDate = `${dmy} ${hour}`;
+    }
+
+    return respDate;
   }
 
   private changeShow() {
@@ -167,7 +173,10 @@ export class ListReserveComponent implements OnInit {
             total: valTotal,
             subtotal: response.msg.subTotal,
             depositInvoice: 0,
-            type: '1'
+            paymentInvoice: 0,
+            type: '1',
+            startDate: response.msg.startDate,
+            description: response.msg.description
           }
           let status = {
             created: false
@@ -261,9 +270,9 @@ export class ListReserveComponent implements OnInit {
             const dataQuotation = {
               id: reserveData.id,
               customerName: reserveData.customerName,
-              reserveDay: this.formatDate(reserveData.startDate),
-              endDate: this.formatDate(reserveData.endDate),
-              startDate: this.formatDate(reserveData.startDate),
+              reserveDay: this.formatDate(reserveData.startDate, true),
+              startDate: this.formatDate(reserveData.startDate, false),
+              endDate: this.formatDate(reserveData.endDate, false),
               status: reserveData.status,
               isEdit,
               isCancel,

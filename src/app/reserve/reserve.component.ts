@@ -114,7 +114,7 @@ export class ReserveComponent implements OnInit {
     this.totalDiscount = new FormControl();
     this.totalReserve = new FormControl();
     //Functions init
-    this.getListGarments();
+    this.getListArticles();
     this.getListCustomers();
     this.getListEmployes();
     this.clearData();
@@ -175,7 +175,7 @@ export class ReserveComponent implements OnInit {
       )
   }
 
-  private getListGarments(): any {
+  private getListArticles(): any {
     this.articleService.loadArticles()
       .subscribe((response: any) => {
         if (response.resp && response.msg.length > 0) {
@@ -477,7 +477,8 @@ export class ReserveComponent implements OnInit {
             total: this.totalReserve.value,
             subtotal: this.subtotal.value,
             depositInvoice: 0,
-            type: '1'
+            type: '1',
+            startDate: response.msg.startDate
           }
           let status = {
             created: false

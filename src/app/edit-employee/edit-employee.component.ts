@@ -39,9 +39,9 @@ export class EditEmployeeComponent implements OnInit {
   ) {
     //Form update employee
     this.hiddenProgBar = true;
-    this.dsbSave       = false;
-    this.employeeId    = new FormControl();
-    this.employeeName  = new FormControl();
+    this.dsbSave = false;
+    this.employeeId = new FormControl();
+    this.employeeName = new FormControl();
     this.employeeIdentificacion = new FormControl();
     this.employeeTelephone = new FormControl();
     this.employeeEmail = new FormControl('', [Validators.email,]);
@@ -54,7 +54,7 @@ export class EditEmployeeComponent implements OnInit {
     this.setEmployee(infoEmployee);
   }
 
-  private setEmployee(infoEmployee){
+  private setEmployee(infoEmployee) {
     this.employeeId.setValue(infoEmployee.employeeId);
     this.employeeName.setValue(infoEmployee.employeeName);
     this.employeeIdentificacion.setValue(infoEmployee.employeeIdentificacion);
@@ -64,7 +64,7 @@ export class EditEmployeeComponent implements OnInit {
     this.employeeActive = infoEmployee.employeeActive;
   }
 
-  public edit(){
+  public edit() {
 
     if (!this.validateData()) {
       this.changeShow();
@@ -79,7 +79,7 @@ export class EditEmployeeComponent implements OnInit {
       showCloseButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes'
+      confirmButtonText: 'Si'
     }).then((result) => {
       if (result.value) {
 
@@ -118,14 +118,14 @@ export class EditEmployeeComponent implements OnInit {
           this.clearData();
         }
       );
-    
+
   }
 
   private alert(title: any, text: any, icon: any) {
     Swal.fire({ title, text, icon });
   }
 
-  private clearData(){
+  private clearData() {
     this.employeeId.setValue('');
     this.employeeName.setValue('');
     this.employeeIdentificacion.setValue('');

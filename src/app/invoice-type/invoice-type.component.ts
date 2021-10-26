@@ -114,7 +114,7 @@ export class InvoiceTypeComponent implements OnInit {
     //Functions init
     this.getListCustomers();
     this.getListEmployes();
-    this.getListGarments();
+    this.getListArticles();
   }
 
   ngOnInit() {
@@ -137,7 +137,7 @@ export class InvoiceTypeComponent implements OnInit {
         break;
     }
   }
-  private getListGarments(): any {
+  private getListArticles(): any {
     this.articleService.loadArticles()
       .subscribe((response: any) => {
         if (response.resp && response.msg.length > 0) {

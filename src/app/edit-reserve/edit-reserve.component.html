@@ -14,7 +14,7 @@
             <p class="card-category"> Fecha de registro: {{form.controls.reserveDay.value}}</p>
             <p class="card-category"> Nro factura: {{form.controls.invoiceNumber.value}}</p>
             <p class="card-category"> Estado: {{form.controls.isActive.value}}</p>
-            <button mat-raised-button matTooltip="Listar reservas" class="btn pull-right save-reserve"
+            <button mat-raised-button matTooltip="Listar reservas" class="btn pull-right back"
               (click)="back()">Volver</button>
             <mat-progress-bar color="warn" mode="indeterminate" [attr.hidden]="hiddenProgBar?'':null">
             </mat-progress-bar>
@@ -93,8 +93,7 @@
 
               <div class="rg">
 
-                <button mat-raised-button matTooltip="Agregar" class="btn save-reserve"
-                  (click)="addArticle()">+</button>
+                <button mat-raised-button matTooltip="Agregar" class="btn add" (click)="addArticle()">+</button>
 
               </div>
 
@@ -118,7 +117,7 @@
                     <tbody>
                       <tr *ngFor="let item of listArticles.get('rows')['controls'] ; let i = index;">
                         <td>
-                          <button mat-raised-button matTooltip="Eliminar" class="btn save-reserve"
+                          <button mat-raised-button matTooltip="Eliminar" class="btn delete"
                             (click)="removeArticle(i)">X</button>
                         </td>
                         <td>
@@ -191,7 +190,7 @@
 
               <div class="pull-right">
 
-                <button mat-raised-button class="btn pull-right save-reserve" [attr.disabled]="dsbSave?'':null"
+                <button mat-raised-button class="btn pull-right action" [attr.disabled]="dsbSave?'':null"
                   (click)="editReserve()">Editar</button>
 
               </div>
